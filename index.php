@@ -63,172 +63,37 @@
             </div>
         </section>
         <section class="section-padding" id="section_2">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-12 text-center mb-4">
-                        <h2>โครงการที่รอการบริจาค</h2>
-                    </div>
-
-                    <!-- Projects Start -->
-                    <div class="container py-2">
-                        <div class="container">
-                            <div class="row mt-n2 wow fadeInUp" data-wow-delay="0.3s">
-                                <div class="col-12 text-center">
-                                    <ul class="list-inline mb-5" id="portfolio-flters">
-                                        <li class="mx-2 active" data-filter="*">โครงการทั้งหมด</li>
-                                        <li class="mx-2" data-filter=".first">ลดหย่อนภาษี 1 เท่า</li>
-                                        <li class="mx-2" data-filter=".second">ลดหย่อนภาษี 2 เท่า</li>
-                                    </ul>
+            <div class="container py-2">
+                <div class="container">
+                    <div class="row portfolio-container">
+                        <?php
+                        require_once 'connection.php';
+                        $stmt = $conn->prepare("SELECT* FROM project");
+                        $stmt->execute();
+                        $result = $stmt->fetchAll();
+                        foreach ($result as $t1) {
+                        ?>
+                            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.2s">
+                                <div class="col-lg-12 col-md-6 col-12 mb-4 ">
+                                    <div class="custom-block-wrap">
+                                        <img src="images/causes/DSC_2926.jpg" class="custom-block-image img-fluid" alt="">
+                                        <div class="custom-block">
+                                            <div class="custom-block-body">
+                                                <h5 class="mb-3"><?= $t1['p_name_TH']; ?></h5>
+                                                <p><?= $t1['p_slogan_TH']; ?></p>
+                                                </p>
+                                                <h7><?= $t1['p_tex']; ?></h7>
+                                            </div>
+                                            <a href="tex_add.php?p_id=<?= $t1['p_id']; ?>" class="custom-btn btn">บริจาค</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row portfolio-container">
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 ">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_2926.jpg" class="custom-block-image img-fluid" alt="">
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการทุนการศึกษาเพื่อนักศึกษาพยาบาล มช.</h5>
-                                                    <p>บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่
-                                                        <a href="05.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" value="05" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1  custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 mb-lg-0">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_3678.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการจัดซื้ออุปกรณ์การศึกษาคณะพยาบาลศาสตร์ มช.</h5>
-                                                    <p>บริจาคเพื่อจัดหาวัสดุอุปกรณ์การศึกษาคณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่<a href="06.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 mb-lg-0 ">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_7972.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการบริจาคเพื่อผู้ยากไร้และผู้ด้อยโอกาสในสังคม</h5>
-                                                    <p>บริจาคเพื่อสาธารณประโยชน์และการกุศลอื่นๆเพื่อ บริจาคให้ผู้ยากไร้และผู้ด้อยโอกาสในสังคม<a href="09.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 ">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/poor-child-landfill-looks-forward-with-hope.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการพัฒนาปรับปรุงอาคารเรียนและสิ่งแวดล้อม คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</h5>
-                                                    <p>บริจาคเพื่อจัดสร้างอาคาร และพัฒนาปรับปรุงอาคารเรียนและสิ่งแวดล้อมคณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่<a href="07.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.3s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 mb-lg-0 ">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_8450.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการคนักศึกษาคณะพยาบาล มหาวิทยาลัยเชียงใหม่ ส่งต่อความดีเพื่อสังคม</h5>
-                                                    <p>บริจาคเพื่อสาธารณประโยชน์และการกุศลอื่นๆ โครงการบริจาคเพื่อนักศึกษาพยาบาล มหาวิทยาลัยเชียงใหม่ ส่งต่อความดีเพื่อสังคม<a href="08.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.5s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 mb-lg-0">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_8522.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการบริจาคเพื่อครอบครัวคณะพยาบาลศาสตร์ มช. ที่ประสบความเดือดร้อน</h5>
-                                                    <p>บริจาคเพื่อสาธารณประโยชน์และการกุศล บริจาคเพื่อครอบครัวคณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ที่ประสบความเดือดร้อน<a href="11.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="col-lg-12 col-md-6 col-12 mb-4 ">
-                                        <div class="custom-block-wrap">
-                                            <img src="images/causes/DSC_3595.jpg" class="custom-block-image img-fluid" alt="">
-
-                                            <div class="custom-block">
-                                                <div class="custom-block-body">
-                                                    <h5 class="mb-3">โครงการบริจาคเพื่อเพื่อนร่วมวิชาชีพพยาบาลที่ประสบภัยจากการปฏิบัติงานในหน้าที่</h5>
-                                                    <p>บริจาคเพื่อสาธารณประโยชน์และการกุศล โครงการบริจาคเพื่อเพื่อนร่วมวิชาชีพพยาบาลที่ประสบภัยจากการปฏิบัติงานในหน้าที่<a href="10.php" class="category-block-link"> อ่านเพิ่มเติม</a></p>
-                                                    <h7>**ลดหย่อนภาษี 2 เท่า</h7>
-                                                </div>
-                                                <div class="row">
-                                                    <a href="donate_no_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ไม่ลดหย่อนภาษี</a>
-                                                    <a href="donate_yes_receipt.php" class="col-lg-6 col-12 mb-1 custom-btn btn">ลดหย่อนภาษี</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
         </section>
-
         <section class="cta-section section-padding section-bg">
             <div class="container">
                 <div class="row justify-content-center align-items-center">

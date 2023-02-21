@@ -1,20 +1,28 @@
 <?php
 
-  if (isset($_POST['name_Title']) && isset($_POST['fullname'])  && isset($_POST['tel'])  && isset($_POST['email'])  && isset($_POST['money'])) {
+  if (isset($_POST['name_Title']) 
+  && isset($_POST['rec_fullname'])  
+  && isset($_POST['rec_tel']) 
+  && isset($_POST['rec_email'])  
+  && isset($_POST['rec_idname'])
+  && isset($_POST['address'])
+  
+  ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
   require_once 'connection.php';
       //sql insert
-      $stmt = $conn->prepare("INSERT INTO inputdonat_no
-      (name_Title,fullname,tel, email, money)
+      $stmt = $conn->prepare("INSERT INTO receipt
+      (name_Title,rec_fullname,rec_tel, rec_email, rec_idname, address)
       VALUES
-      (:name_Title,:fullname,:tel, :email, :money)");
+      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address)");
       //bindParam data type
       $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
-      $stmt->bindParam(':fullname', $_POST['fullname'], PDO::PARAM_STR);
-      $stmt->bindParam(':tel', $_POST['tel'], PDO::PARAM_STR);
-      $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
-      $stmt->bindParam(':money', $_POST['money'], PDO::PARAM_STR);
+      $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);
+      $stmt->bindParam(':rec_tel', $_POST['rec_tel'], PDO::PARAM_STR);
+      $stmt->bindParam(':rec_email', $_POST['rec_email'], PDO::PARAM_STR);
+      $stmt->bindParam(':rec_idname', $_POST['rec_idname'], PDO::PARAM_STR);
+      $stmt->bindParam(':address', $_POST['address'], PDO::PARAM_STR);
       $result = $stmt->execute();
       $conn = null; //close connect db
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล

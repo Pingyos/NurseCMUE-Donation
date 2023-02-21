@@ -12,35 +12,45 @@
             <div class="section-overlay"></div>
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6 col-12 mx-auto">
+                    <div class="col-lg-12 col-12 mx-auto">
                         <form class="custom-form donate-form" action="#" method="POST" role="form">
                             <div class="row">
                                 <div class="col-lg-12 col-12">
                                     <h5 class="mb-3">บริจาคแบบไม่ลดหย่อนภาษีและไม่รับใบเสร็จ</h5>
                                 </div>
-                                <div class="col-lg-4 col-12 mt-2">
-                                    <select name="name_Title"class="form-control"required>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">คำนำหน้าชื่อ</label>
+                                    <select name="name_Title" class="form-control" onchange="showInput(this)">
                                         <option value="">ไม่ระบุคำนำหน้า</option>
-                                        <option mr="">นาย</option>
-                                        <option ms="">นางสาว</option>
-                                        <option mr="">เด็กหญิง</option>
-                                        <option mr="">เด็กชาย</option>
+                                        <option value="นาย">นาย</option>
+                                        <option value="นางสาว">นาง</option>
+                                        <option value="นางสาว">นางสาว</option>
+                                        <option value="other">อื่นๆ</option>
                                     </select>
-                                </div> 
-                                <div class="col-lg-8 col-12 mt-2">
-                                    <input type="text" name="fullname" class="form-control" placeholder="ชื่อ/สกุล*" required>
                                 </div>
-
-                                <div class="col-lg-5 col-12 mt-2">
-                                    <input type="text" name="tel" class="form-control" placeholder="เบอร์โทรติดต่อ">
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
+                                    <input type="text" name="name_Title_other" id="name_Title_other" class="form-control" style="display: none;">
                                 </div>
-
-                                <div class="col-lg-7 col-12 mt-2">
-                                    <input type="email" name="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="อีเมล์">
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">ชื่อ-สกุล</label>
+                                    <input type="text" name="rec_fullname" class="form-control">
                                 </div>
-
-                                <div class="col-lg-12 col-12 mt-2">
-                                    <input type="text" name="money" class="form-control" placeholder="จำนวนเงิน*" required>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">เบอร์โทรศัพท์</label>
+                                    <input type="text" name="rec_tel" class="form-control">
+                                </div>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">อีเมล์</label>
+                                    <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control">
+                                </div>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">เลขบัตรประชาชน</label>
+                                    <input type="text" name="rec_idname" class="form-control">
+                                </div>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <label class="control-label">ที่อยู่</label>
+                                    <input type="text" name="address" class="form-control">
                                 </div>
 
                                 <div class="col-lg-12 col-12 mt-2">
