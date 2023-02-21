@@ -68,23 +68,24 @@
                     <div class="row portfolio-container">
                         <?php
                         require_once 'connection.php';
-                        $stmt = $conn->prepare("SELECT* FROM project");
+                        $stmt = $conn->prepare("SELECT* FROM pro_edo");
                         $stmt->execute();
                         $result = $stmt->fetchAll();
                         foreach ($result as $t1) {
                         ?>
-                            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" >
                                 <div class="col-lg-12 col-md-6 col-12 mb-4 ">
                                     <div class="custom-block-wrap">
                                         <img src="images/causes/DSC_2926.jpg" class="custom-block-image img-fluid" alt="">
                                         <div class="custom-block">
                                             <div class="custom-block-body">
-                                                <h5 class="mb-3"><?= $t1['p_name_TH']; ?></h5>
-                                                <p><?= $t1['p_slogan_TH']; ?></p>
+                                                <h5 class="mb-3"><?= $t1['edo_name_TH']; ?></h5>
+                                                <p><?= $t1['edo_1']; ?></p>
+                                                <p><?= $t1['edo_2']; ?></p>
                                                 </p>
-                                                <h7><?= $t1['p_tex']; ?></h7>
+                                                <h7><?= $t1['edo_tex']; ?></h7>
                                             </div>
-                                            <a href="tex_add.php?p_id=<?= $t1['p_id']; ?>" class="custom-btn btn">บริจาค</a>
+                                            <a href="donate_no_receipt.php?edo_id=<?= $t1['edo_id']; ?>" class="custom-btn btn">บริจาค</a>
                                         </div>
                                     </div>
                                 </div>
