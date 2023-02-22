@@ -13,36 +13,104 @@
             <div class="row">
                 <div class="col-lg-12 col-12 mx-auto">
                     <form class="custom-form donate-form">
-                       
-                    </form>
-                </div>
+                        <center>
+                            <div class="col-lg-12 col-12">
+                                <h3 class="mb-3">ขั้นตอนชำระเงินผ่านบริจาค</h3>
+                                <h5 class="mb-3">ตรวจสอบรายละเอียด</h5>
+                            </div>
+                        </center>
 
-                
-
-                    <form id="form1">
                         <div class="row">
-                            <?Php
-                            require_once("libcache/PromptPayQR.php");
-                            require_once("connection.php");
+                            <?php
+                            require_once 'connection.php';
                             $stmt = $conn->query("SELECT * FROM receipt ORDER BY id DESC LIMIT 1");
-                            $row = $stmt->fetch();
-                            $amount = $row['rec_money'];
-
-                            $PromptPayQR = new PromptPayQR(); // new object
-                            $PromptPayQR->size = 7; // Set QR code size to 8
-                            $PromptPayQR->id = '5665690444'; // PromptPay ID
-                            $PromptPayQR->amount = $amount; // Set amount (not necessary)
-                            echo '<img src="' . $PromptPayQR->generate() . '" />';
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
                             ?>
+                            <div class="row">
+                                <div class="col-lg-3 col-12 mt-2">
+                                    <label class="control-label">ชื่อ-สกุล</label>
+                                    <h5 class="mb-3"><?= $row['rec_fullname']; ?></h5>
+                                </div>
+                                <div class="col-lg-3 col-12 mt-2">
+                                    <label class="control-label">เบอร์โทรศัพท์</label>
+                                    <h5 class="mb-3"><?= $row['rec_tel']; ?></h5>
+                                </div>
+                                <div class="col-lg-3 col-12 mt-2">
+                                    <label class="control-label">เลขบัตรประชาชน</label>
+                                    <h5 class="mb-3"><?= $row['rec_idname']; ?></h5>
+                                </div>
+                                <div class="col-lg-3 col-12 mt-2">
+                                    <label class="control-label">จำนวนเงิน</label>
+                                    <h5 class="mb-3"><?= $row['rec_money']; ?></h5>
+                                </div>
+                                <div class="col-lg-8 col-12 mt-2">
+                                    <label class="control-label">โครงการ</label>
+                                    <h5 class="mb-3"><?= $row['p_name_TH']; ?></h5>
+                                </div>
+                            </div>
                         </div>
+
+                        <fieldset id="Member">
+                            <div class="row mt-4">
+                                <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                    <div class="form-check form-check-radio">
+                                        <input type="radio" id="date-show-1" value="yes" name="Member" class="form-check-input">
+                                        <label class="form-check-label" for="date-show-1">ชำระผ่านเลขบัญชี</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                    <div class="form-check form-check-radio">
+                                        <input type="radio" id="date-show-2" value="no" name="Member" class="form-check-input" checked="checked">
+                                        <label class="form-check-label" for="date-show-2">ชำระผ่าน QC CODE</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="date-show-date" class=" medium-12">
+                                <p>1</p>
+                            </div>
+
+                            <div id="date-show-form" class=" medium-12">
+                                <p>2</p>
+                            </div>
+
+                            <script>
+                                function showHide1(input) {
+                                    var attrVal = $(input).attr('id');
+                                    switch (attrVal) {
+                                        case 'date-show-1':
+                                            $('#date-show-form').hide();
+                                            $('#date-show-date').show();
+                                            break;
+                                        case "date-show-2":
+                                            $('#date-show-date').hide();
+                                            $('#date-show-form').show();
+                                            break;
+                                        default:
+                                            $('#date-show-form').show();
+                                            $('#date-show-date').hide();
+                                            break;
+                                    }
+                                }
+                                $(document).ready(function() {
+                                    $('input[type="radio"]').each(function() {
+                                        showHide1(this);
+                                    });
+                                    $('input[type="radio"]').click(function() {
+                                        showHide1(this);
+                                    });
+                                });
+                            </script>
+
+                        </fieldset>
                     </form>
-           
                 </div>
             </div>
         </div>
+        </div>
     </main>
     <?php require_once('footer.php'); ?>
-    <script src="service/province.service.js" type="text/javascript"></script>
     <script src="js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -62,22 +130,6 @@
             $('#cancel').prop('checked', true);
         });
     </script>
-
-    <script>
-        function showInput(selectElement) {
-            var inputElement = document.getElementById("name_Title_other");
-            if (selectElement.value === "other") {
-                inputElement.style.display = "block";
-                inputElement.setAttribute("required", true);
-            } else {
-                inputElement.style.display = "none";
-                inputElement.removeAttribute("required");
-            }
-        }
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="service/province.service.js" type="text/javascript"></script>
 
 </body>
 

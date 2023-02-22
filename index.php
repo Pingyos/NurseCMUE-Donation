@@ -73,14 +73,14 @@
                         $result = $stmt->fetchAll();
                         foreach ($result as $t1) {
                         ?>
-                            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp" >
+                            <div class="col-lg-4 col-md-6 portfolio-item second wow fadeInUp">
                                 <div class="col-lg-12 col-md-6 col-12 mb-4 ">
                                     <div class="custom-block-wrap">
                                         <img src="images/causes/DSC_2926.jpg" class="custom-block-image img-fluid" alt="">
                                         <div class="custom-block">
                                             <div class="custom-block-body">
                                                 <h5 class="mb-3"><?= $t1['edo_name']; ?></h5>
-                                    
+
                                                 </p>
                                                 <h7><?= $t1['edo_tex']; ?></h7>
                                             </div>
@@ -185,7 +185,7 @@
                                     <i class="bi-telephone me-2"></i>
 
                                     <a href="tel: 120-240-9600">
-                                        053-935024
+                                        053-949075
                                     </a>
                                 </p>
 
@@ -196,6 +196,7 @@
                                         edonation@gmail.com
                                     </a>
                                 </p>
+                                
 
                                 <a href="#section_2" class="custom-btn btn mt-3">บริจาค</a>
                             </div>
