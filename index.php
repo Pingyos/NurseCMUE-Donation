@@ -79,9 +79,8 @@
                                         <img src="images/causes/DSC_2926.jpg" class="custom-block-image img-fluid" alt="">
                                         <div class="custom-block">
                                             <div class="custom-block-body">
-                                                <h5 class="mb-3"><?= $t1['edo_name_TH']; ?></h5>
-                                                <p><?= $t1['edo_1']; ?></p>
-                                                <p><?= $t1['edo_2']; ?></p>
+                                                <h5 class="mb-3"><?= $t1['edo_name']; ?></h5>
+                                    
                                                 </p>
                                                 <h7><?= $t1['edo_tex']; ?></h7>
                                             </div>
