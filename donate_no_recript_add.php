@@ -24,7 +24,7 @@ if (
   $stmt = $conn->prepare("INSERT INTO receipt
       (name_Title,rec_fullname,rec_tel, rec_email, rec_idname, address, name_Title_other, rec_money, road, provinces, amphures, districts, zip_code, rec_status)
       VALUES
-      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :rec_status, :zip_code)");
+      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :zip_code, :rec_status )");
   //bindParam data type
   $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
   $stmt->bindParam(':name_Title_other', $_POST['name_Title_other'], PDO::PARAM_STR);
