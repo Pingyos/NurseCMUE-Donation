@@ -15,7 +15,7 @@
                         <form class="custom-form donate-form" action="#" method="POST" role="form">
                             <center>
                                 <div class="col-lg-12 col-12">
-                                    <h2 class="mb-3">ร่วมบริจาค คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</h2>
+                                    <h5 class="mb-3">ร่วมบริจาค คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</h5>
                                 </div>
                                 <?php
                                 if (isset($_GET['edo_id'])) {
@@ -26,8 +26,8 @@
                                 }
                                 ?>
                                 <div class="col-lg-12 col-12">
-                                    <h5 class="mb-3"><?= $row['edo_name']; ?></h5>
-                                    <h7 class="mb-3"><?= $row['edo_tex']; ?></h7>
+                                    <h3 class="mb-3"><?= $row['edo_name']; ?></h3>
+                                    <h3 class="mb-3"><?= $row['edo_tex']; ?></h3>
                                 </div>
                             </center>
 
@@ -36,7 +36,7 @@
                                     <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
                                         <div class="form-check form-check-radio">
                                             <input type="radio" id="date-show-1" value="yes" name="Member" class="form-check-input">
-                                            <label class="form-check-label" for="date-show-1">รายละเอียด</label>
+                                            <label class="form-check-label" for="date-show-1">รายละเอียดโครงการ</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
@@ -103,12 +103,13 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <input type="text" name="edo_name" value="<?= $_GET['id']; ?>" hidden>
+                                        <input type="text" name="edo_tex" value="<?= $_GET['id']; ?>" hidden>
                                         <div id="show-me" class=" medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่อ</label>
-                                                    <select name="name_Title" class="form-control" onchange="showInput(this)">
+                                                    <select name="name_Title" class="form-control" onchange="showInput2(this)">
                                                         <option value="">ไม่ระบุคำนำหน้า</option>
                                                         <option value="นาย">นาย</option>
                                                         <option value="นางสาว">นาง</option>
@@ -116,6 +117,18 @@
                                                         <option value="other">อื่นๆ</option>
                                                     </select>
                                                 </div>
+                                                <script>
+                                                    function showInput2(selectElement) {
+                                                        var inputElement = document.getElementById("name_Title_other");
+                                                        if (selectElement.value === "other") {
+                                                            inputElement.style.display = "block";
+                                                            inputElement.setAttribute("required", true);
+                                                        } else {
+                                                            inputElement.style.display = "none";
+                                                            inputElement.removeAttribute("required");
+                                                        }
+                                                    }
+                                                </script>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
                                                     <input type="text" name="name_Title_other" id="name_Title_other" class="form-control" style="display: none;">
@@ -135,7 +148,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่อ</label>
-                                                    <select name="name_Title" class="form-control" onchange="showInput(this)">
+                                                    <select name="name_Title" class="form-control" onchange="showInput1(this)">
                                                         <option value="">ไม่ระบุคำนำหน้า</option>
                                                         <option value="นาย">นาย</option>
                                                         <option value="นางสาว">นาง</option>
@@ -145,8 +158,20 @@
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
-                                                    <input type="text" name="name_Title_other" id="name_Title_other" class="form-control" style="display: none;">
+                                                    <input type="text" name="name_Title_other" id="name_Title_other1" class="form-control" style="display: none;">
                                                 </div>
+                                                <script>
+                                                    function showInput1(selectElement) {
+                                                        var inputElement = document.getElementById("name_Title_other1");
+                                                        if (selectElement.value === "other") {
+                                                            inputElement.style.display = "block";
+                                                            inputElement.setAttribute("required", true);
+                                                        } else {
+                                                            inputElement.style.display = "none";
+                                                            inputElement.removeAttribute("required");
+                                                        }
+                                                    }
+                                                </script>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ชื่อ-สกุล</label>
                                                     <input type="text" name="rec_fullname" class="form-control">
@@ -258,6 +283,7 @@
                                                 </script>
                                             </div>
                                         </div>
+
                                         <script>
                                             function showHide(input) {
                                                 var attrVal = $(input).attr('id');
@@ -289,8 +315,8 @@
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
                                         <!-- <?php echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>'; ?> -->
+                                                print_r($_POST);
+                                                echo '</pre>'; ?> -->
                                     </div>
                                 </div>
 
@@ -331,22 +357,6 @@
         </section>
     </main>
     <?php require_once('footer.php'); ?>
-    <script src="service/province.service.js" type="text/javascript"></script>
-    <script>
-        function showInput(selectElement) {
-            var inputElement = document.getElementById("name_Title_other");
-            if (selectElement.value === "other") {
-                inputElement.style.display = "block";
-                inputElement.setAttribute("required", true);
-            } else {
-                inputElement.style.display = "none";
-                inputElement.removeAttribute("required");
-            }
-        }
-    </script>
-
-
-
 </body>
 
 </html>
