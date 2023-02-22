@@ -46,10 +46,10 @@ if (
   if ($result) {
     echo '<script>
       swal({
-          title: "บันทึกข้อมูลสำเร็จ", 
-          text: "กำลังไปหน้าชำระเงิน",
+          title: "บันทึกข้อมูลบริจาคสำเร็จ", 
+          text: "ระบบจะทำการ Generator cq code เพื่อให้ท่านได้ชำระเงิน กรุณารอสักครู่",
           type: "success", //success, warning, danger
-          timer: 2000, //ระยะเวลา redirect 3000 = 3 วิ เพิ่มลดได้
+          timer: 3000, //ระยะเวลา redirect 3000 = 3 วิ เพิ่มลดได้
           showConfirmButton: false //ปิดการแสดงปุ่มคอนเฟิร์ม ถ้าแก้เป็น true จะแสดงปุ่ม ok ให้คลิกเหมือนเดิม
         }, function(){
           window.location.href = "qrgenerator_receipt.php"; //หน้าเพจที่เราต้องการให้ redirect ไป  

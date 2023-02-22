@@ -29,27 +29,27 @@
                             <div class="row">
                                 <div class="col-lg-3 col-12 mt-2">
                                     <label class="control-label">ชื่อ-สกุล</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control" readonly>
                                 </div>
                                 <div class="col-lg-3 col-12 mt-2">
                                     <label class="control-label">เบอร์โทรศัพท์</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control" readonly>
                                 </div>
                                 <div class="col-lg-3 col-12 mt-2">
                                     <label class="control-label">เลขบัตรประชาชน</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control" readonly>
                                 </div>
                                 <div class="col-lg-3 col-12 mt-2">
                                     <label class="control-label">จำนวนเงิน</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_money']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['rec_money']; ?>" class="form-control" readonly>
                                 </div>
                                 <div class="col-lg-6 col-12 mt-2">
                                     <label class="control-label">รายละเอียดโครงการ</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control"readonly>
                                 </div>
                                 <div class="col-lg-6 col-12 mt-2">
                                     <label class="control-label">ประเภทลดหย่อนภาษี</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control">
+                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control"readonly>
                                 </div>
                             </div>
                         </div>
