@@ -90,13 +90,13 @@
                                     </div>
                                     <fieldset id="rec_status">
                                         <div class="row mt-4">
-                                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                            <div class="col-lg-6 col-12 form-check-group form-check-group-donation-frequency">
                                                 <div class="form-check form-check-radio">
                                                     <input type="radio" id="watch-me" value="no" name="rec_status" class="form-check-input">
                                                     <label class="form-check-label" for="watch-me">กรณีที่ไม่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                            <div class="col-lg-6 col-12 form-check-group form-check-group-donation-frequency">
                                                 <div class="form-check form-check-radio">
                                                     <input type="radio" id="watch-me-maybe" value="yes" name="rec_status" class="form-check-input" required checked="checked">
                                                     <label class="form-check-label" for="watch-me-maybe">กรณีที่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
