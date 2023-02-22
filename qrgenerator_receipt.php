@@ -45,11 +45,11 @@
                                 </div>
                                 <div class="col-lg-6 col-12 mt-2">
                                     <label class="control-label">รายละเอียดโครงการ</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control"readonly>
+                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control" readonly>
                                 </div>
                                 <div class="col-lg-6 col-12 mt-2">
                                     <label class="control-label">ประเภทลดหย่อนภาษี</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control"readonly>
+                                    <input type="text" name="rec_fullname" value="<?= $row['p_name_TH']; ?>" class="form-control" readonly>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,9 @@
                                     </div>
                                 </center>
                             </div>
-
+                            <div class="col-lg-12 col-12 mt-2">
+                                <button type="submit" class="form-control mt-4">ขอใบเสร็จรับเงิน</button>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
