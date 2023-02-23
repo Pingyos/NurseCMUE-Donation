@@ -25,6 +25,7 @@
                                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                     $edo_name = $row['edo_name'];
                                     $edo_tex = $row['edo_tex'];
+                                    $edo_pro_id = $row['edo_pro_id'];
                                 }
                                 ?>
                                 <div class="col-lg-12 col-12">
@@ -107,6 +108,7 @@
                                         </div>
                                         <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
                                         <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
+                                        <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
 
                                         <div id="show-me" class=" medium-12">
                                             <div class="row">
@@ -317,9 +319,9 @@
                                     </fieldset>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <?php echo '<pre>';
+                                        <!-- <?php echo '<pre>';
                                         print_r($_POST);
-                                        echo '</pre>'; ?>
+                                        echo '</pre>'; ?> -->
                                     </div>
                                 </div>
 
@@ -353,7 +355,7 @@
 
                             </fieldset>
                         </form>
-                        <!-- <?php require_once('donate_no_recript_add.php'); ?> -->
+                        <?php require_once('donate_no_recript_add.php'); ?>
                     </div>
                 </div>
             </div>

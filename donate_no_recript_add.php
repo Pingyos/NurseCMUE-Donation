@@ -21,6 +21,7 @@ if (
   && isset($_POST['zip_code'])
   && isset($_POST['edo_name'])
   && isset($_POST['edo_tex'])
+  && isset($_POST['edo_pro_id'])
   && isset($_POST['rec_status'])
 
 ) {
@@ -29,9 +30,9 @@ if (
   require_once 'connection.php';
   //sql insert
   $stmt = $conn->prepare("INSERT INTO receipt
-      (name_Title,rec_fullname,rec_tel, rec_email, rec_idname, address, name_Title_other, rec_money, road, provinces, amphures, districts, zip_code, edo_name, edo_tex, rec_status)
+      (name_Title,rec_fullname,rec_tel, rec_email, rec_idname, address, name_Title_other, rec_money, road, provinces, amphures, districts, zip_code, edo_name, edo_tex, edo_pro_id, rec_status)
       VALUES
-      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :zip_code, :edo_name, :edo_tex,:rec_status )");
+      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :zip_code, :edo_name, :edo_tex,:edo_pro_id, :rec_status )");
   //bindParam data type
   $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
   $stmt->bindParam(':name_Title_other', $_POST['name_Title_other'], PDO::PARAM_STR);
@@ -48,6 +49,7 @@ if (
   $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_tex', $_POST['edo_tex'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_status', $_POST['rec_status'], PDO::PARAM_STR);
   $result = $stmt->execute();
   $conn = null; //close connect db
