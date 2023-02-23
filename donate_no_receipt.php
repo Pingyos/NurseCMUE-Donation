@@ -23,6 +23,8 @@
                                     $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                                     $stmt->execute([$_GET['edo_id']]);
                                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    $edo_name = $row['edo_name'];
+                                    $edo_tex = $row['edo_tex'];
                                 }
                                 ?>
                                 <div class="col-lg-12 col-12">
@@ -31,17 +33,17 @@
                                 </div>
                             </center>
 
-                            <fieldset id="Member">
+                            <fieldset id="date">
                                 <div class="row mt-4">
                                     <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
                                         <div class="form-check form-check-radio">
-                                            <input type="radio" id="date-show-1" value="yes" name="Member" class="form-check-input">
+                                            <input type="radio" id="date-show-1" value="yes" name="date" class="form-check-input">
                                             <label class="form-check-label" for="date-show-1">รายละเอียดโครงการ</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
                                         <div class="form-check form-check-radio">
-                                            <input type="radio" id="date-show-2" value="no" name="Member" class="form-check-input" checked="checked">
+                                            <input type="radio" id="date-show-2" value="no" name="date" class="form-check-input" checked="checked">
                                             <label class="form-check-label" for="date-show-2">บริจาค</label>
                                         </div>
                                     </div>
@@ -103,8 +105,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <input type="text" name="edo_name" value="<?= $_GET['id']; ?>" hidden>
-                                        <input type="text" name="edo_tex" value="<?= $_GET['id']; ?>" hidden>
+                                        <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
+                                        <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
+
                                         <div id="show-me" class=" medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
@@ -315,8 +318,8 @@
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
                                         <?php echo '<pre>';
-                                                print_r($_POST);
-                                                echo '</pre>'; ?>
+                                        print_r($_POST);
+                                        echo '</pre>'; ?>
                                     </div>
                                 </div>
 
@@ -350,7 +353,7 @@
 
                             </fieldset>
                         </form>
-                         <?php require_once('donate_no_recript_add.php'); ?>
+                        <!-- <?php require_once('donate_no_recript_add.php'); ?> -->
                     </div>
                 </div>
             </div>
