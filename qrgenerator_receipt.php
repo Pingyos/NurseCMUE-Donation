@@ -123,7 +123,7 @@
                                 </center>
                             </div>
 
-                            <!-- <div class="col-lg-12 col-12 mt-2">
+                            <div class="col-lg-12 col-12 mt-2">
                                 <?php
                                 require_once 'connection.php';
                                 $stmt = $conn->prepare("SELECT* FROM receipt");
@@ -131,8 +131,8 @@
                                 $result = $stmt->fetchAll();
                                 foreach ($result as $t2)
                                 ?>
-                                <a href="mindphp02.php?id=<?= $t2['id']; ?>" class="custom-btn btn">ใบเสร็จรับเงิน</a>
-                            </div> -->
+                                <a href="pdf_maker.php?id=<?php echo $t2['id']; ?>&ACTION=VIEW" class="custom-btn btn">ใบเสร็จ</a>
+                            </div>
                         </fieldset>
                     </form>
                 </div>
@@ -141,7 +141,7 @@
         </div>
     </main>
     <?php require_once('footer.php'); ?>
-    <script src="js/main.js"></script>
+    <script src=" js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function showHide1(input) {

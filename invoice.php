@@ -18,6 +18,7 @@
                                     <tr>
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>โครงการ</th>
+                                        <th>วัน-เวลา</th>
                                         <th>ดูใบเสร็จรับเงิน</th>
                                         <th>ดาวน์โหลดใบเสร็จรับเงิน</th>
                                     </tr>
@@ -25,7 +26,7 @@
                                 <tbody>
                                     <?php
                                     require 'database_connection.php';
-                                    $display_query = "SELECT T1.id, T1.rec_fullname, T1.edo_name FROM receipt T1";
+                                    $display_query = "SELECT T1.id, T1.rec_fullname, T1.edo_name, T1.dateCreate FROM receipt T1";
                                     $results = mysqli_query($con, $display_query);
                                     $count = mysqli_num_rows($results);
                                     if ($count > 0) {
@@ -34,6 +35,7 @@
                                             <tr>
                                                 <td><?php echo $data_row['rec_fullname']; ?></td>
                                                 <td><?php echo $data_row['edo_name']; ?></td>
+                                                <td><?php echo $data_row['dateCreate']; ?></td>
                                                 <td>
                                                     <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> View PDF</a>
                                                 </td>
