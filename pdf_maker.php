@@ -34,10 +34,10 @@ if ($count > 0) {
 	$content .= '
 	<style type="text/css">
 	body{
-	font-size:12px;
-	line-height:24px;
-	font-family:"thsarabunnew", "thsarabunnew", thsarabunnew;
-	color:#000;
+	font-size: 12px;
+	ine-height: 24px;
+	font-family: "thsarabunnew", Arial, sans-serif;
+	color: #000;
 	}
 	</style>    
 <table>
