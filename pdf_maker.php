@@ -17,13 +17,13 @@ if ($count > 0) {
 	$pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
 	$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-	$pdf->SetDefaultMonospacedFont('THsarabunNew');
+	$pdf->SetDefaultMonospacedFont('thsarabunnew');
 	$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 	$pdf->SetMargins(PDF_MARGIN_LEFT, '1', PDF_MARGIN_RIGHT);
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 10);
-	$pdf->SetFont('THsarabunNew', '', 11.8);
+	$pdf->SetFont('thsarabunnew', '', 11.8);
 	$pdf->SetMargins(10, 3, 10);
 	$pdf->AddPage(); //default A4
 
@@ -36,7 +36,7 @@ if ($count > 0) {
 	body{
 	font-size:12px;
 	line-height:24px;
-	font-family:"THsarabunNew Neue", "THsarabunNew", THsarabunNew, Arial, sans-serif;
+	font-family:"thsarabunnew", "thsarabunnew", thsarabunnew;
 	color:#000;
 	}
 	</style>    
@@ -61,7 +61,7 @@ if ($count > 0) {
 	<tr><td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
 	<td align="right"><b>เลขที่ใบเสร็จ: </b>' . $inv_mst_data_row['edo_pro_id'] . '</td></tr>
 	<tr><td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
-	<td align="right"><b>เลขที่ใบเสร็จ : </b>' . date("d-m-Y") . '</td></tr>
+	<td align="right"><b>วันที่เอกสาร : </b>' . date("d-m-Y") . '</td></tr>
 	<tr><td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
 	<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td></tr>
 	<tr><td align="right"><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท</td></tr>
