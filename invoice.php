@@ -37,10 +37,10 @@
                                                 <td><?php echo $data_row['edo_name']; ?></td>
                                                 <td><?php echo $data_row['dateCreate']; ?></td>
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> View PDF</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> View PDF</a>
                                                 </td>
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" class="btn btn-danger"><i class="fa fa-download"></i> Download PDF</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger"><i class="fa fa-download"></i> Download PDF</a>
                                                 </td>
                                             </tr>
                                     <?php

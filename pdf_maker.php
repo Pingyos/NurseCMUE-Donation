@@ -14,7 +14,7 @@ if ($count > 0) {
 	$pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 	$pdf->SetCreator(PDF_CREATOR);
 	//$pdf->SetTitle("Export HTML Table data to PDF using TCPDF in PHP");  
-	$pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
+	$pdf->SetHeaderData('TCPDF/cmulogo.png', 30, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 	$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 	$pdf->SetDefaultMonospacedFont('thsarabunnew');
@@ -26,11 +26,52 @@ if ($count > 0) {
 	$pdf->SetFont('thsarabunnew', '', 11.8);
 	$pdf->SetMargins(10, 3, 10);
 	$pdf->AddPage(); //default A4
+	// 
 	date_default_timezone_set('Asia/Bangkok');
 	$year = date('Y') + 543;
 	$datetime_be = str_replace(date('Y'), $year, date('Y'));
 	$datetime_be1 = str_replace(date('Y'), $year, date('Y-m-d'));
+	// 
 
+	// 
+	// Define an array with Thai words for numbers 0-9
+	$thai_num_arr = array(
+		'๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙'
+	);
+
+	// Define an array with Thai words for powers of 10
+	$thai_unit_arr = array(
+		'', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'
+	);
+
+	// Define the number you want to convert to Thai words
+	$number = $inv_mst_data_row['rec_money'];
+
+	// Convert the number to an array of digits
+	$digits = str_split(str_replace(',', '', $number));
+
+	// Reverse the array of digits so we can loop through it from right to left
+	$digits = array_reverse($digits);
+
+	// Initialize the Thai words string
+	$thai_words = '';
+
+	// Loop through the array of digits
+	for ($i = 0; $i < count($digits); $i++) {
+		// If the current digit is not 0, add its Thai word to the Thai words string
+		if ($digits[$i] != 0) {
+			$thai_words .= $thai_num_arr[$digits[$i]];
+			$thai_words .= $thai_unit_arr[$i % 6];
+		}
+	}
+
+	// Reverse the Thai words string to get the correct order
+	$thai_words = strrev($thai_words);
+
+	// Print the Thai words
+	echo $thai_words;
+
+	// 
 	$content = '';
 
 	$content .= '
@@ -60,6 +101,9 @@ if ($count > 0) {
 	<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td></tr>
 	<tr><td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number 099 4 00042317 9</td>
 	<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td></tr>
+	<tr><td></td>
+	<td align="right">เบอรโทร 053-949075</td></tr>
+	
 
 	<tr><td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
 	<td align="right"><b>เลขที่ใบเสร็จ: </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td></tr>
@@ -75,6 +119,9 @@ if ($count > 0) {
 	<tr><td>' . $inv_mst_data_row[''] . ' </td>
 	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $datetime_be1 . '</td></tr>
 	<table><tr><td><b>หมายเหตู :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td></tr>
+	<tr>
+    <td style="border-bottom: 0.5px solid black;"></td>
+  </tr>
 	</table>
 	';
 
