@@ -26,19 +26,22 @@ if ($count > 0) {
 	$pdf->SetFont('thsarabunnew', '', 11.8);
 	$pdf->SetMargins(10, 3, 10);
 	$pdf->AddPage(); //default A4
-
-	//$pdf->AddPage('P','A5'); //when you require custome page size 
+	date_default_timezone_set('Asia/Bangkok');
+	$year = date('Y') + 543;
+	$datetime_be = str_replace(date('Y'), $year, date('Y'));
+	$datetime_be1 = str_replace(date('Y'), $year, date('Y-m-d'));
 
 	$content = '';
 
 	$content .= '
 	<style type="text/css">
-	body{
-	font-size: 12px;
-	ine-height: 24px;
-	font-family: "thsarabunnew", Arial, sans-serif;
-	color: #000;
+	body {
+		font-size: 12px;
+		line-height: 24px;
+		font-family: "thsarabunnew", Arial, sans-serif;
+		color: #000;
 	}
+	
 	</style>    
 <table>
   <tr>
@@ -59,9 +62,9 @@ if ($count > 0) {
 	<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td></tr>
 
 	<tr><td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
-	<td align="right"><b>เลขที่ใบเสร็จ: </b>' . $inv_mst_data_row['edo_pro_id'] . '</td></tr>
+	<td align="right"><b>เลขที่ใบเสร็จ: </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td></tr>
 	<tr><td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
-	<td align="right"><b>วันที่เอกสาร : </b>' . date("d-m-Y") . '</td></tr>
+	<td align="right"><b>วันที่เอกสาร : </b>' . $datetime_be1 . '</td></tr>
 	<tr><td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
 	<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td></tr>
 	<tr><td align="right"><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท</td></tr>
@@ -70,7 +73,7 @@ if ($count > 0) {
 	<tr><td><b>ชำระด้วย : </b>' . $inv_mst_data_row[''] . ' </td></tr>
 
 	<tr><td>' . $inv_mst_data_row[''] . ' </td>
-	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน</td></tr>
+	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $datetime_be1 . '</td></tr>
 	<table><tr><td><b>หมายเหตู :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td></tr>
 	</table>
 	';
@@ -79,9 +82,14 @@ if ($count > 0) {
 
 	$file_location = "/home/fbi1glfa0j7p/public_html/examples/generate_pdf/uploads/"; //add your full path of your server
 	//$file_location = "/opt/lampp/htdocs/examples/generate_pdf/uploads/"; //for local xampp server
+	// set timezone to Bangkok
+	date_default_timezone_set('Asia/Bangkok');
 
-	$datetime = date('dmY_hms');
-	$file_name = "INV_" . $datetime . ".pdf";
+	$year = date('Y') + 543;
+
+	$datetime = date('Y');
+	$datetime_be = str_replace(date('Y'), $year, $datetime);
+	$file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . ".pdf";
 	ob_end_clean();
 
 	if ($_GET['ACTION'] == 'VIEW') {
