@@ -97,7 +97,7 @@ if ($count > 0) {
 	$pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 	$pdf->SetCreator(PDF_CREATOR);
 	//$pdf->SetTitle("Export HTML Table data to PDF using TCPDF in PHP");  
-	$pdf->SetHeaderData('TCPDF/cmulogo.png', 30, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+	$pdf->SetHeaderData('', '', PDF_HEADER_TITLE, PDF_HEADER_STRING);
 	$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 	$pdf->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 	$pdf->SetDefaultMonospacedFont('thsarabunnew');
@@ -122,134 +122,132 @@ if ($count > 0) {
 
 	$content .= '
 <table>
-<tr>
-
-<td style="font-size: 18px;" >
-	<b>มหาวิทยาลัยเชียงใหม่</b>
-</td>
-<td align="right" style="font-size: 18px;" >
-	<b>ใบเสร็จรับเงิน</b></td>
-</tr>
-
-<tr>
-<td>
-	<b>Chiang Mai University</b>
-</td>
-<td align="right">
-	<b>ต้นฉบับ</b>
-</td>
-</tr>
-
-<tr>
-<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
-<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
-</tr>
-
-<tr>
-<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
-<td align="right">Faculty of Nursing, CMU</td>
-</tr>
-
-<tr>
-<td>เบอร์โทร 053-949075</td>
-<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
-</tr>
-
-<tr>
-<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
-<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
-</tr>
-
-<tr>
-<td>099 4 00042317 9</td>
-<td align="right">เบอร์โทร 053-949075</td>
-</tr>
-
-<tr>
-    <td colspan="2" style="border-bottom: solid black 1px;"></td>
-</tr>
-
-<tr>
-<br>
-	<td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
-	<td align="right"><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
-</tr>
-
-<tr>
-	<td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
-	<td align="right"><b>วันที่เอกสาร : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
-</tr>
-
-<tr>
-	<td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
-	<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
-</tr>
-
-<tr>
-	<td align="right" colspan="2" ><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
-</tr>
-
-<tr>
-	<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
-</tr>
-
-<tr>
-	<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
-</tr>
 	<tr>
-<td>
-	<b>ชำระด้วย : </b>' . $inv_mst_data_row[''] . ' </td>
-</tr>
+		<td style="font-size: 18px;" >
+			<b>มหาวิทยาลัยเชียงใหม่</b>
+		</td>
+		<td align="right" style="font-size: 18px;" >
+			<b>ใบเสร็จรับเงิน</b>
+		</td>
+	</tr>
 
-<tr>
-	<td></td>
-	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
-</tr>
+	<tr>
+	<td>
+		<b>Chiang Mai University</b>
+	</td>
+	<td align="right">
+		<b>ต้นฉบับ</b>
+	</td>
+	</tr>
 
-<table>
+	<tr>
+	<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+	<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
+	</tr>
+
+	<tr>
+	<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
+	<td align="right">Faculty of Nursing, CMU</td>
+	</tr>
+
+	<tr>
+	<td>เบอร์โทร 053-949075</td>
+	<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+	</tr>
+
+	<tr>
+	<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
+	<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
+	</tr>
+
+	<tr>
+	<td>099 4 00042317 9</td>
+	<td align="right">เบอร์โทร 053-949075</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" style="border-bottom: solid black 1px;"></td>
+	</tr>
+
+	<tr>
+	<br>
+		<td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td align="right"><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
+	</tr>
+
+	<tr>
+		<td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
+		<td align="right"><b>วันที่เอกสาร : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
+	</tr>
+	
+
+	<tr>
+		<td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
+		<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+	</tr>
+
+	<tr>
+		<td align="right" colspan="2" ><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+	</tr>
+
+	<tr>
+		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
+	</tr>
+
+	<tr>
+		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+	</tr>
+		<tr>
+	<td>
+		<b>ชำระด้วย : </b>' . $inv_mst_data_row[''] . ' </td>
+	</tr>
+
+	<tr>
+		<td></td>
+		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
+	</tr>
 	<tr>
 		<td><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td>
 	</tr>
+	<tr>
+		<td colspan="2" style="border-bottom: solid black 1px;"></td>
+	</tr>
+
+	<br>
+
+	<tr>
+		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
+	</tr>
+	<tr>
+		<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
+	</tr>
+	<tr>
+		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+	</tr>
+	<br>
+	<tr>
+		<td ><b>จาก : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
+	</tr>
+	<tr>
+		<td><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
+	</tr>
+	<br>
+	<tr>
+		<td colspan="2" style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
+	</tr>
+	<br>
+	<br>
+	<br>
+	<br>
+	<tr>
+		<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
+	</tr>
+	<tr>
+	<td><b>เลยที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . ' </td>
+	<td align="right"><b>ลำดับเอกสาร : </b>' . $inv_mst_data_row['id'] . '</td>
+</tr>
 </table>
 
-</table>
-
-<table>
-	<tr>
-		<td style="border-bottom: solid black, 1px;"></td>
-	</tr>
-	<br>
-	<tr>
-		<td style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
-	</tr>
-	<tr>
-		<td style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
-	</tr>
-	<tr>
-		<td style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
-	</tr>
-	<br>
-	<tr>
-		<td><b>จาก : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
-	</tr>
-	<tr>
-		<td><b>วัตถุประสงค์ : </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
-	</tr>
-	<br>
-	<tr>
-		<td style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
-	</tr>
-	<br>
-	<br>
-	<br>
-	<br>
-	<tr>
-		<td style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
-	</tr>
-	<tr>
-		<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
-	</tr>
-</table>
 	';
 
 	$pdf->writeHTML($content);

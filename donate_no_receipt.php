@@ -91,7 +91,8 @@
 
                                 <div id="date-show-form" class=" medium-12">
                                     <div class="col-lg-12 col-12 mt-2">
-                                        <input name="rec_money" type="text" onkeyup="dokeyup(this);" onchange="dokeyup(this);" onkeypress="checknumber()" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
+                                    <input type="text" name="rec_money" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
+                                        <!-- <input name="rec_money" type="text" onkeyup="dokeyup(this);" onchange="dokeyup(this);" onkeypress="checknumber()" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
                                         <script>
                                             function dokeyup(obj) {
                                                 var key = event.keyCode;
@@ -130,7 +131,7 @@
                                                     event.returnValue = false;
                                                 };
                                             };
-                                        </script>
+                                        </script> -->
                                     </div>
                                     <fieldset id="rec_status">
                                         <div class="row mt-4">
