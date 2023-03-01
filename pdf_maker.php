@@ -20,10 +20,13 @@ $thai_months = array(
 
 function convertToThaiBaht($amount)
 {
-	$number = number_format($amount, 2, '.', '');
+	$number = floatval(str_replace(',', '', $amount));
+	$number = number_format($number, 2, '.', '');
+
 	$txtnum1 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
 	$txtnum2 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
 	$txtnum3 = array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน');
+
 	$number = str_replace(',', '', $number);
 	$number = explode('.', $number);
 	$strlen = strlen($number[0]);
@@ -44,6 +47,7 @@ function convertToThaiBaht($amount)
 		}
 	}
 	$result .= 'บาท';
+
 	if (isset($number[1])) {
 		$strlen = strlen($number[1]);
 		for ($i = 0; $i < $strlen; $i++) {
@@ -67,6 +71,7 @@ function convertToThaiBaht($amount)
 	}
 	return $result;
 }
+
 
 $id = $_GET['id'];
 
@@ -102,8 +107,9 @@ if ($count > 0) {
 	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->SetFont('thsarabunnew', '', 14);
-	$pdf->SetMargins(10, 8, 10);
+	$pdf->SetMargins(8, 8, 8);
 	$pdf->AddPage(); //default A4
+
 	// 
 	date_default_timezone_set('Asia/Bangkok');
 	$year = date('Y') + 543;
@@ -117,6 +123,7 @@ if ($count > 0) {
 	$content .= '
 <table>
 <tr>
+
 <td style="font-size: 18px;" >
 	<b>มหาวิทยาลัยเชียงใหม่</b>
 </td>
@@ -179,15 +186,15 @@ if ($count > 0) {
 </tr>
 
 <tr>
-	<td align="right"><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+	<td align="right" colspan="2" ><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 </tr>
 
 <tr>
-	<td><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
+	<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
 </tr>
 
 <tr>
-	<td><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+	<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 </tr>
 	<tr>
 <td>
@@ -195,7 +202,7 @@ if ($count > 0) {
 </tr>
 
 <tr>
-	<td>' . $inv_mst_data_row[''] . ' </td>
+	<td></td>
 	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
 </tr>
 
@@ -213,7 +220,7 @@ if ($count > 0) {
 	</tr>
 	<br>
 	<tr>
-		<td style="text-align: center;"><b>อนุโมทนาบัตร</b></td>
+		<td style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
 	</tr>
 	<tr>
 		<td style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
@@ -230,15 +237,17 @@ if ($count > 0) {
 	</tr>
 	<br>
 	<tr>
-		<td style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $inv_mst_data_row['rec_date'] . '</td>
+		<td style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
 	</tr>
-	<br>
 	<br>
 	<br>
 	<br>
 	<br>
 	<tr>
 		<td style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
+	</tr>
+	<tr>
+		<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
 	</tr>
 </table>
 	';

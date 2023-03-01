@@ -91,7 +91,46 @@
 
                                 <div id="date-show-form" class=" medium-12">
                                     <div class="col-lg-12 col-12 mt-2">
-                                        <input type="text" name="rec_money" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
+                                        <input name="rec_money" type="text" onkeyup="dokeyup(this);" onchange="dokeyup(this);" onkeypress="checknumber()" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
+                                        <script>
+                                            function dokeyup(obj) {
+                                                var key = event.keyCode;
+                                                if (key != 37 & key != 39 & key != 110) {
+                                                    var value = obj.value;
+                                                    var svals = value.split("."); //แยกทศนิยมออก
+                                                    var sval = svals[0]; //ตัวเลขจำนวนเต็ม
+
+                                                    var n = 0;
+                                                    var result = "";
+                                                    var c = "";
+                                                    for (a = sval.length - 1; a >= 0; a--) {
+                                                        c = sval.charAt(a);
+                                                        if (c != ',') {
+                                                            n++;
+                                                            if (n == 4) {
+                                                                result = "," + result;
+                                                                n = 1;
+                                                            };
+                                                            result = c + result;
+                                                        };
+                                                    };
+
+                                                    if (svals[1]) {
+                                                        result = result + '.' + svals[1];
+                                                    };
+
+                                                    obj.value = result;
+                                                };
+                                            };
+
+                                            //ให้ text รับค่าเป็นตัวเลขอย่างเดียว
+                                            function checknumber() {
+                                                key = event.keyCode;
+                                                if (key != 46 & (key < 48 || key > 57)) {
+                                                    event.returnValue = false;
+                                                };
+                                            };
+                                        </script>
                                     </div>
                                     <fieldset id="rec_status">
                                         <div class="row mt-4">
@@ -323,9 +362,9 @@
                                     </fieldset>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                         <!-- <?php echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>'; ?> -->
+                                        <!-- <?php echo '<pre>';
+                                                print_r($_POST);
+                                                echo '</pre>'; ?> -->
                                     </div>
                                 </div>
 
@@ -359,7 +398,7 @@
 
                             </fieldset>
                         </form>
-                         <?php require_once('donate_no_recript_add.php'); ?>
+                        <?php require_once('donate_no_recript_add.php'); ?>
                     </div>
                 </div>
             </div>
