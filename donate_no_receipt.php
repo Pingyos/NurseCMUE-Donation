@@ -26,6 +26,8 @@
                                     $edo_name = $row['edo_name'];
                                     $edo_tex = $row['edo_tex'];
                                     $edo_pro_id = $row['edo_pro_id'];
+                                    $rec_out = $row['rec_out'];
+                                    $rec_out_oj = $row['rec_out_oj'];
                                 }
                                 ?>
                                 <div class="col-lg-12 col-12">
@@ -109,6 +111,8 @@
                                         <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
                                         <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
                                         <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
+                                        <input type="text" name="rec_out" value="<?= $rec_out; ?>" hidden>
+                                        <input type="text" name="rec_out_oj" value="<?= $rec_out_oj; ?>" hidden>
 
                                         <div id="show-me" class=" medium-12">
                                             <div class="row">
@@ -319,7 +323,7 @@
                                     </fieldset>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <!-- <?php echo '<pre>';
+                                         <!-- <?php echo '<pre>';
                                         print_r($_POST);
                                         echo '</pre>'; ?> -->
                                     </div>
@@ -355,7 +359,7 @@
 
                             </fieldset>
                         </form>
-                        <?php require_once('donate_no_recript_add.php'); ?>
+                         <?php require_once('donate_no_recript_add.php'); ?>
                     </div>
                 </div>
             </div>

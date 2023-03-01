@@ -2,14 +2,91 @@
 require 'database_connection.php';
 include_once('TCPDF/tcpdf.php');
 
+// Thai month names
+$thai_months = array(
+	"01" => "มกราคม",
+	"02" => "กุมภาพันธ์",
+	"03" => "มีนาคม",
+	"04" => "เมษายน",
+	"05" => "พฤษภาคม",
+	"06" => "มิถุนายน",
+	"07" => "กรกฎาคม",
+	"08" => "สิงหาคม",
+	"09" => "กันยายน",
+	"10" => "ตุลาคม",
+	"11" => "พฤศจิกายน",
+	"12" => "ธันวาคม"
+);
+
+function convertToThaiBaht($amount)
+{
+	$number = number_format($amount, 2, '.', '');
+	$txtnum1 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
+	$txtnum2 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
+	$txtnum3 = array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน');
+	$number = str_replace(',', '', $number);
+	$number = explode('.', $number);
+	$strlen = strlen($number[0]);
+	$result = '';
+	for ($i = 0; $i < $strlen; $i++) {
+		$n = substr($number[0], $i, 1);
+		if ($n != 0) {
+			if (($i == ($strlen - 1)) && ($n == 1)) {
+				$result .= 'เอ็ด';
+			} elseif (($i == ($strlen - 2)) && ($n == 2)) {
+				$result .= 'ยี่';
+			} elseif (($i == ($strlen - 2)) && ($n == 1)) {
+				$result .= '';
+			} else {
+				$result .= $txtnum1[$n];
+			}
+			$result .= $txtnum3[($strlen - $i - 1)];
+		}
+	}
+	$result .= 'บาท';
+	if (isset($number[1])) {
+		$strlen = strlen($number[1]);
+		for ($i = 0; $i < $strlen; $i++) {
+			$n = substr($number[1], $i, 1);
+			if ($n != 0) {
+				if (($i == ($strlen - 1)) && ($n == 1)) {
+					$result .= 'เอ็ด';
+				} elseif (($i == ($strlen - 2)) && ($n == 2)) {
+					$result .= 'ยี่';
+				} elseif (($i == ($strlen - 2)) && ($n == 1)) {
+					$result .= '';
+				} else {
+					$result .= $txtnum2[$n];
+				}
+				$result .= $txtnum3[($strlen - $i - 1) + 6];
+			}
+		}
+		$result .= 'ถ้วน';
+	} else {
+		$result .= 'ถ้วน';
+	}
+	return $result;
+}
+
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.edo_name, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.rec_out, T1.rec_out_oj, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
 	$inv_mst_data_row = mysqli_fetch_array($inv_mst_results, MYSQLI_ASSOC);
-	
+
+	// Get the Thai date and month name from the database
+	$rec_date = $inv_mst_data_row['rec_date'];
+	$rec_day = date("d", strtotime($rec_date));
+	$rec_month = $thai_months[date("m", strtotime($rec_date))];
+	$rec_year = date("Y", strtotime($rec_date));
+	$rec_year = date('Y') + 543;
+
+	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
+	$thaiBaht = convertToThaiBaht($amount);
+
+
 
 	//----- Code for generate pdf
 	$pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -25,7 +102,7 @@ if ($count > 0) {
 	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->SetFont('thsarabunnew', '', 14);
-	$pdf->SetMargins(10, 3, 10);
+	$pdf->SetMargins(10, 8, 10);
 	$pdf->AddPage(); //default A4
 	// 
 	date_default_timezone_set('Asia/Bangkok');
@@ -38,89 +115,79 @@ if ($count > 0) {
 	$content = '';
 
 	$content .= '
-	<style type="text/css">
-	body {
-		font-size: 12px;
-		line-height: 24px;
-		font-family: "thsarabunnew", Arial, sans-serif;
-		color: #000;
-	}
-	
-	</style>    
 <table>
-  <tr>
-    <td colspan="2"></td>
-  </tr>
-</table>
-
 <tr>
-	<td>
-		<b>มหาวิทยาลัยเชียงใหม่</b>
-	</td>
-	<td align="right">
-		<b>ใบเสร็จรับเงิน</b></td>
+<td style="font-size: 18px;" >
+	<b>มหาวิทยาลัยเชียงใหม่</b>
+</td>
+<td align="right" style="font-size: 18px;" >
+	<b>ใบเสร็จรับเงิน</b></td>
 </tr>
 
 <tr>
-	<td>
-		<b>Chiang Mai University</b>
-	</td>
-	<td align="right">
-		<b>ต้นฉบับ</b>
-	</td>
+<td>
+	<b>Chiang Mai University</b>
+</td>
+<td align="right">
+	<b>ต้นฉบับ</b>
+</td>
 </tr>
 
 <tr>
-	<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
-	<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
+<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
 </tr>
 
 <tr>
-	<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
-	<td align="right">Faculty of Nursing, CMU</td>
+<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
+<td align="right">Faculty of Nursing, CMU</td>
 </tr>
 
 <tr>
-	<td>เบอร์โทร 053-949075</td>
-	<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+<td>เบอร์โทร 053-949075</td>
+<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
 </tr>
 
 <tr>
-	<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
-	<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
+<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
+<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
 </tr>
 
 <tr>
-	<td>099 4 00042317 9</td>
-	<td align="right">เบอร์โทร 053-949075</td>
+<td>099 4 00042317 9</td>
+<td align="right">เบอร์โทร 053-949075</td>
 </tr>
 
+<tr>
+    <td colspan="2" style="border-bottom: solid black 1px;"></td>
+</tr>
+
+<tr>
 <br>
-<tr>
 	<td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
-	<td align="right"><b>เลขที่ใบเสร็จ: </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
+	<td align="right"><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
 </tr>
 
 <tr>
 	<td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
-	<td align="right"><b>วันที่เอกสาร : </b>' . $inv_mst_data_row['rec_date'] . '</td>
+	<td align="right"><b>วันที่เอกสาร : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
 </tr>
 
 <tr>
-	<td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
+	<td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
 	<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
 </tr>
 
 <tr>
-	<td align="right"><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+	<td align="right"><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 </tr>
 
 <tr>
-	<td><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' </td>
+	<td><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
 </tr>
 
 <tr>
-	<td><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' </td>
+	<td><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 </tr>
 	<tr>
 <td>
@@ -129,14 +196,18 @@ if ($count > 0) {
 
 <tr>
 	<td>' . $inv_mst_data_row[''] . ' </td>
-	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $datetime_be1 . '</td>
+	<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
 </tr>
 
 <table>
 	<tr>
-		<td><b>หมายเหตู :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td>
+		<td><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td>
 	</tr>
 </table>
+
+</table>
+
+<table>
 	<tr>
 		<td style="border-bottom: solid black, 1px;"></td>
 	</tr>
@@ -148,14 +219,14 @@ if ($count > 0) {
 		<td style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
 	</tr>
 	<tr>
-		<td style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท ' . $inv_mst_data_row['rec_money'] . '</td>
+		<td style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 	<br>
 	<tr>
 		<td><b>จาก : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
 	</tr>
 	<tr>
-		<td><b>วัตถุประสงค์ : </b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
+		<td><b>วัตถุประสงค์ : </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
 	</tr>
 	<br>
 	<tr>
@@ -169,7 +240,7 @@ if ($count > 0) {
 	<tr>
 		<td style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
 	</tr>
-	
+</table>
 	';
 
 	$pdf->writeHTML($content);
