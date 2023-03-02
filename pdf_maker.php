@@ -291,10 +291,10 @@ if ($count > 0) {
 	</tr>
 	<br>
 	<tr>
-		<td ><b>จาก : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td><b>จาก : </b>' . $inv_mst_data_row['name_Title'] . ' ' . $inv_mst_data_row['name_Title_other'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
 	</tr>
 	<tr>
-		<td><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
+		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
 	</tr>
 	<br>
 	<tr>
