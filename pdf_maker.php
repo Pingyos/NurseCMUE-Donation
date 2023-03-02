@@ -261,7 +261,7 @@ if ($count > 0) {
 
 	$datetime = date('Y');
 	$datetime_be = str_replace(date('Y'), $year, $datetime);
-	$file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . ".pdf";
+	$file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] ."-" . $inv_mst_data_row['id'] . ".pdf";
 	ob_end_clean();
 
 	if ($_GET['ACTION'] == 'VIEW') {
