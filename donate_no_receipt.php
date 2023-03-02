@@ -82,6 +82,11 @@
                                                     <h5 class="mb-0"><?= $row['edo_name4']; ?></h5>
                                                     <p class="mb-0"><?= $row['edo_slogan4']; ?></p>
                                                     <p class="mb-0"><?= $row['edo_description4']; ?></p>
+                                                    <h5>วัตถุประสงค์</h5>
+                                                    <p class="mb-0"><?= $row['edo_objective1']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective2']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective3']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective4']; ?></p>
 
                                                 </div>
                                             </div>
@@ -202,7 +207,7 @@
                                                         <option value="นาย">นาย</option>
                                                         <option value="นางสาว">นาง</option>
                                                         <option value="นางสาว">นางสาว</option>
-                                                        <option value="other">อื่นๆ</option>
+                                                        <option value="">อื่นๆ</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
@@ -212,7 +217,7 @@
                                                 <script>
                                                     function showInput1(selectElement) {
                                                         var inputElement = document.getElementById("name_Title_other1");
-                                                        if (selectElement.value === "other") {
+                                                        if (selectElement.value === "") {
                                                             inputElement.style.display = "block";
                                                             inputElement.setAttribute("required", true);
                                                         } else {

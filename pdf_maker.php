@@ -17,6 +17,20 @@ $thai_months = array(
 	"11" => "พฤศจิกายน",
 	"12" => "ธันวาคม"
 );
+$english_months = array(
+	"01" => "January",
+	"02" => "February",
+	"03" => "March",
+	"04" => "April",
+	"05" => "May",
+	"06" => "June",
+	"07" => "July",
+	"08" => "August",
+	"09" => "September",
+	"10" => "October",
+	"11" => "November",
+	"12" => "December"
+);
 
 function convertToThaiBaht($amount)
 {
@@ -72,10 +86,64 @@ function convertToThaiBaht($amount)
 	return $result;
 }
 
+function convertToEnBaht($amount)
+{
+	$number = floatval(str_replace(',', '', $amount));
+	$number = number_format($number, 2, '.', '');
+
+	$txtnum1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
+	$txtnum2 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
+	$txtnum3 = array('', 'ten', 'hundred', 'thousand', 'ten thousand', 'hundred thousand', 'million');
+
+	$number = str_replace(',', '', $number);
+	$number = explode('.', $number);
+	$strlen = strlen($number[0]);
+	$result = '';
+	for ($i = 0; $i < $strlen; $i++) {
+		$n = substr($number[0], $i, 1);
+		if ($n != 0) {
+			if (($i == ($strlen - 1)) && ($n == 1)) {
+				$result .= 'one';
+			} elseif (($i == ($strlen - 2)) && ($n == 2)) {
+				$result .= 'twenty';
+			} elseif (($i == ($strlen - 2)) && ($n == 1)) {
+				$result .= '';
+			} else {
+				$result .= $txtnum1[$n];
+			}
+			$result .= $txtnum3[($strlen - $i - 1)];
+		}
+	}
+	$result .= 'baht';
+
+	if (isset($number[1])) {
+		$strlen = strlen($number[1]);
+		for ($i = 0; $i < $strlen; $i++) {
+			$n = substr($number[1], $i, 1);
+			if ($n != 0) {
+				if (($i == ($strlen - 1)) && ($n == 1)) {
+					$result .= 'one';
+				} elseif (($i == ($strlen - 2)) && ($n == 2)) {
+					$result .= 'twenty';
+				} elseif (($i == ($strlen - 2)) && ($n == 1)) {
+					$result .= '';
+				} else {
+					$result .= $txtnum2[$n];
+				}
+				$result .= $txtnum3[($strlen - $i - 1) + 6];
+			}
+		}
+		$result .= '';
+	} else {
+		$result .= '';
+	}
+	return $result;
+}
+
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.rec_out, T1.rec_out_oj, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.rec_out, T1.rec_out_oj, T1.name_Title, T1.name_Title_other, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -85,8 +153,9 @@ if ($count > 0) {
 	$rec_date = $inv_mst_data_row['rec_date'];
 	$rec_day = date("d", strtotime($rec_date));
 	$rec_month = $thai_months[date("m", strtotime($rec_date))];
-	$rec_year = date("Y", strtotime($rec_date));
-	$rec_year = date('Y') + 543;
+	$rec_monen = $english_months[date("m", strtotime($rec_date))];
+	$rec_yearen = date("Y", strtotime($rec_date));
+	$rec_yearth = date('Y') + 543;
 
 	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
 	$thaiBaht = convertToThaiBaht($amount);
@@ -123,20 +192,20 @@ if ($count > 0) {
 	$content .= '
 <table>
 	<tr>
-		<td style="font-size: 18px;" >
-			<b>มหาวิทยาลัยเชียงใหม่</b>
+		<td  >
+			มหาวิทยาลัยเชียงใหม่
 		</td>
-		<td align="right" style="font-size: 18px;" >
-			<b>ใบเสร็จรับเงิน</b>
+		<td align="right"  >
+			ใบเสร็จรับเงิน
 		</td>
 	</tr>
 
 	<tr>
 	<td>
-		<b>Chiang Mai University</b>
+		Chiang Mai University
 	</td>
 	<td align="right">
-		<b>ต้นฉบับ</b>
+		ต้นฉบับ
 	</td>
 	</tr>
 
@@ -166,40 +235,36 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td colspan="2" style="border-bottom: solid black 1px;"></td>
-	</tr>
-
-	<tr>
 	<br>
-		<td><b>ชื่อ : </b>' . $inv_mst_data_row['rec_fullname'] . ' </td>
-		<td align="right"><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
+		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_Title'] . ' ' . $inv_mst_data_row['name_Title_other'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . '</td>
 	</tr>
 
 	<tr>
-		<td><b>ที่อยู่ : </b>' . $inv_mst_data_row['address'] . ' </td>
-		<td align="right"><b>วันที่เอกสาร : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
+		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' </td>
+		<td align="right"><b>วันที่เอกสาร/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	
 
 	<tr>
-		<td><b>รายละเอียดโครงการ</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
-		<td align="right"><b>จำนวนเงิน</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+		<td><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
+		<td align="right"><b>จำนวนเงิน/Amount</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงินรวม : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td align="right" colspan="2" ><b>จำนวนเงินรวม/Total : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') </td>
+		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 		<tr>
 	<td>
-		<b>ชำระด้วย : </b>' . $inv_mst_data_row[''] . ' </td>
+		<b>ชำระด้วย/By : </b>' . $inv_mst_data_row[''] . ' </td>
 	</tr>
 
 	<tr>
@@ -207,7 +272,7 @@ if ($count > 0) {
 		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_year . '</td>
 	</tr>
 	<tr>
-		<td><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</b></td>
+		<td colspan="2" ><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน<br>The receipt will be valid with payment and the signature of the collector</b></td>
 	</tr>
 	<tr>
 		<td colspan="2" style="border-bottom: solid black 1px;"></td>
@@ -237,8 +302,6 @@ if ($count > 0) {
 	</tr>
 	<br>
 	<br>
-	<br>
-	<br>
 	<tr>
 		<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
 	</tr>
@@ -261,7 +324,7 @@ if ($count > 0) {
 
 	$datetime = date('Y');
 	$datetime_be = str_replace(date('Y'), $year, $datetime);
-	$file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] ."-" . $inv_mst_data_row['id'] . ".pdf";
+	$file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . "-" . $inv_mst_data_row['id'] . ".pdf";
 	ob_end_clean();
 
 	if ($_GET['ACTION'] == 'VIEW') {

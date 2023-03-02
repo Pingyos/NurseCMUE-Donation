@@ -122,16 +122,9 @@
                                     </div>
                                 </center>
                             </div>
-
-                            <div class="col-lg-12 col-12 mt-2">
-                                <?php
-                                require_once 'connection.php';
-                                $stmt = $conn->prepare("SELECT* FROM receipt");
-                                $stmt->execute();
-                                $result = $stmt->fetchAll();
-                                foreach ($result as $t2)
-                                ?>
-                                <a href="pdf_maker.php?id=<?php echo $t2['id']; ?>&ACTION=VIEW" class="custom-btn btn">ใบเสร็จ</a>
+                            <br>
+                            <div class="row">
+                                <a href="invoice.php" class="custom-btn 2 btn">ดูใบเสร็จ</a>
                             </div>
                         </fieldset>
                     </form>
