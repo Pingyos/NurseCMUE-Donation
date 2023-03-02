@@ -13,14 +13,14 @@
                 <div class="row">
                     <div class="col-lg-12 col-12 mx-auto">
                         <form class="custom-form donate-form" action="#" method="POST" role="form">
-                            <table class="table table-striped">
+                            <table class="table table-striped" id="myTable">
                                 <thead>
                                     <tr>
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>โครงการ</th>
-                                        <th>วัน-เดือน-ปี</th>
-                                        <th>ดูใบเสร็จรับเงิน</th>
-                                        <th>ดาวน์โหลดใบเสร็จรับเงิน</th>
+
+                                        <th>ใบเสร็จรับเงิน</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -59,14 +59,14 @@
                                             $day = date('d', strtotime($date));
                                     ?>
                                             <tr>
-                                                <td><?php echo $data_row['rec_fullname']; ?></td>
-                                                <td><?php echo $data_row['edo_name']; ?></td>
-                                                <td><?php echo $day . ' ' . $month_thai . ' ' . $year; ?></td>
-                                                <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> View PDF</a>
+                                                <td><?php echo $data_row['rec_fullname']; ?><br><span style="font-size: 14px;">
+                                                        <?php echo $day . ' ' . $month_thai . ' ' . $year; ?>
+                                                    </span>
                                                 </td>
+                                                <td><?php echo $data_row['edo_name']; ?></td>
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger"><i class="fa fa-download"></i> Download PDF</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn"><i class="fa fa-file-pdf-o"></i> ดู</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="custom-btn1 btn"><i class="fa fa-download"></i> ดาวน์โหลด</a>
                                                 </td>
                                             </tr>
                                     <?php
@@ -83,6 +83,9 @@
         </section>
     </main>
     <?php require_once('footer.php'); ?>
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
 </body>
 
 </html>
