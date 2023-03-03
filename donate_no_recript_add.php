@@ -7,6 +7,10 @@
 
 if (
   isset($_POST['name_Title'])
+  && isset($_POST['no_name_Title'])
+  && isset($_POST['name_Title_no'])
+  && isset($_POST['no_fullname'])
+  && isset($_POST['no_tel'])
   && isset($_POST['name_Title_other'])
   && isset($_POST['rec_fullname'])
   && isset($_POST['rec_tel'])
@@ -32,10 +36,17 @@ if (
   require_once 'connection.php';
   //sql insert
   $stmt = $conn->prepare("INSERT INTO receipt
-      (name_Title,rec_fullname,rec_tel, rec_email, rec_idname, address, name_Title_other, rec_money, road, provinces, amphures, districts, zip_code, edo_name, edo_tex, edo_pro_id, rec_out, rec_out_oj, rec_status)
+      (name_Title, no_name_Title, name_Title_no, no_tel, no_fullname, rec_fullname,rec_tel, rec_email, rec_idname, address, name_Title_other, rec_money, road, provinces, amphures, districts, zip_code, edo_name, edo_tex, edo_pro_id, rec_out, rec_out_oj, rec_status)
       VALUES
-      (:name_Title,:rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :zip_code, :edo_name, :edo_tex,:edo_pro_id, :rec_out, :rec_out_oj, :rec_status )");
+      (:name_Title, :no_name_Title, :name_Title_no, :no_tel, :no_fullname, :rec_fullname,:rec_tel, :rec_email, :rec_idname, :address, :name_Title_other, :rec_money, :road, :provinces, :amphures, :districts, :zip_code, :edo_name, :edo_tex,:edo_pro_id, :rec_out, :rec_out_oj, :rec_status )");
   //bindParam data type
+  $stmt->bindParam(':no_name_Title', $_POST['no_name_Title'], PDO::PARAM_STR);
+  $stmt->bindParam(':name_Title_no', $_POST['name_Title_no'], PDO::PARAM_STR);
+  $stmt->bindParam(':no_tel', $_POST['no_tel'], PDO::PARAM_STR);
+  $stmt->bindParam(':no_fullname', $_POST['no_fullname'], PDO::PARAM_STR);
+  $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
+  $stmt->bindParam(':name_Title_other', $_POST['name_Title_other'], PDO::PARAM_STR);
+  $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);
   $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
   $stmt->bindParam(':name_Title_other', $_POST['name_Title_other'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);

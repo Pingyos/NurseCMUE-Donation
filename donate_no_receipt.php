@@ -96,47 +96,8 @@
 
                                 <div id="date-show-form" class=" medium-12">
                                     <div class="col-lg-12 col-12 mt-2">
-                                    <input type="text" name="rec_money" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
-                                        <!-- <input name="rec_money" type="text" onkeyup="dokeyup(this);" onchange="dokeyup(this);" onkeypress="checknumber()" class="form-control" placeholder="จำนวนเงินที่ท่านประสงค์จะบริจาค" required>
-                                        <script>
-                                            function dokeyup(obj) {
-                                                var key = event.keyCode;
-                                                if (key != 37 & key != 39 & key != 110) {
-                                                    var value = obj.value;
-                                                    var svals = value.split("."); //แยกทศนิยมออก
-                                                    var sval = svals[0]; //ตัวเลขจำนวนเต็ม
-
-                                                    var n = 0;
-                                                    var result = "";
-                                                    var c = "";
-                                                    for (a = sval.length - 1; a >= 0; a--) {
-                                                        c = sval.charAt(a);
-                                                        if (c != ',') {
-                                                            n++;
-                                                            if (n == 4) {
-                                                                result = "," + result;
-                                                                n = 1;
-                                                            };
-                                                            result = c + result;
-                                                        };
-                                                    };
-
-                                                    if (svals[1]) {
-                                                        result = result + '.' + svals[1];
-                                                    };
-
-                                                    obj.value = result;
-                                                };
-                                            };
-
-                                            //ให้ text รับค่าเป็นตัวเลขอย่างเดียว
-                                            function checknumber() {
-                                                key = event.keyCode;
-                                                if (key != 46 & (key < 48 || key > 57)) {
-                                                    event.returnValue = false;
-                                                };
-                                            };
-                                        </script> -->
+                                        <label class="control-label">จำนวนเงินที่ท่านประสงค์จะบริจาค <span style="color:red;">*</span></label>
+                                        <input type="text" name="rec_money" class="form-control" required>
                                     </div>
                                     <fieldset id="rec_status">
                                         <div class="row mt-4">
@@ -148,7 +109,7 @@
                                             </div>
                                             <div class="col-lg-6 col-12 form-check-group form-check-group-donation-frequency">
                                                 <div class="form-check form-check-radio">
-                                                    <input type="radio" id="watch-me-maybe" value="yes" name="rec_status" class="form-check-input" required checked="checked">
+                                                    <input type="radio" id="watch-me-maybe" value="yes" name="rec_status" class="form-check-input" checked="checked">
                                                     <label class="form-check-label" for="watch-me-maybe">กรณีที่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
                                                 </div>
                                             </div>
@@ -163,18 +124,18 @@
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่อ</label>
-                                                    <select name="name_Title" class="form-control" onchange="showInput2(this)">
+                                                    <select name="no_name_Title" class="form-control" onchange="showInput2(this)">
                                                         <option value="">ไม่ระบุคำนำหน้า</option>
                                                         <option value="นาย">นาย</option>
-                                                        <option value="นางสาว">นาง</option>
+                                                        <option value="นาง">นาง</option>
                                                         <option value="นางสาว">นางสาว</option>
-                                                        <option value="other">อื่นๆ</option>
+                                                        <option value="">อื่นๆ</option>
                                                     </select>
                                                 </div>
                                                 <script>
                                                     function showInput2(selectElement) {
-                                                        var inputElement = document.getElementById("name_Title_other");
-                                                        if (selectElement.value === "other") {
+                                                        var inputElement = document.getElementById("name_Title_no");
+                                                        if (selectElement.value === "") {
                                                             inputElement.style.display = "block";
                                                             inputElement.setAttribute("required", true);
                                                         } else {
@@ -185,15 +146,15 @@
                                                 </script>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
-                                                    <input type="text" name="name_Title_other" id="name_Title_other" class="form-control" style="display: none;">
+                                                    <input type="text" name="name_Title_no" id="name_Title_no" class="form-control" style="display: none;">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ชื่อ-สกุล</label>
-                                                    <input type="text" name="rec_fullname" class="form-control">
+                                                    <input type="text" name="no_fullname" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">เบอร์โทรศัพท์</label>
-                                                    <input type="text" name="rec_tel" class="form-control">
+                                                    <input type="text" name="no_tel" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -201,11 +162,11 @@
                                         <div id="show-me-2" class="medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">คำนำหน้าชื่อ</label>
+                                                    <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
                                                     <select name="name_Title" class="form-control" onchange="showInput1(this)">
                                                         <option value="">ไม่ระบุคำนำหน้า</option>
                                                         <option value="นาย">นาย</option>
-                                                        <option value="นางสาว">นาง</option>
+                                                        <option value="นาง">นาง</option>
                                                         <option value="นางสาว">นางสาว</option>
                                                         <option value="">อื่นๆ</option>
                                                     </select>
@@ -227,27 +188,27 @@
                                                     }
                                                 </script>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ชื่อ-สกุล</label>
+                                                    <label class="control-label">ชื่อ-สกุล <span style="color:red;">*</span></label>
                                                     <input type="text" name="rec_fullname" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เบอร์โทรศัพท์</label>
+                                                    <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
                                                     <input type="text" name="rec_tel" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">อีเมล์</label>
+                                                    <label class="control-label">อีเมล์ <span style="color:red;">*</span></label>
                                                     <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เลขบัตรประชาชน</label>
+                                                    <label class="control-label">เลขบัตรประชาชน <span style="color:red;">*</span></label>
                                                     <input type="text" name="rec_idname" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ที่อยู่</label>
+                                                    <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
                                                     <input type="text" name="address" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ถนน</label>
+                                                    <label class="control-label">ถนน <span style="color:red;">*</span></label>
                                                     <input type="text" name="road" class="form-control">
                                                 </div>
 
@@ -257,8 +218,8 @@
                                                 $query = mysqli_query($con, $sql_provinces);
                                                 ?>
                                                 <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">จังหวัด</label>
-                                                    <select class="form-control" name="provinces" id="provinces" required>
+                                                    <label class="control-label">จังหวัด <span style="color:red;">*</span></label>
+                                                    <select class="form-control" name="provinces" id="provinces">
                                                         <option value="" selected disabled></option>
                                                         <?php foreach ($query as $value) { ?>
                                                             <option value="<?= $value['id'] ?>"><?= $value['name_th'] ?></option>
@@ -266,14 +227,14 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">อำเภอ</label>
-                                                    <select class="form-control" name="amphures" id="amphures" required>
+                                                    <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
+                                                    <select class="form-control" name="amphures" id="amphures">
                                                         <option selected disabled></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">ตำบล</label>
-                                                    <select class="form-control" name="districts" id="districts" required>
+                                                    <label class="control-label">ตำบล <span style="color:red;">*</span></label>
+                                                    <select class="form-control" name="districts" id="districts">
                                                         <option selected disabled></option>
                                                     </select>
                                                 </div>
@@ -368,12 +329,12 @@
                                     </fieldset>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <!-- <?php echo '<pre>';
-                                                print_r($_POST);
-                                                echo '</pre>'; ?> -->
+                                        <?php echo '<pre>';
+                                        print_r($_POST);
+                                        echo '</pre>';
+                                        ?>
                                     </div>
                                 </div>
-
                                 <script>
                                     function showHide1(input) {
                                         var attrVal = $(input).attr('id');
@@ -401,7 +362,6 @@
                                         });
                                     });
                                 </script>
-
                             </fieldset>
                         </form>
                         <?php require_once('donate_no_recript_add.php'); ?>
