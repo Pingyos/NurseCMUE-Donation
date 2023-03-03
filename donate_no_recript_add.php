@@ -74,24 +74,23 @@ if (
       swal({
           title: "บันทึกข้อมูลบริจาคสำเร็จ", 
           text: "ระบบจะทำการ Generator cq code เพื่อให้ท่านได้ชำระเงิน กรุณารอสักครู่",
-          type: "success", //success, warning, danger
-          timer: 3000, //ระยะเวลา redirect 3000 = 3 วิ เพิ่มลดได้
-          showConfirmButton: false //ปิดการแสดงปุ่มคอนเฟิร์ม ถ้าแก้เป็น true จะแสดงปุ่ม ok ให้คลิกเหมือนเดิม
+          type: "success", 
+          timer: 3000, 
+          showConfirmButton: false 
         }, function(){
-          window.location.href = "qrgenerator_receipt.php"; //หน้าเพจที่เราต้องการให้ redirect ไป  
+          window.location.href = "qrgenerator_receipt.php"; 
           });
     </script>';
   } else {
     echo '<script>
-    setTimeout(function() {
       swal({
-      title: "เกิดข้อผิดพลาด",
-      type: "error"
+        title: "เกิดข้อผิดพลาด",
+        type: "error"
       }, function() {
-      window.location = "donate_no_receipt.php"; //หน้าที่ต้องการให้กระโดดไป
+        window.location = "donate_no_receipt.php";
       });
-    }, 1000);
-  </script>';
-  } //else ของ if result
+    </script>';
+  }
+  //else ของ if result
 
 } //isset

@@ -70,7 +70,7 @@
                                                     </a>
                                                     <script>
                                                         function showPasswordPrompt(id) {
-                                                            var password = prompt("Please enter the password:");
+                                                            var password = prompt("กรุณาใส่เลขบัตรประชาชน");
                                                             if (password != null) {
                                                                 // Send the password to the server for validation
                                                                 $.post("validate_password.php", {
