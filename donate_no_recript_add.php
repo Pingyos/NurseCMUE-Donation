@@ -92,7 +92,7 @@ if (
           timer: 3000, 
           showConfirmButton: false 
         }, function(){
-          window.location.href = "qrgenerator_receipt.php?id=' . $id . '"; 
+          window.location.href = "qrgenerator_receipt.php"; 
           });
     </script>';
   } else {

@@ -95,200 +95,162 @@
                                 <!--  -->
 
                                 <div id="date-show-form" class=" medium-12">
-                                    <div class="col-lg-12 col-12 mt-2">
-                                        <label class="control-label">จำนวนเงินที่ท่านประสงค์จะบริจาค <span style="color:red;">*</span></label>
-                                        <input type="text" name="rec_money" class="form-control" required>
-                                    </div>
-                                    <fieldset id="rec_status">
-                                        <div class="row mt-4">
-                                            <div class="col-lg-12 col-12 form-check-group form-check-group-donation-frequency">
-                                                <div class="form-check form-check-radio">
-                                                    <input type="radio" id="watch-me-maybe" class="form-check-input" checked="checked">
-                                                    <label class="form-check-label" for="watch-me-maybe">กรณีที่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
-                                                </div>
-                                            </div>
+                                    <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
+                                    <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
+                                    <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
+                                    <input type="text" name="rec_out" value="<?= $rec_out; ?>" hidden>
+                                    <input type="text" name="rec_out_oj" value="<?= $rec_out_oj; ?>" hidden>
+
+                                    <div id="show-me-2" class="medium-12">
+                                        <div class="col-lg-12 col-12 mt-2">
+                                            <label class="control-label">จำนวนเงินที่ท่านประสงค์จะบริจาค <span style="color:red;">*</span></label>
+                                            <input type="text" name="rec_money" class="form-control" required>
                                         </div>
-                                        <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
-                                        <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
-                                        <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
-                                        <input type="text" name="rec_out" value="<?= $rec_out; ?>" hidden>
-                                        <input type="text" name="rec_out_oj" value="<?= $rec_out_oj; ?>" hidden>
-                                        <!--  -->
-                                        <div id="show-me-2" class="medium-12">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
-                                                    <select name="name_Title" class="form-control" onchange="showInput1(this)" required>
-                                                        <option value="">ไม่ระบุคำนำหน้า</option>
-                                                        <option value="นาย">นาย</option>
-                                                        <option value="นาง">นาง</option>
-                                                        <option value="นางสาว">นางสาว</option>
-                                                        <option value="">อื่นๆ</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
-                                                    <input type="text" name="name_Title_other" id="name_Title_other1" class="form-control" style="display: none;">
-                                                </div>
-                                                <script>
-                                                    function showInput1(selectElement) {
-                                                        var inputElement = document.getElementById("name_Title_other1");
-                                                        if (selectElement.value === "") {
-                                                            inputElement.style.display = "block";
-                                                            inputElement.setAttribute("required", true);
-                                                        } else {
-                                                            inputElement.style.display = "none";
-                                                            inputElement.removeAttribute("required");
-                                                        }
+                                        <div class="row">
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
+                                                <select name="name_Title" class="form-control" onchange="showInput1(this)" required>
+                                                    <option value="">ไม่ระบุคำนำหน้า</option>
+                                                    <option value="นาย">นาย</option>
+                                                    <option value="นาง">นาง</option>
+                                                    <option value="นางสาว">นางสาว</option>
+                                                    <option value="">อื่นๆ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
+                                                <input type="text" name="name_Title_other" id="name_Title_other1" class="form-control" style="display: none;">
+                                            </div>
+                                            <script>
+                                                function showInput1(selectElement) {
+                                                    var inputElement = document.getElementById("name_Title_other1");
+                                                    if (selectElement.value === "") {
+                                                        inputElement.style.display = "block";
+                                                        inputElement.setAttribute("required", true);
+                                                    } else {
+                                                        inputElement.style.display = "none";
+                                                        inputElement.removeAttribute("required");
                                                     }
-                                                </script>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ชื่อ-สกุล <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_fullname" class="form-control" required>
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_tel" class="form-control" minlength="2" maxlength="10" required>
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">อีเมล์ <span style="color:red;">*</span></label>
-                                                    <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control" required>
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_idname" class="form-control" minlength="2" maxlength="13" required>
-                                                </div>
-
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
-                                                    <input type="text" name="address" class="form-control" required>
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ถนน <span style="color:red;">*</span></label>
-                                                    <input type="text" name="road" class="form-control">
-                                                </div>
-
-                                                <?php
-                                                require_once('ajax_db.php');
-                                                $sql_provinces = "SELECT * FROM provinces";
-                                                $query = mysqli_query($con, $sql_provinces);
-                                                ?>
-                                                <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">จังหวัด <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="provinces" id="provinces" required>
-                                                        <option value="" selected disabled></option>
-                                                        <?php foreach ($query as $value) { ?>
-                                                            <option value="<?= $value['id'] ?>"><?= $value['name_th'] ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="amphures" id="amphures" required>
-                                                        <option selected disabled></option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">ตำบล <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="districts" id="districts" required>
-                                                        <option selected disabled></option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-6 col-6 mt-2">
-                                                    <label class="control-label">รหัสไปรษณีย์</label>
-                                                    <input type="text" name="zip_code" id="zip_code" class="form-control">
-                                                </div>
-                                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                                                <script type="text/javascript">
-                                                    $('#provinces').change(function() {
-                                                        var id_province = $(this).val();
-
-                                                        $.ajax({
-                                                            type: "POST",
-                                                            url: "ajax_db.php",
-                                                            data: {
-                                                                id: id_province,
-                                                                function: 'provinces'
-                                                            },
-                                                            success: function(data) {
-                                                                $('#amphures').html(data);
-                                                                $('#districts').html(' ');
-                                                                $('#districts').val(' ');
-                                                                $('#zip_code').val(' ');
-                                                            }
-                                                        });
-                                                    });
-
-                                                    $('#amphures').change(function() {
-                                                        var id_amphures = $(this).val();
-
-                                                        $.ajax({
-                                                            type: "POST",
-                                                            url: "ajax_db.php",
-                                                            data: {
-                                                                id: id_amphures,
-                                                                function: 'amphures'
-                                                            },
-                                                            success: function(data) {
-                                                                $('#districts').html(data);
-                                                            }
-                                                        });
-                                                    });
-
-                                                    $('#districts').change(function() {
-                                                        var id_districts = $(this).val();
-
-                                                        $.ajax({
-                                                            type: "POST",
-                                                            url: "ajax_db.php",
-                                                            data: {
-                                                                id: id_districts,
-                                                                function: 'districts'
-                                                            },
-                                                            success: function(data) {
-                                                                $('#zip_code').val(data)
-                                                            }
-                                                        });
-
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>
-
-                                        <script>
-                                            function showHide(input) {
-                                                var attrVal = $(input).attr('id');
-                                                switch (attrVal) {
-                                                    case 'watch-me':
-                                                        $('#show-me-2').hide();
-                                                        $('#show-me').show();
-                                                        break;
-                                                    case "watch-me-maybe":
-                                                        $('#show-me').hide();
-                                                        $('#show-me-2').show();
-                                                        break;
-                                                    default:
-                                                        $('#show-me-2').show();
-                                                        $('#show-me').hide();
-                                                        break;
                                                 }
-                                            }
-                                            $(document).ready(function() {
-                                                $('input[type="radio"]').each(function() {
-                                                    showHide(this);
+                                            </script>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">ชื่อ-สกุล <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_fullname" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_tel" class="form-control" minlength="8" maxlength="10" required>
+                                            </div>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">อีเมล์ <span style="color:red;">*</span></label>
+                                                <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_idname" class="form-control" minlength="12" maxlength="13" required>
+                                            </div>
+
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
+                                                <input type="text" name="address" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-6 col-12 mt-2">
+                                                <label class="control-label">ถนน <span style="color:red;">*</span></label>
+                                                <input type="text" name="road" class="form-control">
+                                            </div>
+
+                                            <?php
+                                            require_once('ajax_db.php');
+                                            $sql_provinces = "SELECT * FROM provinces";
+                                            $query = mysqli_query($con, $sql_provinces);
+                                            ?>
+                                            <div class="col-lg-6 col-6 mt-2">
+                                                <label class="control-label">จังหวัด <span style="color:red;">*</span></label>
+                                                <select class="form-control" name="provinces" id="provinces" required>
+                                                    <option value="" selected disabled></option>
+                                                    <?php foreach ($query as $value) { ?>
+                                                        <option value="<?= $value['id'] ?>"><?= $value['name_th'] ?></option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-6 mt-2">
+                                                <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
+                                                <select class="form-control" name="amphures" id="amphures" required>
+                                                    <option selected disabled></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-6 mt-2">
+                                                <label class="control-label">ตำบล <span style="color:red;">*</span></label>
+                                                <select class="form-control" name="districts" id="districts" required>
+                                                    <option selected disabled></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-6 mt-2">
+                                                <label class="control-label">รหัสไปรษณีย์</label>
+                                                <input type="text" name="zip_code" id="zip_code" class="form-control">
+                                            </div>
+                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                                            <script type="text/javascript">
+                                                $('#provinces').change(function() {
+                                                    var id_province = $(this).val();
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "ajax_db.php",
+                                                        data: {
+                                                            id: id_province,
+                                                            function: 'provinces'
+                                                        },
+                                                        success: function(data) {
+                                                            $('#amphures').html(data);
+                                                            $('#districts').html(' ');
+                                                            $('#districts').val(' ');
+                                                            $('#zip_code').val(' ');
+                                                        }
+                                                    });
                                                 });
-                                                $('input[type="radio"]').click(function() {
-                                                    showHide(this);
+
+                                                $('#amphures').change(function() {
+                                                    var id_amphures = $(this).val();
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "ajax_db.php",
+                                                        data: {
+                                                            id: id_amphures,
+                                                            function: 'amphures'
+                                                        },
+                                                        success: function(data) {
+                                                            $('#districts').html(data);
+                                                        }
+                                                    });
                                                 });
-                                            });
-                                        </script>
-                                    </fieldset>
+
+                                                $('#districts').change(function() {
+                                                    var id_districts = $(this).val();
+
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "ajax_db.php",
+                                                        data: {
+                                                            id: id_districts,
+                                                            function: 'districts'
+                                                        },
+                                                        success: function(data) {
+                                                            $('#zip_code').val(data)
+                                                        }
+                                                    });
+
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <?php echo '<pre>';
+                                        <!-- <?php echo '<pre>';
                                         print_r($_POST);
                                         echo '</pre>';
-                                        ?>
+                                        ?> -->
                                     </div>
                                 </div>
                                 <script>
@@ -320,7 +282,7 @@
                                 </script>
                             </fieldset>
                         </form>
-                        <?php require_once('donate_no_recript_add.php'); ?>
+                        <!-- <?php require_once('donate_no_recript_add.php'); ?> -->
                     </div>
                 </div>
             </div>
