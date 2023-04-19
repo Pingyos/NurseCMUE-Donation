@@ -37,6 +37,7 @@
                             </center>
 
                             <fieldset id="date">
+                                <!--  -->
                                 <div class="row mt-4">
                                     <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
                                         <div class="form-check form-check-radio">
@@ -51,8 +52,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div id="date-show-date" class=" medium-12">
                                     <div class="container">
                                         <?php
@@ -93,6 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--  -->
 
                                 <div id="date-show-form" class=" medium-12">
                                     <div class="col-lg-12 col-12 mt-2">
@@ -119,7 +119,7 @@
                                         <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
                                         <input type="text" name="rec_out" value="<?= $rec_out; ?>" hidden>
                                         <input type="text" name="rec_out_oj" value="<?= $rec_out_oj; ?>" hidden>
-
+                                        <!--  -->
                                         <div id="show-me" class=" medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
@@ -158,7 +158,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <!--  -->
                                         <div id="show-me-2" class="medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
@@ -193,16 +193,17 @@
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_tel" class="form-control">
+                                                    <input type="text" name="rec_tel" class="form-control" minlength="2" maxlength="10">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">อีเมล์ <span style="color:red;">*</span></label>
                                                     <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เลขบัตรประชาชน <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_idname" class="form-control">
+                                                    <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
+                                                    <input type="text" name="rec_idname" class="form-control" minlength="2" maxlength="13">
                                                 </div>
+
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
                                                     <input type="text" name="address" class="form-control">
@@ -329,10 +330,10 @@
                                     </fieldset>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <!-- <?php echo '<pre>';
-                                                print_r($_POST);
-                                                echo '</pre>';
-                                                ?> -->
+                                        <?php echo '<pre>';
+                                        print_r($_POST);
+                                        echo '</pre>';
+                                        ?>
                                     </div>
                                 </div>
                                 <script>
@@ -364,7 +365,7 @@
                                 </script>
                             </fieldset>
                         </form>
-                        <?php require_once('donate_no_recript_add.php'); ?>
+                        <!-- <?php require_once('donate_no_recript_add.php'); ?> -->
                     </div>
                 </div>
             </div>
