@@ -246,11 +246,11 @@
                                     </div>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-
+<!-- 
                                         <?php echo '<pre>';
                                         print_r($_POST);
                                         echo '</pre>';
-                                        ?>
+                                        ?> -->
                                     </div>
                                 </div>
 
