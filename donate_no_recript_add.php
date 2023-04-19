@@ -81,9 +81,14 @@ if (
   $stmt->bindParam(':districts', $_POST['districts'], PDO::PARAM_STR);
   $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
   $result = $stmt->execute();
-  $conn = null; //close connect db
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
   if ($result) {
+    $id = $conn->lastInsertId();
+    $stmt = $conn->prepare("SELECT id FROM receipt WHERE rec_fullname = :rec_fullname ORDER BY id DESC LIMIT 1");
+    $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
     echo '<script>
       swal({
           title: "บันทึกข้อมูลบริจาคสำเร็จ", 
@@ -92,7 +97,7 @@ if (
           timer: 3000, 
           showConfirmButton: false 
         }, function(){
-          window.location.href = "qrgenerator_receipt.php"; 
+          window.location.href = "qrgenerator_receipt.php?id=' . $id . '"; 
           });
     </script>';
   } else {

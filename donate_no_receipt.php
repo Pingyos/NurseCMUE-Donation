@@ -93,7 +93,6 @@
                                     </div>
                                 </div>
                                 <!--  -->
-
                                 <div id="date-show-form" class=" medium-12">
                                     <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
                                     <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
@@ -247,12 +246,14 @@
                                     </div>
                                     <div class="col-lg-12 col-12 mt-2">
                                         <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
-                                        <!-- <?php echo '<pre>';
-                                                print_r($_POST);
-                                                echo '</pre>';
-                                                ?> -->
+
+                                        <?php echo '<pre>';
+                                        print_r($_POST);
+                                        echo '</pre>';
+                                        ?>
                                     </div>
                                 </div>
+
                                 <script>
                                     function showHide1(input) {
                                         var attrVal = $(input).attr('id');
@@ -282,7 +283,7 @@
                                 </script>
                             </fieldset>
                         </form>
-                        <?php require_once('donate_no_recript_add.php'); ?>
+                         <?php require_once 'donate_no_recript_add.php'; ?>
                     </div>
                 </div>
             </div>

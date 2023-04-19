@@ -22,12 +22,12 @@
                         <div class="row"></div>
                             <?php
                             require_once 'connection.php';
-                            $stmt = $conn->query("SELECT * FROM receipt ");
+                            $stmt = $conn->query("SELECT * FROM receipt order by id desc");
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <div class="row">
                                 <div class="col-lg-3 col-12 mt-2">
-                                    <label class="control-label">First Name</label>
+                                    <label class="control-label">ชื่อ-สกุล</label>
                                     <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control" readonly>
                                 </div>
 
