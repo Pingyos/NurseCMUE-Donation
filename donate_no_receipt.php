@@ -101,15 +101,9 @@
                                     </div>
                                     <fieldset id="rec_status">
                                         <div class="row mt-4">
-                                            <div class="col-lg-6 col-12 form-check-group form-check-group-donation-frequency">
+                                            <div class="col-lg-12 col-12 form-check-group form-check-group-donation-frequency">
                                                 <div class="form-check form-check-radio">
-                                                    <input type="radio" id="watch-me" value="no" name="rec_status" class="form-check-input">
-                                                    <label class="form-check-label" for="watch-me">กรณีที่ไม่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-12 form-check-group form-check-group-donation-frequency">
-                                                <div class="form-check form-check-radio">
-                                                    <input type="radio" id="watch-me-maybe" value="yes" name="rec_status" class="form-check-input" checked="checked">
+                                                    <input type="radio" id="watch-me-maybe" class="form-check-input" checked="checked">
                                                     <label class="form-check-label" for="watch-me-maybe">กรณีที่ต้องการนำใบเสร็จไปลดหย่อนภาษี</label>
                                                 </div>
                                             </div>
@@ -120,50 +114,11 @@
                                         <input type="text" name="rec_out" value="<?= $rec_out; ?>" hidden>
                                         <input type="text" name="rec_out_oj" value="<?= $rec_out_oj; ?>" hidden>
                                         <!--  -->
-                                        <div id="show-me" class=" medium-12">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">คำนำหน้าชื่อ</label>
-                                                    <select name="no_name_Title" class="form-control" onchange="showInput2(this)">
-                                                        <option value="">ไม่ระบุคำนำหน้า</option>
-                                                        <option value="นาย">นาย</option>
-                                                        <option value="นาง">นาง</option>
-                                                        <option value="นางสาว">นางสาว</option>
-                                                        <option value="">อื่นๆ</option>
-                                                    </select>
-                                                </div>
-                                                <script>
-                                                    function showInput2(selectElement) {
-                                                        var inputElement = document.getElementById("name_Title_no");
-                                                        if (selectElement.value === "") {
-                                                            inputElement.style.display = "block";
-                                                            inputElement.setAttribute("required", true);
-                                                        } else {
-                                                            inputElement.style.display = "none";
-                                                            inputElement.removeAttribute("required");
-                                                        }
-                                                    }
-                                                </script>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">คำนำหน้าชื่ออื่นๆ</label>
-                                                    <input type="text" name="name_Title_no" id="name_Title_no" class="form-control" style="display: none;">
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">ชื่อ-สกุล</label>
-                                                    <input type="text" name="no_fullname" class="form-control">
-                                                </div>
-                                                <div class="col-lg-6 col-12 mt-2">
-                                                    <label class="control-label">เบอร์โทรศัพท์</label>
-                                                    <input type="text" name="no_tel" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--  -->
                                         <div id="show-me-2" class="medium-12">
                                             <div class="row">
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
-                                                    <select name="name_Title" class="form-control" onchange="showInput1(this)">
+                                                    <select name="name_Title" class="form-control" onchange="showInput1(this)" required>
                                                         <option value="">ไม่ระบุคำนำหน้า</option>
                                                         <option value="นาย">นาย</option>
                                                         <option value="นาง">นาง</option>
@@ -189,24 +144,24 @@
                                                 </script>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ชื่อ-สกุล <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_fullname" class="form-control">
+                                                    <input type="text" name="rec_fullname" class="form-control" required>
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_tel" class="form-control" minlength="2" maxlength="10">
+                                                    <input type="text" name="rec_tel" class="form-control" minlength="2" maxlength="10" required>
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">อีเมล์ <span style="color:red;">*</span></label>
-                                                    <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control">
+                                                    <input type="email" name="rec_email" pattern="[^ @]*@[^ @]*" class="form-control" required>
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
-                                                    <input type="text" name="rec_idname" class="form-control" minlength="2" maxlength="13">
+                                                    <input type="text" name="rec_idname" class="form-control" minlength="2" maxlength="13" required>
                                                 </div>
 
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
-                                                    <input type="text" name="address" class="form-control">
+                                                    <input type="text" name="address" class="form-control" required>
                                                 </div>
                                                 <div class="col-lg-6 col-12 mt-2">
                                                     <label class="control-label">ถนน <span style="color:red;">*</span></label>
@@ -220,7 +175,7 @@
                                                 ?>
                                                 <div class="col-lg-6 col-6 mt-2">
                                                     <label class="control-label">จังหวัด <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="provinces" id="provinces">
+                                                    <select class="form-control" name="provinces" id="provinces" required>
                                                         <option value="" selected disabled></option>
                                                         <?php foreach ($query as $value) { ?>
                                                             <option value="<?= $value['id'] ?>"><?= $value['name_th'] ?></option>
@@ -229,13 +184,13 @@
                                                 </div>
                                                 <div class="col-lg-6 col-6 mt-2">
                                                     <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="amphures" id="amphures">
+                                                    <select class="form-control" name="amphures" id="amphures" required>
                                                         <option selected disabled></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-6 col-6 mt-2">
                                                     <label class="control-label">ตำบล <span style="color:red;">*</span></label>
-                                                    <select class="form-control" name="districts" id="districts">
+                                                    <select class="form-control" name="districts" id="districts" required>
                                                         <option selected disabled></option>
                                                     </select>
                                                 </div>
@@ -365,7 +320,7 @@
                                 </script>
                             </fieldset>
                         </form>
-                        <!-- <?php require_once('donate_no_recript_add.php'); ?> -->
+                        <?php require_once('donate_no_recript_add.php'); ?>
                     </div>
                 </div>
             </div>
