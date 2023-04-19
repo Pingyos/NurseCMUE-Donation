@@ -19,11 +19,10 @@
                                 <h5 class="mb-3">ตรวจสอบรายละเอียด</h5>
                             </div>
                         </center>
-
-                        <div class="row">
+                        <div class="row"></div>
                             <?php
                             require_once 'connection.php';
-                            $stmt = $conn->query("SELECT * FROM receipt ORDER BY id DESC LIMIT 1");
+                            $stmt = $conn->query("SELECT * FROM receipt ");
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                             ?>
                             <div class="row">
@@ -59,7 +58,7 @@
                                         <?Php
                                         require_once("libcache/PromptPayQR.php");
                                         require_once("connection.php");
-                                        $stmt = $conn->query("SELECT * FROM receipt ORDER BY id DESC LIMIT 1");
+                                        $stmt = $conn->query("SELECT * FROM receipt");
                                         $row = $stmt->fetch();
                                         $amount = $row['rec_money'];
                                         $PromptPayQR = new PromptPayQR();
