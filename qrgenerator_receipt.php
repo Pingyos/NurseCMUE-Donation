@@ -20,60 +20,60 @@
                             </div>
                         </center>
                         <div class="row"></div>
-                            <?php
-                            require_once 'connection.php';
-                            $stmt = $conn->query("SELECT * FROM receipt order by id desc");
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            ?>
-                            <div class="row">
-                                <div class="col-lg-3 col-12 mt-2">
-                                    <label class="control-label">ชื่อ-สกุล</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control" readonly>
-                                </div>
-
-                                <div class="col-lg-3 col-12 mt-2">
-                                    <label class="control-label">เบอร์โทรศัพท์</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control" readonly>
-                                </div>
-                                <div class="col-lg-3 col-12 mt-2">
-                                    <label class="control-label">เลขบัตรประชาชน</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control" readonly>
-                                </div>
-                                <div class="col-lg-3 col-12 mt-2">
-                                    <label class="control-label">จำนวนเงิน</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['rec_money']; ?>" class="form-control" readonly>
-                                </div>
-                                <div class="col-lg-8 col-12 mt-2">
-                                    <label class="control-label">รายละเอียดโครงการ</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
-                                </div>
-                                <div class="col-lg-4 col-12 mt-2">
-                                    <label class="control-label">ประเภทลดหย่อนภาษี</label>
-                                    <input type="text" name="rec_fullname" value="<?= $row['edo_tex']; ?>" class="form-control" readonly>
-                                </div>
+                        <?php
+                        require_once 'connection.php';
+                        $stmt = $conn->query("SELECT * FROM receipt order by id desc");
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        ?>
+                        <div class="row">
+                            <div class="col-lg-3 col-12 mt-2">
+                                <label class="control-label">ชื่อ-สกุล</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control" readonly>
                             </div>
-                            <div id="date-show-form" class=" medium-12">
-                                <center>
-                                    <div class="col-lg-6 col-12 mt-2">
-                                        <?Php
-                                        require_once("libcache/PromptPayQR.php");
-                                        require_once("connection.php");
-                                        $stmt = $conn->query("SELECT * FROM receipt");
-                                        $row = $stmt->fetch();
-                                        $amount = $row['rec_money'];
-                                        $PromptPayQR = new PromptPayQR();
-                                        $PromptPayQR->size = 7;
-                                        $PromptPayQR->id = '5665690444'; 
-                                        $PromptPayQR->amount = $amount; 
-                                        echo '<img src="' . $PromptPayQR->generate() . '" />';
-                                        ?>
-                                    </div>
-                                </center>
+
+                            <div class="col-lg-3 col-12 mt-2">
+                                <label class="control-label">เบอร์โทรศัพท์</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control" readonly>
+                            </div>
+                            <div class="col-lg-3 col-12 mt-2">
+                                <label class="control-label">เลขบัตรประชาชน</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control" readonly>
+                            </div>
+                            <div class="col-lg-3 col-12 mt-2">
+                                <label class="control-label">จำนวนเงิน</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['rec_money']; ?>" class="form-control" readonly>
+                            </div>
+                            <div class="col-lg-8 col-12 mt-2">
+                                <label class="control-label">รายละเอียดโครงการ</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
+                            </div>
+                            <div class="col-lg-4 col-12 mt-2">
+                                <label class="control-label">ประเภทลดหย่อนภาษี</label>
+                                <input type="text" name="rec_fullname" value="<?= $row['edo_tex']; ?>" class="form-control" readonly>
                             </div>
                         </div>
-                    </form>
+                        <div id="date-show-form" class=" medium-12">
+                            <center>
+                                <div class="col-lg-6 col-12 mt-2">
+                                    <?Php
+                                    require_once("libcache/PromptPayQR.php");
+                                    require_once("connection.php");
+                                    $stmt = $conn->query("SELECT * FROM receipt order by id desc");
+                                    $row = $stmt->fetch();
+                                    $amount = $row['rec_money'];
+                                    $PromptPayQR = new PromptPayQR();
+                                    $PromptPayQR->size = 7;
+                                    $PromptPayQR->id = '5665690444';
+                                    $PromptPayQR->amount = $amount;
+                                    echo '<img src="' . $PromptPayQR->generate() . '" />';
+                                    ?>
+                                </div>
+                            </center>
+                        </div>
                 </div>
+                </form>
             </div>
+        </div>
         </div>
         </div>
     </main>
