@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="โครงการที่รอการบริจาค,บริจาค,ทำบุญ">
     <meta name="keywords" content="โครงการที่รอการบริจาค,บริจาค,ทำบุญ">
-
+    <title>NurseCMU E-Donation</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
