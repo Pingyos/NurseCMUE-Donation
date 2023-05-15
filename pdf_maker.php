@@ -86,61 +86,6 @@ function convertToThaiBaht($amount)
 	return $result;
 }
 
-function convertToEnBaht($amount)
-{
-	$number = floatval(str_replace(',', '', $amount));
-	$number = number_format($number, 2, '.', '');
-
-	$txtnum1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
-	$txtnum2 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine');
-	$txtnum3 = array('', 'ten', 'hundred', 'thousand', 'ten thousand', 'hundred thousand', 'million');
-
-	$number = str_replace(',', '', $number);
-	$number = explode('.', $number);
-	$strlen = strlen($number[0]);
-	$result = '';
-	for ($i = 0; $i < $strlen; $i++) {
-		$n = substr($number[0], $i, 1);
-		if ($n != 0) {
-			if (($i == ($strlen - 1)) && ($n == 1)) {
-				$result .= 'one';
-			} elseif (($i == ($strlen - 2)) && ($n == 2)) {
-				$result .= 'twenty';
-			} elseif (($i == ($strlen - 2)) && ($n == 1)) {
-				$result .= '';
-			} else {
-				$result .= $txtnum1[$n];
-			}
-			$result .= $txtnum3[($strlen - $i - 1)];
-		}
-	}
-	$result .= 'baht';
-
-	if (isset($number[1])) {
-		$strlen = strlen($number[1]);
-		for ($i = 0; $i < $strlen; $i++) {
-			$n = substr($number[1], $i, 1);
-			if ($n != 0) {
-				if (($i == ($strlen - 1)) && ($n == 1)) {
-					$result .= 'one';
-				} elseif (($i == ($strlen - 2)) && ($n == 2)) {
-					$result .= 'twenty';
-				} elseif (($i == ($strlen - 2)) && ($n == 1)) {
-					$result .= '';
-				} else {
-					$result .= $txtnum2[$n];
-				}
-				$result .= $txtnum3[($strlen - $i - 1) + 6];
-			}
-		}
-		$result .= '';
-	} else {
-		$result .= '';
-	}
-	return $result;
-}
-
-
 $id = $_GET['id'];
 
 $inv_mst_query = "SELECT T1.id, T1.rec_out, T1.rec_out_oj, T1.name_Title, T1.name_Title_other, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt T1 WHERE T1.id='" . $id . "' ";
