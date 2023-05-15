@@ -66,7 +66,7 @@ require_once 'head.php'; ?>
                                                     </td>
                                                     <td><?php echo $data_row['edo_name']; ?></td>
                                                     <td>
-                                                        <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success">
+                                                        <a href="pdf_maker1.php?id=<?php echo $data_row['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success">
                                                             <i class="fa fa-file-pdf-o"></i> ดูรายละเอียด
                                                         </a>
                                                         <?php
@@ -99,7 +99,7 @@ require_once 'head.php'; ?>
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <a href="pdf_maker.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning"><i class="fa fa-download"></i> ดาวน์โหลด</a>
+                                                        <a href="pdf_maker1.php?id=<?php echo $data_row['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning"><i class="fa fa-download"></i> ดาวน์โหลด</a>
                                                     </td>
                                                 </tr>
                                                 </tr>
