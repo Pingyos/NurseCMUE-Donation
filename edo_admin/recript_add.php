@@ -62,6 +62,10 @@ if (
   $stmt->bindParam(':pay_by', $_POST['pay_by'], PDO::PARAM_STR);
   $result = $stmt->execute();
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
+  echo '
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
   if ($result) {
     echo '<script>
       swal({
@@ -71,7 +75,7 @@ if (
           timer: 3000, 
           showConfirmButton: false 
         }, function(){
-          window.location.href = "qrgenerator_receipt.php?id=' . $id . '"; 
+          window.location.href = "receipt.php"; 
           });
     </script>';
   } else {
