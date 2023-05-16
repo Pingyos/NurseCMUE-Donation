@@ -9,22 +9,28 @@ require_once 'head.php'; ?>
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-12">
-
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">Data Table</strong>
                             </div>
                             <div class="card-body">
+                                <?php
+                                include('connection.php');
+                                $query = "SELECT * FROM nurse_edo ORDER BY pro_edo ASC";
+                                $result = mysqli_query($conn, $query);
+                                ?>
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="edo_name" class="control-label mb-1">รายละเอียดโครงการ</label>
-                                                <select name="edo_name" required class="form-control">
-                                                    <option value="0">-</option>
-                                                    <option value="121205">โครงการบริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</option>
-                                                    <option value="121206">โครงการระดมพลังเพื่อเร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มช.</option>
-                                                    <option value="121207">โครงการบริจาคเพื่อสาธารณประโยชน์และการกุศลอื่น ๆ</option>
+                                                <select name="test" class="form-control" required>
+                                                    <option value="">-Choose-</option>
+                                                    <?php foreach ($result as $results) { ?>
+                                                        <option value="<?php echo $results["edo_name"]; ?>">
+                                                            <?php echo $results["edo_name"]; ?>
+                                                        </option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -176,7 +182,7 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-lg-12 col-12 mt-2">
                                             <button type="submit" class="btn btn-primary btn-block">ออกใบเสร็จ</button>
-                                             <?php echo '<pre>';
+                                            <?php echo '<pre>';
                                             print_r($_POST);
                                             echo '</pre>';
                                             ?>
