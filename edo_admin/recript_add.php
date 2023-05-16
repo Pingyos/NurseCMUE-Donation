@@ -1,7 +1,7 @@
 <?php
 if (
   isset($_POST['edo_name'])
-  && isset($_POST['name_Title'])
+  && isset($_POST['name_title'])
   && isset($_POST['rec_fullname'])
   && isset($_POST['rec_money'])
   && isset($_POST['rec_tel'])
@@ -20,7 +20,7 @@ if (
   //sql insert
   $stmt = $conn->prepare("INSERT INTO receipt_b
       (edo_name,
-      name_Title,
+      name_title,
       rec_fullname,
       rec_money,
       rec_tel,
@@ -31,10 +31,10 @@ if (
       amphures,
       districts,
       date_s,
-      pay_by
+      pay_by)
       VALUES
       (:edo_name,
-      :name_Title,
+      :name_title,
       :rec_fullname,
       :rec_money,
       :rec_tel,
@@ -48,7 +48,7 @@ if (
       :pay_by)");
   //bindParam data type
   $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
-  $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
+  $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_money', $_POST['rec_money'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_tel', $_POST['rec_tel'], PDO::PARAM_STR);
@@ -84,5 +84,4 @@ if (
       });
     </script>';
   }
-
 } //isset

@@ -31,7 +31,7 @@ require_once 'head.php'; ?>
                                         <div class="col-2">
                                             <div class="form-group">
                                                 <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
-                                                <select name="name_Title" class="form-control" onchange="showInput1(this)" required>
+                                                <select name="name_title" class="form-control" onchange="showInput1(this)" required>
                                                     <option value="">ไม่ระบุคำนำหน้า</option>
                                                     <option value="นาย">นาย</option>
                                                     <option value="นาง">นาง</option>
