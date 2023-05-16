@@ -19,12 +19,12 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group">
-                                                <label for="activity" class="control-label mb-1">รายละเอียดโครงการ</label>
+                                                <label for="edo_name" class="control-label mb-1">รายละเอียดโครงการ</label>
                                                 <select name="edo_name" required class="form-control">
                                                     <option value="0">-</option>
-                                                    <option value="โครงการบริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่">โครงการบริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</option>
-                                                    <option value="โครงการระดมพลังเพื่อเร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มช.">โครงการระดมพลังเพื่อเร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มช.</option>
-                                                    <option value="โครงการบริจาคเพื่อสาธารณประโยชน์และการกุศลอื่น ๆ">โครงการบริจาคเพื่อสาธารณประโยชน์และการกุศลอื่น ๆ</option>
+                                                    <option value="121205">โครงการบริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</option>
+                                                    <option value="121206">โครงการระดมพลังเพื่อเร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มช.</option>
+                                                    <option value="121207">โครงการบริจาคเพื่อสาธารณประโยชน์และการกุศลอื่น ๆ</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -170,13 +170,13 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-2">
                                             <div class="form-group">
-                                                <label for="by" class="control-label mb-1">การรับเงิน</label>
-                                                <input type="text" name="by" required class="form-control">
+                                                <label for="pay_by" class="control-label mb-1">การรับเงิน</label>
+                                                <input type="text" name="pay_by" required class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-12 mt-2">
                                             <button type="submit" class="btn btn-primary btn-block">ออกใบเสร็จ</button>
-                                            <?php echo '<pre>';
+                                             <?php echo '<pre>';
                                             print_r($_POST);
                                             echo '</pre>';
                                             ?>
