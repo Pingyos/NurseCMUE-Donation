@@ -88,7 +88,7 @@ function convertToThaiBaht($amount)
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.rec_out, T1.rec_out_oj, T1.name_Title, T1.name_Title_other, T1.edo_pro_id,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt_b T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title,T1.rec_date, T1.rec_fullname,T1.rec_money,T1.address FROM receipt_b T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {

@@ -79,7 +79,7 @@ require_once 'head.php'; ?>
                                                             $mysqli = new mysqli("localhost", "root", "", "nurse_edo");
 
                                                             // Prepare a statement to check if the password is valid for the given record ID
-                                                            $stmt = $mysqli->prepare("SELECT * FROM receipt WHERE id = ? and password = ?");
+                                                            $stmt = $mysqli->prepare("SELECT * FROM receipt_b WHERE id = ? and password = ?");
                                                             $stmt->bind_param("ss", $id, $password);
                                                             $stmt->execute();
 
