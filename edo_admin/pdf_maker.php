@@ -191,11 +191,11 @@ if ($count > 0) {
 	$inv_mst_data_row = mysqli_fetch_array($inv_mst_results, MYSQLI_ASSOC);
 
 	// Get the Thai date and month name from the database
-	$rec_date = $inv_mst_data_row['rec_date'];
-	$rec_day = date("d", strtotime($rec_date));
-	$rec_month = $thai_months[date("m", strtotime($rec_date))];
-	$rec_monen = $english_months[date("m", strtotime($rec_date))];
-	$rec_yearen = date("Y", strtotime($rec_date));
+	$rec_date_out = $inv_mst_data_row['rec_date_out'];
+	$rec_day = date("d", strtotime($rec_date_out));
+	$rec_month = $thai_months[date("m", strtotime($rec_date_out))];
+	$rec_monen = $english_months[date("m", strtotime($rec_date_out))];
+	$rec_yearen = date("Y", strtotime($rec_date_out));
 	$rec_yearth = date('Y') + 543;
 
 	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
@@ -281,7 +281,7 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 135;
+	$y = $pdf->GetY() + 140;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 

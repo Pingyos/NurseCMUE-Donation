@@ -44,7 +44,7 @@ require_once 'head.php'; ?>
                                                 <td><?= $t1['rec_money']; ?></td>
                                                 <td><?= $t1['rec_date_out']; ?></td>
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> ดูรายละเอียด</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> เปิด</a>
                                                     <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-download"></i> ดาวน์โหลด</a>
                                                     <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-times-circle"></i> ลบข้อมูล</a>
                                                 </td>
