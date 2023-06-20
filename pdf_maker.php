@@ -121,8 +121,74 @@ if ($count > 0) {
 	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->SetFont('thsarabunnew', '', 14);
-	$pdf->SetMargins(8, 8, 8);
+	$pdf->SetMargins(8, 10, 8);
 	$pdf->AddPage(); //default A4
+	// ลายเช็ตคณบดี
+	$img = 'TCPDF/name_c.png';
+	$cellWidth = 200;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 20;  // กำหนดความกว้างของรูปภาพ
+
+	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
+	$y = $pdf->GetY() + 240;
+
+	$pdf->Image($img, $x, $y, $imageWidth, 15, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	// 
+
+	// ลายเช็นพี่เจี๊ยบ
+	$img = 'TCPDF/name.png';
+	$cellWidth = 355;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 30;  // กำหนดความกว้างของรูปภาพ
+
+	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
+	$y = $pdf->GetY() + 85;
+
+	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	// 
+
+	// ลายน้ำ
+	$img = 'TCPDF/cmulogo20.png';
+	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 150;  // กำหนดความกว้างของรูปภาพ
+
+	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
+	$y = $pdf->GetY() - 10;
+
+	$pdf->Image($img, $x, $y, $imageWidth, 150, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	// 
+
+	// logo
+	$img = 'TCPDF/cmulogo.png';
+	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
+
+	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
+	$y = $pdf->GetY() - 10;
+
+	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+
+	// 
+
+	// logo logo
+	$img = 'TCPDF/cmulogo.png';
+	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
+
+	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
+	$y = $pdf->GetY() + 145;
+
+	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	// 
+
 
 	// 
 	date_default_timezone_set('Asia/Bangkok');
@@ -136,7 +202,8 @@ if ($count > 0) {
 
 	$content .= '
 <table>
-	<tr>
+
+<tr>
 		<td  >
 			มหาวิทยาลัยเชียงใหม่
 		</td>
@@ -181,18 +248,18 @@ if ($count > 0) {
 
 	<tr>
 	<br>
-		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_Title'] . ' ' . $inv_mst_data_row['name_Title_other'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
 		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-00' . $inv_mst_data_row['id'] . '</td>
 	</tr>
 
 	<tr>
-		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' </td>
+		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
 		<td align="right"><b>วันที่เอกสาร/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	
 
 	<tr>
-		<td><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['rec_out'] . ' </td>
+		<td><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
 		<td align="right"><b>จำนวนเงิน/Amount</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
 	</tr>
 
@@ -201,15 +268,15 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
+		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 		<tr>
 	<td>
-		<b>ชำระด้วย/By : </b>' . $inv_mst_data_row[''] . ' </td>
+		<b>ชำระด้วย/By : </b>' . $inv_mst_data_row['payby'] . ' </td>
 	</tr>
 
 	<tr>
@@ -224,7 +291,10 @@ if ($count > 0) {
 	</tr>
 
 	<br>
-
+	<br>
+	<br>
+	<br>
+	<br>
 	<tr>
 		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
 	</tr>
@@ -234,17 +304,16 @@ if ($count > 0) {
 	<tr>
 		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
-	<br>
 	<tr>
-		<td><b>จาก : </b>' . $inv_mst_data_row['name_Title'] . ' ' . $inv_mst_data_row['name_Title_other'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['rec_out_oj'] . ' </td>
+		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['edo_objective'] . ' </td>
 	</tr>
-	<br>
 	<tr>
 		<td colspan="2" style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี้<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
 	</tr>
+	<br>
 	<br>
 	<br>
 	<tr>

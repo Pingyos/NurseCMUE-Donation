@@ -1,65 +1,85 @@
 <?php
 if (
-  isset($_POST['edo_name'])
-  && isset($_POST['name_title'])
+  isset($_POST['name_Title'])
   && isset($_POST['rec_fullname'])
-  && isset($_POST['rec_money'])
   && isset($_POST['rec_tel'])
+  && isset($_POST['rec_email'])
   && isset($_POST['rec_idname'])
   && isset($_POST['address'])
   && isset($_POST['road'])
   && isset($_POST['provinces'])
   && isset($_POST['amphures'])
   && isset($_POST['districts'])
-  && isset($_POST['date_s'])
-  && isset($_POST['pay_by'])
+  && isset($_POST['zip_code'])
+  && isset($_POST['rec_date'])
+  && isset($_POST['rec_money'])
+  && isset($_POST['payby'])
+  && isset($_POST['edo_name'])
+  && isset($_POST['edo_pro_id'])
+  && isset($_POST['edo_description'])
+  && isset($_POST['edo_objective'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
   require_once 'connection.php';
   //sql insert
-  $stmt = $conn->prepare("INSERT INTO receipt_b
-      (edo_name,
-      name_title,
+  $stmt = $conn->prepare("INSERT INTO receipt_offline
+      (name_Title,
       rec_fullname,
-      rec_money,
       rec_tel,
+      rec_email,
       rec_idname,
       address,
       road,
       provinces,
       amphures,
       districts,
-      date_s,
-      pay_by)
+      zip_code,
+      rec_date,
+      edo_name,
+      rec_money,
+      payby,
+      edo_pro_id,
+      edo_description,
+      edo_objective)
       VALUES
-      (:edo_name,
-      :name_title,
+      (:name_Title,
       :rec_fullname,
-      :rec_money,
       :rec_tel,
+      :rec_email,
       :rec_idname,
       :address,
       :road,
       :provinces,
       :amphures,
       :districts,
-      :date_s,
-      :pay_by)");
+      :zip_code,
+      :rec_date,
+      :edo_name,
+      :rec_money,
+      :payby,
+      :edo_pro_id,
+      :edo_description,
+      :edo_objective)");
   //bindParam data type
-  $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
-  $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
+  $stmt->bindParam(':name_Title', $_POST['name_Title'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_fullname', $_POST['rec_fullname'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_money', $_POST['rec_money'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_tel', $_POST['rec_tel'], PDO::PARAM_STR);
+  $stmt->bindParam(':rec_email', $_POST['rec_email'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_idname', $_POST['rec_idname'], PDO::PARAM_STR);
   $stmt->bindParam(':address', $_POST['address'], PDO::PARAM_STR);
   $stmt->bindParam(':road', $_POST['road'], PDO::PARAM_STR);
   $stmt->bindParam(':provinces', $_POST['provinces'], PDO::PARAM_STR);
   $stmt->bindParam(':amphures', $_POST['amphures'], PDO::PARAM_STR);
   $stmt->bindParam(':districts', $_POST['districts'], PDO::PARAM_STR);
-  $stmt->bindParam(':date_s', $_POST['date_s'], PDO::PARAM_STR);
-  $stmt->bindParam(':pay_by', $_POST['pay_by'], PDO::PARAM_STR);
+  $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
+  $stmt->bindParam(':rec_date', $_POST['rec_date'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
+  $stmt->bindParam(':rec_money', $_POST['rec_money'], PDO::PARAM_STR);
+  $stmt->bindParam(':payby', $_POST['payby'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
   $result = $stmt->execute();
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
   echo '
@@ -70,12 +90,12 @@ if (
     echo '<script>
       swal({
           title: "บันทึกข้อมูลบริจาคสำเร็จ", 
-          text: "ระบบจะทำการ Generator cq code เพื่อให้ท่านได้ชำระเงิน กรุณารอสักครู่",
+          text: "กรุณารอสักครู่ กำลัง Generator ใบเสร็จ",
           type: "success", 
-          timer: 3000, 
+          timer: 2000, 
           showConfirmButton: false 
         }, function(){
-          window.location.href = "receipt.php"; 
+          window.location.href = "showdata_offline.php"; 
           });
     </script>';
   } else {

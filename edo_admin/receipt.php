@@ -13,183 +13,153 @@ require_once 'head.php'; ?>
                             <div class="card-header">
                                 <strong class="card-title">Data Table</strong>
                             </div>
+                            <?php
+                            require_once 'connection.php';
+                            $stmt = $conn->prepare("SELECT* FROM pro_offline");
+                            $stmt->execute();
+                            $result = $stmt->fetchAll();
+                            foreach ($result as $t1)
+                            ?>
                             <div class="card-body">
-                                <?php
-                                include('connection.php');
-                                $query = "SELECT * FROM nurse_edo ORDER BY pro_edo ASC";
-                                $result = mysqli_query($conn, $query);
-                                ?>
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">รายละเอียดโครงการ</label>
-                                                <select name="test" class="form-control" required>
-                                                    <option value="">-Choose-</option>
-                                                    <?php foreach ($result as $results) { ?>
-                                                        <option value="<?php echo $results["edo_name"]; ?>">
-                                                            <?php echo $results["edo_name"]; ?>
-                                                        </option>
-                                                    <?php } ?>
-                                                </select>
+                                                <label for="name_Title" class="control-label mb-1">คำนำหน้าชื่อ</label>
+                                                <input type="text" name="name_Title" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
-                                                <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
-                                                <select name="name_title" class="form-control" onchange="showInput1(this)" required>
-                                                    <option value="">ไม่ระบุคำนำหน้า</option>
-                                                    <option value="นาย">นาย</option>
-                                                    <option value="นาง">นาง</option>
-                                                    <option value="นางสาว">นางสาว</option>
-                                                    <option value="">อื่นๆ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="rec_fullname" class="control-label mb-1">ชื่อ-สกุล <span style="color:red;">*</span></label>
+                                                <label for="rec_fullname" class="control-label mb-1">ชื่อ-สกุล</label>
                                                 <input type="text" name="rec_fullname" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="rec_money" class="control-label mb-1">จำนวนเงิน <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_money" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
-                                                <input type="text" name="rec_tel" class="form-control" minlength="8" maxlength="10" required>
+                                                <input type="text" name="rec_tel" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_email" class="control-label mb-1">อีเมล์</label>
+                                                <input type="text" name="rec_email" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน</label>
-                                                <input type="text" name="rec_idname" class="form-control" minlength="12" maxlength="13" required>
+                                                <input type="text" name="rec_idname" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="address" class="control-label mb-1">ที่อยู่</label>
                                                 <input type="text" name="address" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="road" class="control-label mb-1">ถนน</label>
-                                                <input type="text" name="road" class="form-control">
+                                                <input type="text" name="road" class="form-control" required>
                                             </div>
                                         </div>
-                                        <?php
-                                        require_once('../ajax_db.php');
-                                        $sql_provinces = "SELECT * FROM provinces";
-                                        $query = mysqli_query($con, $sql_provinces);
-                                        ?>
-                                        <div class="col-2">
+                                        <div class="col-3">
                                             <div class="form-group">
-                                                <label for="name" class="control-label mb-1">จังหวัด <span style="color:red;">*</span></label>
-                                                <select class="form-control" name="provinces" id="provinces" required>
-                                                    <option value="" selected disabled></option>
-                                                    <?php foreach ($query as $value) { ?>
-                                                        <option value="<?= $value['id'] ?>"><?= $value['name_th'] ?></option>
-                                                    <?php } ?>
-                                                </select>
+                                                <label for="provinces" class="control-label mb-1">จังหวัด</label>
+                                                <input type="text" name="provinces" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
-                                                <select class="form-control" name="amphures" id="amphures" required>
-                                                    <option selected disabled></option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label class="control-label">ตำบล <span style="color:red;">*</span></label>
-                                                <select class="form-control" name="districts" id="districts" required>
-                                                    <option selected disabled></option>
-                                                </select>
-                                            </div>
-                                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                                            <script type="text/javascript">
-                                                $('#provinces').change(function() {
-                                                    var id_province = $(this).val();
-
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "../ajax_db.php",
-                                                        data: {
-                                                            id: id_province,
-                                                            function: 'provinces'
-                                                        },
-                                                        success: function(data) {
-                                                            $('#amphures').html(data);
-                                                            $('#districts').html(' ');
-                                                            $('#districts').val(' ');
-                                                            $('#zip_code').val(' ');
-                                                        }
-                                                    });
-                                                });
-
-                                                $('#amphures').change(function() {
-                                                    var id_amphures = $(this).val();
-
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "../ajax_db.php",
-                                                        data: {
-                                                            id: id_amphures,
-                                                            function: 'amphures'
-                                                        },
-                                                        success: function(data) {
-                                                            $('#districts').html(data);
-                                                        }
-                                                    });
-                                                });
-
-                                                $('#districts').change(function() {
-                                                    var id_districts = $(this).val();
-
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "../ajax_db.php",
-                                                        data: {
-                                                            id: id_districts,
-                                                            function: 'districts'
-                                                        },
-                                                        success: function(data) {
-                                                            $('#zip_code').val(data)
-                                                        }
-                                                    });
-
-                                                });
-                                            </script>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="date_s" class="control-label mb-1">วันที่ออกเอกสาร</label>
-                                                <input type="date" name="date_s" required class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-2">
-                                            <div class="form-group">
-                                                <label for="pay_by" class="control-label mb-1">การรับเงิน</label>
-                                                <input type="text" name="pay_by" required class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-12 mt-2">
-                                            <button type="submit" class="btn btn-primary btn-block">ออกใบเสร็จ</button>
-                                            <?php echo '<pre>';
-                                            print_r($_POST);
-                                            echo '</pre>';
-                                            ?>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="amphures" class="control-label mb-1">อำเภอ</label>
+                                                <input type="text" name="amphures" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="districts" class="control-label mb-1">ตำบล</label>
+                                                <input type="text" name="districts" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="zip_code" class="control-label mb-1">รหัสไปรษณีย์</label>
+                                                <input type="text" name="zip_code" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_date" class="control-label mb-1">วันที่ออกใบเสร็จ</label>
+                                                <input type="date" name="rec_date" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="edo_name" class="control-label mb-1">โครงการ </label>
+                                                <select name="edo_name" id="edo_name" class="form-control" required>
+                                                    <option value="">เลือกโครงการ</option>
+                                                    <?php
+                                                foreach ($result as $t1) {
+                                                    echo "<option value='" . $t1['edo_name'] . "' data-id='" . $t1['edo_pro_id'] . "'>" . $t1['edo_name'] . "</option>";
+                                                }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="edo_pro_id" id="edo_pro_id">
+                                            <input type="hidden" name="edo_description" id="edo_description">
+                                            <input type="hidden" name="edo_objective" id="edo_objective">
+                                        </div>
+
+                                        <script>
+                                            // เลือกตัวองค์ประกอบที่เกี่ยวข้อง
+                                            var edoNameSelect = document.getElementById('edo_name');
+                                            var edoProIdInput = document.getElementById('edo_pro_id');
+                                            var edoDescriptionInput = document.getElementById('edo_description');
+                                            var edoObjectiveInput = document.getElementById('edo_objective');
+
+                                            // ดักจับเหตุการณ์เมื่อมีการเลือกค่าใน edo_name
+                                            edoNameSelect.addEventListener('change', function() {
+                                                // รับค่าที่ถูกเลือก
+                                                var selectedOption = edoNameSelect.options[edoNameSelect.selectedIndex];
+                                                var selectedEdoName = selectedOption.value;
+                                                var selectedEdoProId = selectedOption.getAttribute('data-id');
+
+                                                // กำหนดค่าให้กับ hidden input elements
+                                                edoProIdInput.value = selectedEdoProId;
+                                                edoDescriptionInput.value = selectedEdoName;
+                                                edoObjectiveInput.value = selectedEdoName;
+                                            });
+                                        </script>
+
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค</label>
+                                                <input type="text" name="rec_money" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="payby" class="control-label mb-1">ชำระแบบ</label>
+                                                <input type="text" name="payby" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block">ออกใบเสร็จ</button>
                                 </form>
                                 <?php require_once 'recript_add.php'; ?>
+                                <?php
+                                echo '<pre>';
+                                print_r($_POST);
+                                echo '</pre>';
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -214,8 +184,6 @@ require_once 'head.php'; ?>
     <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
     <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
     <script src="assets/js/init/datatables-init.js"></script>
-
-
 </body>
 
 </html>
