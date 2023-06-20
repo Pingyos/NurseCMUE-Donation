@@ -32,6 +32,7 @@ $english_months = array(
 	"12" => "December"
 );
 
+
 function convertToThaiBaht($amount)
 {
 	$number = floatval(str_replace(',', '', $amount));
@@ -86,9 +87,104 @@ function convertToThaiBaht($amount)
 	return $result;
 }
 
+function convertToEnglish($number)
+{
+	$ones = array(
+		0 => 'zero',
+		1 => 'one',
+		2 => 'two',
+		3 => 'three',
+		4 => 'four',
+		5 => 'five',
+		6 => 'six',
+		7 => 'seven',
+		8 => 'eight',
+		9 => 'nine',
+		10 => 'ten',
+		11 => 'eleven',
+		12 => 'twelve',
+		13 => 'thirteen',
+		14 => 'fourteen',
+		15 => 'fifteen',
+		16 => 'sixteen',
+		17 => 'seventeen',
+		18 => 'eighteen',
+		19 => 'nineteen'
+	);
+
+	$tens = array(
+		2 => 'twenty',
+		3 => 'thirty',
+		4 => 'forty',
+		5 => 'fifty',
+		6 => 'sixty',
+		7 => 'seventy',
+		8 => 'eighty',
+		9 => 'ninety'
+	);
+
+	$number = intval($number);
+
+	if ($number < 20) {
+		return $ones[$number];
+	}
+
+	if ($number < 100) {
+		$tensDigit = intval($number / 10);
+		$onesDigit = $number % 10;
+
+		$result = $tens[$tensDigit];
+
+		if ($onesDigit > 0) {
+			$result .= '-' . $ones[$onesDigit];
+		}
+
+		return $result;
+	}
+
+	if ($number < 1000) {
+		$hundredsDigit = intval($number / 100);
+		$remainder = $number % 100;
+
+		$result = $ones[$hundredsDigit] . ' hundred';
+
+		if ($remainder > 0) {
+			$result .= ' ' . convertToEnglish($remainder);
+		}
+
+		return $result;
+	}
+
+	$suffixes = array(
+		1000 => 'thousand',
+		1000000 => 'million',
+		1000000000 => 'billion',
+		1000000000000 => 'trillion',
+		1000000000000000 => 'quadrillion',
+		1000000000000000000 => 'quintillion'
+	);
+
+	foreach (array_reverse($suffixes, true) as $suffix => $suffixText) {
+		if ($number >= $suffix) {
+			$quotient = intval($number / $suffix);
+			$remainder = $number % $suffix;
+
+			$result = convertToEnglish($quotient) . ' ' . $suffixText;
+
+			if ($remainder > 0) {
+				$result .= ' ' . convertToEnglish($remainder);
+			}
+
+			return $result;
+		}
+	}
+
+	return 'Number out of range';
+}
+
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_fullname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname, T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname, T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -105,7 +201,8 @@ if ($count > 0) {
 	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
 	$thaiBaht = convertToThaiBaht($amount);
 
-
+	$number = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
+	$EngBaht = convertToEnglish($number);
 
 	//----- Code for generate pdf
 	$pdf = new TCPDF('P', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -120,7 +217,7 @@ if ($count > 0) {
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
 	$pdf->SetAutoPageBreak(TRUE, 10);
-	$pdf->SetFont('thsarabunnew', '', 14);
+	$pdf->SetFont('thsarabunnew', '', 13);
 	$pdf->SetMargins(8, 10, 8);
 	$pdf->AddPage(); //default A4
 	// ลายเช็ตคณบดี
@@ -184,10 +281,11 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 145;
+	$y = $pdf->GetY() + 140;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 
+
 
 
 	// 
@@ -248,7 +346,7 @@ if ($count > 0) {
 
 	<tr>
 	<br>
-		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
 		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-00' . $inv_mst_data_row['id'] . '</td>
 	</tr>
 
@@ -264,15 +362,15 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงินรวม/Total : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td align="right" colspan="2" ><b>จำนวนเงินรวม/Total : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" ><b>รวมทั้งหมด : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
 
 	<tr>
-		<td colspan="2" ><b>ชำระจำนวนเงิน : </b>' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" ><b>ชำระจำนวนเงิน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
 		<tr>
 	<td>
@@ -305,7 +403,7 @@ if ($count > 0) {
 		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 	<tr>
-		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_fullname'] . ' </td>
+		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
 	</tr>
 	<tr>
 		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['edo_objective'] . ' </td>

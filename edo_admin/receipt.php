@@ -25,85 +25,134 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="name_Title" class="control-label mb-1">คำนำหน้าชื่อ</label>
-                                                <input type="text" name="name_Title" class="form-control" required>
+                                                <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
+                                                <input type="text" name="name_title" class="form-control" list="cars" required>
+                                                <datalist id="cars">
+                                                    <option value="นาย" />
+                                                    <option value="นาง" />
+                                                    <option value="นางสาว" />
+                                                </datalist>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_fullname" class="control-label mb-1">ชื่อ-สกุล</label>
-                                                <input type="text" name="rec_fullname" class="form-control" required>
+                                                <label for="rec_name" class="control-label mb-1">ชื่อ <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_name" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_surname" class="control-label mb-1">สกุล <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_surname" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
-                                                <input type="text" name="rec_tel" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label for="rec_email" class="control-label mb-1">อีเมล์</label>
-                                                <input type="text" name="rec_email" class="form-control" required>
+                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน</label>
-                                                <input type="text" name="rec_idname" class="form-control" required>
+                                                <label for="rec_email" class="control-label mb-1">อีเมล์</label>
+                                                <input type="text" name="rec_email" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="address" class="control-label mb-1">ที่อยู่</label>
+                                                <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;">*</span></label>
+                                                <input type="text" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                            </div>
+                                            <script>
+                                                function autoTab(obj) {
+                                                    var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
+                                                    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
+                                                    var returnText = new String("");
+                                                    var obj_l = obj.value.length;
+                                                    var obj_l2 = obj_l - 1;
+                                                    for (i = 0; i < pattern.length; i++) {
+                                                        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
+                                                            returnText += obj.value + pattern_ex;
+                                                            obj.value = returnText;
+                                                        }
+                                                    }
+                                                    if (obj_l >= pattern.length) {
+                                                        obj.value = obj.value.substr(0, pattern.length);
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;">*</span></label>
                                                 <input type="text" name="address" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="road" class="control-label mb-1">ถนน</label>
-                                                <input type="text" name="road" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label for="provinces" class="control-label mb-1">จังหวัด</label>
-                                                <input type="text" name="provinces" class="form-control" required>
+                                                <input type="text" name="road" class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="amphures" class="control-label mb-1">อำเภอ</label>
+                                                <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;">*</span></label>
+                                                <input type="text" name="provinces" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;">*</span></label>
                                                 <input type="text" name="amphures" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="districts" class="control-label mb-1">ตำบล</label>
+                                                <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;">*</span></label>
                                                 <input type="text" name="districts" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="zip_code" class="control-label mb-1">รหัสไปรษณีย์</label>
-                                                <input type="text" name="zip_code" class="form-control" required>
+                                                <input type="text" name="zip_code" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span style="color:red;">*</span></label>
+                                                <input type="date" name="rec_date_s" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_date" class="control-label mb-1">วันที่ออกใบเสร็จ</label>
-                                                <input type="date" name="rec_date" class="form-control" required>
+                                                <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ <span style="color:red;">*</span></label>
+                                                <input type="date" name="rec_date_out" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_money" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="payby" class="control-label mb-1">ชำระแบบ <span style="color:red;">*</span></label>
+                                                <input type="text" name="payby" class="form-control" required>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">โครงการ </label>
+                                                <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
                                                 <select name="edo_name" id="edo_name" class="form-control" required>
                                                     <option value="">เลือกโครงการ</option>
                                                     <?php
@@ -138,17 +187,10 @@ require_once 'head.php'; ?>
                                                 edoObjectiveInput.value = selectedEdoName;
                                             });
                                         </script>
-
-                                        <div class="col-3">
+                                        <div class="col-6">
                                             <div class="form-group">
-                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค</label>
-                                                <input type="text" name="rec_money" class="form-control" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <label for="payby" class="control-label mb-1">ชำระแบบ</label>
-                                                <input type="text" name="payby" class="form-control" required>
+                                                <label for="comment" class="control-label mb-1">หมายเหตุ</label>
+                                                <input type="text" name="comment" class="form-control">
                                             </div>
                                         </div>
                                     </div>

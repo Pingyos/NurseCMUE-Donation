@@ -22,27 +22,33 @@ require_once 'head.php'; ?>
                                             <th>ลำดับ</th>
                                             <th>ชื่อ-นามสกุล</th>
                                             <th>โครงการ</th>
+                                            <th>จำนวนเงิน</th>
+                                            <th>วันที่ออก</th>
                                             <th>รายละเอียด</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         require_once 'connection.php';
-                                        $stmt = $conn->prepare("SELECT* FROM receipt_offline");
+                                        $stmt = $conn->prepare("SELECT * FROM receipt_offline");
                                         $stmt->execute();
                                         $result = $stmt->fetchAll();
+                                        $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
                                         $countrow = 1;
                                         foreach ($result as $t1) {
                                         ?>
                                             <tr>
                                                 <td><?= $countrow ?></td>
-                                                <td><?= $t1['rec_fullname']; ?></td>
+                                                <td><?= $t1['name_title']; ?> <?= $t1['rec_fullname']; ?></td>
                                                 <td><?= $t1['edo_name']; ?></td>
+                                                <td><?= $t1['rec_money']; ?></td>
+                                                <td><?= $t1['rec_date']; ?></td>
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> ดูรายละเอียด</a>
-                                                    <hr>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning"><i class="fa fa-download"></i> ดาวน์โหลด</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> ดูรายละเอียด</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-download"></i> ดาวน์โหลด</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-times-circle"></i> ลบข้อมูล</a>
                                                 </td>
+
                                             </tr>
                                         <?php $countrow++;
                                         }
