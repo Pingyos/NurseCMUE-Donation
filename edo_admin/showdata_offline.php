@@ -39,10 +39,10 @@ require_once 'head.php'; ?>
                                         ?>
                                             <tr>
                                                 <td><?= $countrow ?></td>
-                                                <td><?= $t1['name_title']; ?> <?= $t1['rec_fullname']; ?></td>
+                                                <td><?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?></td>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td><?= $t1['rec_money']; ?></td>
-                                                <td><?= $t1['rec_date']; ?></td>
+                                                <td><?= $t1['rec_date_out']; ?></td>
                                                 <td>
                                                     <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> ดูรายละเอียด</a>
                                                     <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-download"></i> ดาวน์โหลด</a>
