@@ -144,8 +144,12 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="payby" class="control-label mb-1">ชำระแบบ <span style="color:red;">*</span></label>
-                                                <input type="text" name="payby" class="form-control" required>
+                                                <label for="payby" class="control-label mb-1">ชำระโดย <span style="color:red;">*</span></label>
+                                                <input type="text" name="payby" class="form-control" list="pay" required>
+                                                <datalist id="pay">
+                                                    <option value="เงินสด / Cash" />
+                                                    <option value="โอน / Prompt Pay" />
+                                                </datalist>
                                             </div>
                                         </div>
                                     </div>
