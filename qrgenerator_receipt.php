@@ -22,13 +22,23 @@
                         <div class="row"></div>
                         <?php
                         require_once 'connection.php';
-                        $stmt = $conn->query("SELECT * FROM receipt order by id desc");
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
+
+                            $stmt = $conn->prepare("SELECT * FROM receipt_online WHERE id = :id");
+                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                            $stmt->execute();
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                            // // แสดงข้อมูล ID ที่ได้จากฐานข้อมูล
+                            // echo "ID: " . $row['id'];
+                        }
                         ?>
+
                         <div class="row">
                             <div class="col-lg-3 col-12 mt-2">
                                 <label class="control-label">ชื่อ-สกุล</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['rec_fullname']; ?>" class="form-control" readonly>
+                                <input type="text" name="rec_name" value="<?= $row['name_title']; ?> <?= $row['rec_name']; ?> <?= $row['rec_surname']; ?>" class="form-control" readonly>
                             </div>
 
                             <div class="col-lg-3 col-12 mt-2">
@@ -52,22 +62,75 @@
                                 <input type="text" name="rec_fullname" value="<?= $row['edo_tex']; ?>" class="form-control" readonly>
                             </div>
                         </div>
+                        <hr>
                         <div id="date-show-form" class=" medium-12">
                             <center>
-                                <div class="col-lg-6 col-12 mt-2">
-                                    <?Php
+                                <div id="qrCodeContainer">
+                                    <?php
                                     require_once("libcache/PromptPayQR.php");
                                     require_once("connection.php");
-                                    $stmt = $conn->query("SELECT * FROM receipt order by id desc");
-                                    $row = $stmt->fetch();
-                                    $amount = $row['rec_money'];
-                                    $PromptPayQR = new PromptPayQR();
-                                    $PromptPayQR->size = 7;
-                                    $PromptPayQR->id = '5665690444';
-                                    $PromptPayQR->amount = $amount;
-                                    echo '<img src="' . $PromptPayQR->generate() . '" />';
+
+                                    // ตรวจสอบว่ามีค่า id ที่ส่งมาใน URL หรือไม่
+                                    if (isset($_GET['id'])) {
+                                        $id = $_GET['id'];
+
+                                        $stmt = $conn->prepare("SELECT * FROM receipt_online WHERE id = ?");
+                                        $stmt->execute([$id]);
+                                        $row = $stmt->fetch();
+
+                                        if ($row) {
+                                            $amount = $row['rec_money'];
+
+                                            $PromptPayQR = new PromptPayQR();
+                                            $PromptPayQR->size = 7;
+                                            $PromptPayQR->id = '5665690444';
+                                            $PromptPayQR->amount = $amount;
+                                            echo '<img id="qrCodeImage" src="' . $PromptPayQR->generate() . '" />';
+                                        } else {
+                                            echo "ไม่พบข้อมูล: $id";
+                                        }
+                                    } else {
+                                        echo "ไม่พบข้อมูล ID";
+                                    }
                                     ?>
                                 </div>
+                                <div id="countdownTimer"></div>
+
+                                <div id="countdownTimer"></div>
+
+                                <script>
+                                    function showQRCodeForDuration() {
+                                        var qrCodeImage = document.getElementById('qrCodeImage');
+                                        var amount = <?php echo $amount; ?>;
+                                        var countdown = 320; // จำนวนวินาทีที่นับถอยหลัง
+
+                                        qrCodeImage.style.display = 'block';
+
+                                        // ฟังก์ชันสำหรับแสดงเวลาออกทางหน้าจอในรูปแบบนาฬิกานับถอยหลังและข้อความว่า QR code จะหมดอายุในเวลาเท่าไร
+                                        function updateCountdownTimer() {
+                                            var countdownTimer = document.getElementById('countdownTimer');
+
+                                            if (countdown >= 0) {
+                                                // แสดงเวลาออกทางหน้าจอและข้อความว่า QR code จะหมดอายุในเวลาเท่าไร
+                                                countdownTimer.innerHTML = "QR code จะหมดอายุใน " + countdown + " วินาที";
+                                                countdown--;
+                                                setTimeout(updateCountdownTimer, 1000); // นับถอยหลังทุกๆ 1 วินาที (1000 มิลลิวินาที)
+                                            } else {
+                                                qrCodeImage.style.display = 'none';
+                                                amount = 0;
+                                            }
+                                        }
+
+                                        updateCountdownTimer();
+
+                                        setTimeout(function() {
+                                            qrCodeImage.style.display = 'none';
+                                            amount = 0;
+                                        }, countdown * 1000); // หลังจากเวลาผ่านไป countdown วินาที
+                                    }
+
+                                    window.onload = showQRCodeForDuration;
+                                </script>
                             </center>
                         </div>
                 </div>

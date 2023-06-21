@@ -1,6 +1,6 @@
 <?php
 require '../database_connection.php';
-include_once('../TCPDF/tcpdf.php');
+require('../TCPDF/tcpdf.php');
 
 // Thai month names
 $thai_months = array(
@@ -184,7 +184,7 @@ function convertToEnglish($number)
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname, T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_online T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {

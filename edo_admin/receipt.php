@@ -11,7 +11,7 @@ require_once 'head.php'; ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Data Table</strong>
+                                <strong class="card-title">ออกใบเสร็จรับเงิน</strong>
                             </div>
                             <?php
                             require_once 'connection.php';
@@ -201,11 +201,11 @@ require_once 'head.php'; ?>
                                     <button type="submit" class="btn btn-primary btn-block">ออกใบเสร็จ</button>
                                 </form>
                                 <?php require_once 'recript_add.php'; ?>
-                                <?php
+                                <!-- <?php
                                 echo '<pre>';
                                 print_r($_POST);
                                 echo '</pre>';
-                                ?>
+                                ?> -->
                             </div>
                         </div>
                     </div>
