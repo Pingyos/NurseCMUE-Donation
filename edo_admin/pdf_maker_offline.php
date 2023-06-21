@@ -274,7 +274,7 @@ if ($count > 0) {
 	// 
 
 	// logo logo
-	$img = 'TCPDF/cmulogo.png';
+	$img = 'TCPDF/';
 	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
 

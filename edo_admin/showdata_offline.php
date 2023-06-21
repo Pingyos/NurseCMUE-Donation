@@ -1,4 +1,3 @@
-@@ -1,145 +0,0 @@
 <?php
 require_once 'head.php'; ?>
 
@@ -13,7 +12,7 @@ require_once 'head.php'; ?>
 
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Data Table</strong>
+                                <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -46,7 +45,7 @@ require_once 'head.php'; ?>
                                                 <td>
                                                     <a href="pdf_maker_offline.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> เปิด</a>
                                                     <a href="pdf_maker_offline.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-download"></i> ดาวน์โหลด</a>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-times-circle"></i> ลบข้อมูล</a>
+                                                    <a href="del.php?id=<?= $t1['id']; ?>" class="btn btn-danger btn-sm"><i class="fa fa-times-circle"></i> Del</a>
                                                 </td>
 
                                             </tr>
