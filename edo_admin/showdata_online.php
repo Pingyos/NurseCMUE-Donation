@@ -1,4 +1,3 @@
-@@ -1,145 +0,0 @@
 <?php
 require_once 'head.php'; ?>
 
@@ -24,7 +23,7 @@ require_once 'head.php'; ?>
                                             <th>โครงการ</th>
                                             <th>จำนวนเงิน</th>
                                             <th>วันที่ออก</th>
-                                            <th>รายละเอียด</th>
+                                            <th>รายละเอียดใบเสร็จ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -34,23 +33,20 @@ require_once 'head.php'; ?>
                                         $stmt->execute();
                                         $result = $stmt->fetchAll();
                                         $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
-                                        $countrow = 1;
                                         foreach ($result as $t1) {
                                         ?>
                                             <tr>
-                                                <td><?= $countrow ?></td>
+                                                <td><?= $t1['id']; ?></td>
                                                 <td><?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?></td>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td><?= $t1['rec_money']; ?></td>
                                                 <td><?= $t1['rec_date_out']; ?></td>
                                                 <td>
-                                                    <a href="pdf_maker_online.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> เปิด</a>
-                                                    <a href="pdf_maker_online.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-warning btn-sm"><i class="fa fa-download"></i> ดาวน์โหลด</a>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=DOWNLOAD" target="_blank" class="btn btn-danger btn-sm"><i class="fa fa-times-circle"></i> ลบข้อมูล</a>
+                                                    <a href="pdf_maker_online.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
+                                                    <a href="" class="btn btn-warning btn-sm"><i class="fa fa-pencil"> แก้ไข</i></a>
                                                 </td>
-
                                             </tr>
-                                        <?php $countrow++;
+                                        <?php
                                         }
                                         ?>
                                     </tbody>
@@ -62,11 +58,7 @@ require_once 'head.php'; ?>
             </div>
         </div>
         <div class="clearfix"></div>
-
-
-
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>

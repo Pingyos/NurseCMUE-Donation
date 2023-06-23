@@ -1,7 +1,7 @@
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
 <script src="assets/js/main.js"></script>
 
@@ -294,133 +294,6 @@
 </script>
 <!--Local Stuff-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-<script type="text/javascript">
-    google.charts.load("current", {
-        packages: ["corechart"]
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            <?php
-            require_once 'connect.php';
-
-            $stmtC = $conn->prepare("SELECT COUNT(*) AS totaC FROM dateinter WHERE activity = 'C'");
-            $stmtC->execute();
-            $countC = $stmtC->fetchColumn();
-
-            $stmtA = $conn->prepare("SELECT COUNT(*) AS totaA FROM dateinter WHERE activity = 'A'");
-            $stmtA->execute();
-            $countA = $stmtA->fetchColumn();
-
-            $stmtR = $conn->prepare("SELECT COUNT(*) AS totaR FROM dateinter WHERE activity = 'R'");
-            $stmtR->execute();
-            $countR = $stmtR->fetchColumn();
-
-            echo "['Activity C', " . $countC . "],";
-            echo "['Activity A', " . $countA . "],";
-            echo "['Activity R', " . $countR . "]";
-            ?>
-        ]);
-
-        var options = {
-            pieHole: 0.4,
-            colors: ['#AB8CE4', '#03A9E3', '#FB9678']
-        };
-
-
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-    }
-</script>
-
-<script type="text/javascript">
-    google.charts.load("current", {
-        packages: ["corechart"]
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Country', 'Number of Universities', {
-                role: 'tooltip'
-            }],
-            <?php
-            require_once 'connect.php';
-
-            $stmtC = $conn->prepare("SELECT country, COUNT(*) AS count, GROUP_CONCAT(university SEPARATOR ', ') AS universities FROM university GROUP BY country");
-            $stmtC->execute();
-
-            while ($row = $stmtC->fetch(PDO::FETCH_ASSOC)) {
-                echo "['" . $row['country'] . "', " . $row['count'] . ", '" . $row['universities'] . "'],";
-            }
-            ?>
-        ]);
-
-        var options = {
-            backgroundColor: '#ffff',
-            colors: ['#00C292'],
-            tooltip: {
-                isHtml: true
-            }
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('columnchart'));
-        chart.draw(data, options);
-
-    }
-</script>
-
-<script type="text/javascript">
-    google.charts.load("current", {
-        packages: ["corechart"]
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            <?php
-            require_once 'connect.php';
-
-            $stmtC = $conn->prepare("SELECT university, COUNT(*) AS num_universities FROM dateinter GROUP BY university ORDER BY num_universities DESC");
-            $stmtC->execute();
-
-            while ($row = $stmtC->fetch()) {
-                echo "['" . $row['university'] . "', " . $row['num_universities'] . "],";
-            }
-            ?>
-        ]);
-
-        var options = {
-            pieHole: 0.4,
-            colors: generateRandomColors(data.getNumberOfRows())
-        };
-
-        function generateRandomColors(numColors) {
-            var colors = [];
-            for (var i = 0; i < numColors; i++) {
-                colors.push('rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')');
-            }
-            return colors;
-        }
-
-        var chart = new google.visualization.PieChart(document.getElementById('university'));
-        chart.draw(data, options);
-    }
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    });
-</script>
-
-<script src="assets/js/lib/data-table/datatables.min.js"></script>
-<script src="assets/js/init/datatables-init.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
 <script src="assets/js/vmap.sampledata.js"></script>

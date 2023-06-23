@@ -181,6 +181,16 @@ function convertToEnglish($number)
 
 	return 'Number out of range';
 }
+function generateReceiptNumber($numid)
+{
+	$receipt_number = str_pad($numid, 4, '0', STR_PAD_LEFT);
+	return $receipt_number;
+}
+$numid = $inv_mst_data_row['id'];
+$receipt_number = generateReceiptNumber($numid);
+
+
+
 
 $id = $_GET['id'];
 
@@ -219,6 +229,8 @@ if ($count > 0) {
 	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->SetFont('thsarabunnew', '', 13);
 	$pdf->SetMargins(8, 10, 8);
+	$pdf->SetAutoPageBreak(true, 2); // 10 เป็นค่าขอบด้านล่างที่คุณต้องการเพิ่ม
+	// คำสั่งที่ใช้สร้างเนื้อหาในเอกสาร PDF ต่อจากนี้...
 	$pdf->AddPage(); //default A4
 	// ลายเช็ตคณบดี
 	$img = 'TCPDF/';
@@ -267,23 +279,24 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() - 10;
+	$y = $pdf->GetY() - 8;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
 
 	// 
 
 	// logo logo
-	$img = 'TCPDF/';
+	$img = 'TCPDF/cmulogo.png';
 	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
 
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
-	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 140;
+	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์ โดยเพิ่มค่า Y ที่ได้จากบรรทัดก่อนหน้านี้
+	$y += 160;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+
 	// 
 
 
@@ -306,7 +319,7 @@ if ($count > 0) {
 			มหาวิทยาลัยเชียงใหม่
 		</td>
 		<td align="right"  >
-			ใบเสร็จรับเงิน
+			ใบเสร็จรับเงิน/Receipt
 		</td>
 	</tr>
 
@@ -315,7 +328,7 @@ if ($count > 0) {
 		Chiang Mai University
 	</td>
 	<td align="right">
-		ต้นฉบับ
+		ต้นฉบับ/Original
 	</td>
 	</tr>
 
@@ -341,42 +354,46 @@ if ($count > 0) {
 
 	<tr>
 	<td>099 4 00042317 9</td>
-	<td align="right">เบอร์โทร 053-949075</td>
+	<td align="right">เบอร์โทร 053-935024</td>
 	</tr>
 
 	<tr>
 	<br>
 		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
-		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-00' . $inv_mst_data_row['id'] . '</td>
-	</tr>
+		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+		</tr>
 
 	<tr>
-		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
+		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
 		<td align="right"><b>วันที่เอกสาร/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	
-
 	<tr>
-		<td><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_name'] . ' </td>
-		<td align="right"><b>จำนวนเงิน/Amount</b><br>' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+		<tdalign="right" colspan="2"><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_name'] . ' </tdalign=>
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงินรวม/Total : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
+		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
 	</tr>
-
+	<br>
 	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
+		<td align="right">' . $inv_mst_data_row['rec_money'] . ' บาท</td>
 	</tr>
-
+	<br>
 	<tr>
 		<td colspan="2" ><b>ชำระจำนวนเงิน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
-		<tr>
-	<td>
-		<b>ชำระด้วย/By : </b>' . $inv_mst_data_row['payby'] . ' </td>
+	<tr>
+		<td colspan="2" ><b>ชำระเงินจำนวน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
-
+	<br>
+	<tr>
+		<td>
+			<b>ชำระด้วย/By : </b>' . $inv_mst_data_row['payby'] . ' 
+		</td>
+	</tr>
+	<br>
 	<tr>
 		<td></td>
 		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
@@ -388,11 +405,13 @@ if ($count > 0) {
 		<td colspan="2" style="border-bottom: solid black 1px;"></td>
 	</tr>
 
+	<tr>
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
+	</tr>
 	<tr>
 		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
 	</tr>
@@ -408,6 +427,7 @@ if ($count > 0) {
 	<tr>
 		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['edo_objective'] . ' </td>
 	</tr>
+	<br>
 	<tr>
 		<td colspan="2" style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี้<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
 	</tr>
@@ -418,7 +438,7 @@ if ($count > 0) {
 		<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
 	</tr>
 	<tr>
-	<td><b>เลยที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-' . $inv_mst_data_row['id'] . ' </td>
+	<td><b>เลยที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
 	<td align="right"><b>ลำดับเอกสาร : </b>' . $inv_mst_data_row['id'] . '</td>
 </tr>
 </table>
