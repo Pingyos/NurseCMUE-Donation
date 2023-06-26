@@ -204,12 +204,12 @@ require_once 'head.php'; ?>
                                         <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                     </div>
                                 </form>
-                                 <?php require_once 'recript_add.php'; ?>
-                                <?php
+                                 <?php require_once 'recript_edit.php'; ?>
+                                <!-- <?php
                                 echo '<pre>';
                                 print_r($_POST);
                                 echo '</pre>';
-                                ?>
+                                ?> -->
                             </div>
                         </div>
                     </div>
