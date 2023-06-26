@@ -110,7 +110,7 @@ if (
     echo '<script>
       swal({
           title: "บันทึกข้อมูลบริจาคสำเร็จ", 
-          text: "กรุณารอสักครู่ กำลัง Generator ใบเสร็จ",
+          text: "กรุณารอสักครู่",
           type: "success", 
           timer: 2000, 
           showConfirmButton: false 
