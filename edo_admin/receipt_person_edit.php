@@ -11,15 +11,28 @@ require_once 'head.php'; ?>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">ออกใบเสร็จสำหรับบุคคล</strong>
+                                <strong class="card-title">แก้ไขใบเสร็จบุคคล</strong>
                             </div>
+                            <?php
+                            if (isset($_GET['id'])) {
+                                require_once 'connection.php';
+                                $stmt = $conn->prepare("SELECT* FROM receipt_offline WHERE id=?");
+                                $stmt->execute([$_GET['id']]);
+                                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                //ถ้าคิวรี่ผิดพลาดให้กลับไปหน้า index
+                                if ($stmt->rowCount() < 1) {
+                                    header('Location: index.php');
+                                    exit();
+                                }
+                            } //isset
+                            ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
-                                                <input type="text" name="name_title" class="form-control" list="cars" required>
+                                                <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ </label>
+                                                <input type="text" name="name_title" class="form-control" list="cars" value="<?= $row['name_title']; ?>">
                                                 <datalist id="cars">
                                                     <option value="นาย" />
                                                     <option value="นาง" />
@@ -29,20 +42,20 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_name" class="control-label mb-1">ชื่อ <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_name" class="form-control" required>
+                                                <label for="rec_name" class="control-label mb-1">ชื่อ </label>
+                                                <input type="text" name="rec_name" class="form-control" value="<?= $row['rec_name']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_surname" class="control-label mb-1">สกุล <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_surname" class="form-control" required>
+                                                <label for="rec_surname" class="control-label mb-1">สกุล </label>
+                                                <input type="text" name="rec_surname" class="form-control" value="<?= $row['rec_surname']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
-                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
+                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*" value="<?= $row['rec_tel']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -51,13 +64,13 @@ require_once 'head.php'; ?>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_email" class="control-label mb-1">อีเมล์</label>
-                                                <input type="text" name="rec_email" class="form-control">
+                                                <input type="text" name="rec_email" class="form-control" value="<?= $row['rec_email']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;">*</span></label>
-                                                <input type="text" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                                <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน </label>
+                                                <input type="text" tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="<?= $row['rec_idname']; ?>" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
                                             </div>
                                             <script>
                                                 function autoTab(obj) {
@@ -80,14 +93,14 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;">*</span></label>
-                                                <input type="text" name="address" class="form-control" required>
+                                                <label for="address" class="control-label mb-1">ที่อยู่ </label>
+                                                <input type="text" name="address" class="form-control" value="<?= $row['address']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="road" class="control-label mb-1">ถนน</label>
-                                                <input type="text" name="road" class="form-control">
+                                                <input type="text" name="road" class="form-control" value="<?= $row['road']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -95,26 +108,26 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;">*</span></label>
-                                                <input type="text" name="provinces" class="form-control" required>
+                                                <label for="provinces" class="control-label mb-1">จังหวัด </label>
+                                                <input type="text" name="provinces" class="form-control" value="<?= $row['provinces']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;">*</span></label>
-                                                <input type="text" name="amphures" class="form-control" required>
+                                                <label for="amphures" class="control-label mb-1">อำเภอ </label>
+                                                <input type="text" name="amphures" class="form-control" value="<?= $row['amphures']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;">*</span></label>
-                                                <input type="text" name="districts" class="form-control" required>
+                                                <label for="districts" class="control-label mb-1">ตำบล </label>
+                                                <input type="text" name="districts" class="form-control" value="<?= $row['districts']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="zip_code" class="control-label mb-1">รหัสไปรษณีย์</label>
-                                                <input type="text" name="zip_code" class="form-control">
+                                                <input type="text" name="zip_code" class="form-control" value="<?= $row['zip_code']; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -122,26 +135,26 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span style="color:red;">*</span></label>
-                                                <input type="date" name="rec_date_s" class="form-control" required>
+                                                <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน </label>
+                                                <input type="date" name="rec_date_s" class="form-control" value="<?= $row['rec_date_s']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ <span style="color:red;">*</span></label>
-                                                <input type="date" name="rec_date_out" class="form-control" required>
+                                                <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ </label>
+                                                <input type="date" name="rec_date_out" class="form-control" value="<?= $row['rec_date_out']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_money" class="form-control" required>
+                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค </label>
+                                                <input type="text" name="rec_money" class="form-control" value="<?= $row['rec_money']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="payby" class="control-label mb-1">ชำระโดย <span style="color:red;">*</span></label>
-                                                <input type="text" name="payby" class="form-control" list="pay" required>
+                                                <label for="payby" class="control-label mb-1">ชำระโดย </label>
+                                                <input type="text" name="payby" class="form-control" list="pay" value="<?= $row['payby']; ?>">
                                                 <datalist id="pay">
                                                     <option value="เงินสด / Cash" />
                                                     <option value="โอน / Prompt Pay" />
@@ -154,7 +167,16 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
+                                                <label for="comment" class="control-label mb-1">หมายเหตุ</label>
+                                                <input type="text" name="comment" class="form-control" value="<?= $row['comment']; ?>">
+                                            </div>
+                                        </div>
+                                        <input type="text" name="status_donat" value="offline" hidden>
+                                        <input type="text" name="status_user" value="person" hidden>
+                                        <input type="text" name="id" value="<?= $row['id']; ?>" hidden>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="edo_name" class="control-label mb-1">โครงการ </label>
                                                 <select name="edo_name" id="edo_name" class="form-control" required>
                                                     <option value="">เลือกโครงการ</option>
                                                     <?php
@@ -178,7 +200,6 @@ require_once 'head.php'; ?>
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
                                         </div>
-
                                         <script>
                                             // เมื่อเลือกตัวเลือกใน <select>
                                             document.getElementById('edo_name').addEventListener('change', function() {
@@ -190,26 +211,19 @@ require_once 'head.php'; ?>
                                                 document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');
                                             });
                                         </script>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="comment" class="control-label mb-1">หมายเหตุ</label>
-                                                <input type="text" name="comment" class="form-control">
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="status_donat" value="offline" class="form-control">
-                                        <input type="hidden" name="status_user" value="person" class="form-control">
+
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">
                                         <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                     </div>
                                 </form>
-                                 <?php require_once 'recript_edit.php'; ?>
+                                <?php require_once 'recript_edit.php'; ?>
                                 <!-- <?php
-                                echo '<pre>';
-                                print_r($_POST);
-                                echo '</pre>';
-                                ?> -->
+                                        echo '<pre>';
+                                        print_r($_POST);
+                                        echo '</pre>';
+                                        ?> -->
                             </div>
                         </div>
                     </div>
