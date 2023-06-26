@@ -12,7 +12,7 @@ require_once 'head.php'; ?>
 
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">รายชื่อบริจาคผ่านเว็บไซต์</strong>
+                                <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -22,7 +22,6 @@ require_once 'head.php'; ?>
                                             <th>ชื่อ-นามสกุล</th>
                                             <th>โครงการ</th>
                                             <th>จำนวนเงิน</th>
-                                            <th>วันที่ออก</th>
                                             <th>รายละเอียดใบเสร็จ</th>
                                         </tr>
                                     </thead>
@@ -33,20 +32,26 @@ require_once 'head.php'; ?>
                                         $stmt->execute();
                                         $result = $stmt->fetchAll();
                                         $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
+                                        $countrow = 1;
                                         foreach ($result as $t1) {
                                         ?>
                                             <tr>
-                                                <td><?= $t1['id']; ?></td>
-                                                <td><?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?></td>
+                                                <td><?= $countrow ?></td>
+                                                <td>
+                                                    <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
+                                                    <br>
+                                                    <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
+                                                    <span style="color: orange;"><?= $t1['rec_time']; ?></span>
+                                                </td>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td><?= $t1['rec_money']; ?></td>
-                                                <td><?= $t1['rec_date_out']; ?></td>
                                                 <td>
                                                     <a href="pdf_maker_online.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
                                                     <a href="" class="btn btn-warning btn-sm"><i class="fa fa-pencil"> แก้ไข</i></a>
                                                 </td>
+
                                             </tr>
-                                        <?php
+                                        <?php $countrow++;
                                         }
                                         ?>
                                     </tbody>
@@ -58,7 +63,11 @@ require_once 'head.php'; ?>
             </div>
         </div>
         <div class="clearfix"></div>
+
+
+
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>

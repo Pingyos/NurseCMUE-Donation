@@ -18,13 +18,14 @@ if (
   && isset($_POST['edo_name'])
   && isset($_POST['edo_pro_id'])
   && isset($_POST['edo_description'])
+  && isset($_POST['status_donat'])
   && isset($_POST['edo_objective'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
   require_once 'connection.php';
   //sql insert
-  $stmt = $conn->prepare("INSERT INTO receipt_online
+  $stmt = $conn->prepare("INSERT INTO receipt_offline
   (name_title,
   rec_name,
   rec_surname,
@@ -43,6 +44,7 @@ if (
   payby,
   edo_pro_id,
   edo_description,
+  status_donat,
   edo_objective)
   VALUES
   (:name_title,
@@ -63,6 +65,7 @@ if (
   :payby,
   :edo_pro_id,
   :edo_description,
+  :status_donat,
   :edo_objective
   )");
   //bindParam data type
@@ -84,7 +87,8 @@ if (
   $stmt->bindParam(':edo_tex', $_POST['edo_tex'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
-  $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
+  $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
+  $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
   $result = $stmt->execute();
   echo '
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>

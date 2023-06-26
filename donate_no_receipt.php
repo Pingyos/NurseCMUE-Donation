@@ -99,7 +99,8 @@
                                     <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
                                     <input type="text" name="edo_description" value="<?= $edo_description; ?>" hidden>
                                     <input type="text" name="edo_objective" value="<?= $edo_objective; ?>" hidden>
-                                    <input type="text" name="payby" value="โอน" hidden>
+                                    <input type="text" name="payby" value="โอน/Cash Transfer" hidden>
+                                    <input type="text" name="status_donat" value="online" hidden>
                                     <div id="show-me-2" class="medium-12">
                                         <div class="col-lg-12 col-12 mt-2">
                                             <label class="control-label">จำนวนเงินที่ท่านประสงค์จะบริจาค <span style="color:red;">*</span></label>
@@ -133,7 +134,7 @@
                                             </div>
                                             <div class="col-lg-4 col-12 mt-2">
                                                 <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
-                                                <input type="number" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                                <input type="text" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
                                             </div>
                                             <script>
                                                 function autoTab(obj) {
@@ -177,6 +178,7 @@
                                                 <label class="control-label">รหัสไปรษณีย์</label>
                                                 <input type="text" name="zip_code" class="form-control">
                                             </div>
+
                                         </div>
                                     </div>
                                     <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>

@@ -369,7 +369,7 @@ if ($count > 0) {
 	</tr>
 	
 	<tr>
-		<tdalign="right" colspan="2"><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_name'] . ' </tdalign=>
+		<tdalign="right" colspan="2"><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_description'] . ' </tdalign=>
 	</tr>
 
 	<tr>
@@ -390,7 +390,7 @@ if ($count > 0) {
 	<br>
 	<tr>
 		<td>
-			<b>ชำระด้วย/By : </b>' . $inv_mst_data_row['payby'] . ' 
+			<b>ชำระด้วย/Pay by : </b>' . $inv_mst_data_row['payby'] . ' 
 		</td>
 	</tr>
 	<br>
@@ -404,13 +404,14 @@ if ($count > 0) {
 	<tr>
 		<td colspan="2" style="border-bottom: solid black 1px;"></td>
 	</tr>
-
 	<tr>
+
 	<br>
 	<br>
 	<br>
 	<br>
 	<br>
+
 	</tr>
 	<tr>
 		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
