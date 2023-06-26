@@ -204,11 +204,11 @@ require_once 'head.php'; ?>
                                     </div>
                                 </form>
                                 <?php require_once 'recript_add.php'; ?>
-                                <?php
+                                <!-- <?php
                                         echo '<pre>';
                                         print_r($_POST);
                                         echo '</pre>';
-                                        ?>
+                                        ?> -->
                             </div>
                         </div>
                     </div>

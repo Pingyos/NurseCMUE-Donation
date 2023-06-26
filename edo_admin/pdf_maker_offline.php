@@ -358,10 +358,11 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
+	
 	<br>
 		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
 		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-		</tr>
+	</tr>
 
 	<tr>
 		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>

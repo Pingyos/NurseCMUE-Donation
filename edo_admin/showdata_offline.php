@@ -41,8 +41,9 @@ require_once 'head.php'; ?>
                                                     <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
                                                     <br>
                                                     <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
-                                                    <span style="color: orange;"><?= $t1['rec_time']; ?></span> /
-                                                    <span style="color: orange;">E0<?= $t1['id']; ?></span>
+                                                    <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span> /
+                                                    <span style="color: orange;"><?= $t1['rec_time']; ?></span>
+                                                    
                                                 </td>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td><?= $t1['rec_money']; ?></td>
