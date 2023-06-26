@@ -11,7 +11,7 @@ require_once 'head.php'; ?>
                     <div class="col-md-12">
                         <div class="card" id="show-me-2">
                             <div class="card-header">
-                                <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
+                                <strong class="card-title">แก้ไขเสร็จนิติบุคคล</strong>
                             </div>
                             <?php
                             if (isset($_GET['id'])) {
