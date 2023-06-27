@@ -32,59 +32,54 @@ $english_months = array(
 	"12" => "December"
 );
 
-
-function convertToThaiBaht($amount)
+function Convert($amount_number)
 {
-	$number = floatval(str_replace(',', '', $amount));
-	$number = number_format($number, 2, '.', '');
-
-	$txtnum1 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
-	$txtnum2 = array('', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า');
-	$txtnum3 = array('', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน');
-
-	$number = str_replace(',', '', $number);
-	$number = explode('.', $number);
-	$strlen = strlen($number[0]);
-	$result = '';
-	for ($i = 0; $i < $strlen; $i++) {
-		$n = substr($number[0], $i, 1);
-		if ($n != 0) {
-			if (($i == ($strlen - 1)) && ($n == 1)) {
-				$result .= 'เอ็ด';
-			} elseif (($i == ($strlen - 2)) && ($n == 2)) {
-				$result .= 'ยี่';
-			} elseif (($i == ($strlen - 2)) && ($n == 1)) {
-				$result .= '';
-			} else {
-				$result .= $txtnum1[$n];
-			}
-			$result .= $txtnum3[($strlen - $i - 1)];
-		}
+	$amount_number = number_format($amount_number, 2, ".", "");
+	$pt = strpos($amount_number, ".");
+	$number = $fraction = "";
+	if ($pt === false)
+		$number = $amount_number;
+	else {
+		$number = substr($amount_number, 0, $pt);
+		$fraction = substr($amount_number, $pt + 1);
 	}
-	$result .= 'บาท';
 
-	if (isset($number[1])) {
-		$strlen = strlen($number[1]);
-		for ($i = 0; $i < $strlen; $i++) {
-			$n = substr($number[1], $i, 1);
-			if ($n != 0) {
-				if (($i == ($strlen - 1)) && ($n == 1)) {
-					$result .= 'เอ็ด';
-				} elseif (($i == ($strlen - 2)) && ($n == 2)) {
-					$result .= 'ยี่';
-				} elseif (($i == ($strlen - 2)) && ($n == 1)) {
-					$result .= '';
-				} else {
-					$result .= $txtnum2[$n];
-				}
-				$result .= $txtnum3[($strlen - $i - 1) + 6];
-			}
-		}
-		$result .= 'ถ้วน';
-	} else {
-		$result .= 'ถ้วน';
+	$ret = "";
+	$baht = ReadNumber($number);
+	if ($baht != "")
+		$ret .= $baht . "บาท";
+
+	$satang = ReadNumber($fraction);
+	if ($satang != "")
+		$ret .=  $satang . "สตางค์";
+	else
+		$ret .= "ถ้วน";
+	return $ret;
+}
+
+function ReadNumber($number)
+{
+	$position_call = array("แสน", "หมื่น", "พัน", "ร้อย", "สิบ", "");
+	$number_call = array("", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า");
+	$number = $number + 0;
+	$ret = "";
+	if ($number == 0) return $ret;
+	if ($number > 1000000) {
+		$ret .= ReadNumber(intval($number / 1000000)) . "ล้าน";
+		$number = intval(fmod($number, 1000000));
 	}
-	return $result;
+
+	$divider = 100000;
+	$pos = 0;
+	while ($number > 0) {
+		$d = intval($number / $divider);
+		$ret .= (($divider == 10) && ($d == 2)) ? "ยี่" : ((($divider == 10) && ($d == 1)) ? "" : ((($divider == 1) && ($d == 1) && ($ret != "")) ? "เอ็ด" : $number_call[$d]));
+		$ret .= ($d ? $position_call[$pos] : "");
+		$number = $number % $divider;
+		$divider = $divider / 10;
+		$pos++;
+	}
+	return $ret;
 }
 
 function convertToEnglish($number)
@@ -208,9 +203,6 @@ if ($count > 0) {
 	$rec_yearen = date("Y", strtotime($rec_date_out));
 	$rec_yearth = date('Y') + 543;
 
-	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
-	$thaiBaht = convertToThaiBaht($amount);
-
 	$number = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
 	$EngBaht = convertToEnglish($number);
 
@@ -273,33 +265,35 @@ if ($count > 0) {
 
 	// logo
 	$img = 'TCPDF/cmulogo.png';
-	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
+	$cellWidth = 194;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
 
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() - 8;
+	$y = $pdf->GetY() - 4;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
 
 	// 
 
 	// logo logo
-	$img = 'TCPDF/cmulogo.png';
-	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
-	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
+	$img = 'TCPDF/nurselogo.png';
+	$cellWidth = 194;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 30;  // กำหนดความกว้างของรูปภาพ
 
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์ โดยเพิ่มค่า Y ที่ได้จากบรรทัดก่อนหน้านี้
-	$y += 160;
+	$y += 150;
 
-	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	$pdf->Image($img, $x, $y, $imageWidth, 30, '', '', '', false, 300, '', false, false, 0, false, false, false);
 
 	// 
-
-
+	function add_comma($amount)
+	{
+		return number_format($amount, 2);
+	}
 
 	// 
 	date_default_timezone_set('Asia/Bangkok');
@@ -307,7 +301,8 @@ if ($count > 0) {
 	$datetime_be = str_replace(date('Y'), $year, date('Y'));
 	// 
 
-
+	$rec_yearth = '2566';
+	$rec_yearth_cut = substr($rec_yearth, -2);
 	// 
 	$content = '';
 
@@ -353,7 +348,7 @@ if ($count > 0) {
 
 	<tr>
 	<td>099 4 00042317 9</td>
-	<td align="right">เบอร์โทร 053-949075</td>
+	<td align="right">โทรศัพท์/Tel 053-949075</td>
 	</tr>
 
 	<tr>
@@ -365,38 +360,37 @@ if ($count > 0) {
 
 	<tr>
 		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
-		<td align="right"><b>วันที่เอกสาร/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
+		<td align="right"><b>วันที่/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	
 	<tr>
-		<tdalign="right" colspan="2"><b>รายละเอียดโครงการ/Description</b><br>' . $inv_mst_data_row['edo_description'] . ' </tdalign=>
+		<tdalign="right" colspan="2"><b>รายการ/Description</b><br>' . $inv_mst_data_row['edo_description'] . ' </tdalign=>
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
+		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . add_comma($inv_mst_data_row['rec_money']) . ' บาท </td>
 	</tr>
 	<br>
 	<tr>
 		<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
-		<td align="right">' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+		<td align="right">' . add_comma($inv_mst_data_row['rec_money']) . ' บาท</td>
 	</tr>
 	<br>
 	<tr>
-		<td colspan="2" ><b>ชำระจำนวนเงิน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['rec_money']) . ' บาท (' . Convert($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>ชำระเงินจำนวน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['rec_money']) . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ' Baht)</b></td>
 	</tr>
-	<br>
 	<tr>
 		<td>
-			<b>ชำระด้วย/Pay by : </b>' . $inv_mst_data_row['payby'] . ' 
+			<b>ชำระโดย/Pay by : </b>' . $inv_mst_data_row['payby'] . ' 
 		</td>
 	</tr>
 	<br>
 	<tr>
 		<td></td>
-		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
+		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน/Collector<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
 	</tr>
 	<tr>
 		<td colspan="2" ><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน<br>The receipt will be valid with payment and the signature of the collector</b></td>
@@ -411,7 +405,7 @@ if ($count > 0) {
 	<br>
 	<br>
 	<br>
-
+	<br>
 	</tr>
 	<tr>
 		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
@@ -420,13 +414,14 @@ if ($count > 0) {
 		<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . add_comma($inv_mst_data_row['rec_money']) . ' บาท (' . Convert($inv_mst_data_row['rec_money']) . ')</td>
 	</tr>
 	<tr>
+	<br>
 		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>วัตถุประสงค์  </b><br>' . $inv_mst_data_row['edo_objective'] . ' </td>
+		<td colspan="2" ><b>วัตถุประสงค์  </b>' . $inv_mst_data_row['edo_objective'] . ' </td>
 	</tr>
 	<br>
 	<tr>
@@ -435,16 +430,18 @@ if ($count > 0) {
 	<br>
 	<br>
 	<br>
+	<br>
 	<tr>
 		<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
 	</tr>
 	<tr>
-	<td><b>เลยที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-	<td align="right"><b>ลำดับเอกสาร : </b>' . $inv_mst_data_row['id'] . '</td>
+	<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+	<td align="right"><b>ลำดับเอกสาร : </b>' . $rec_yearth_cut . '' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
 </tr>
 </table>
 
 	';
+
 
 	$pdf->writeHTML($content);
 

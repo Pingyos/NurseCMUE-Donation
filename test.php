@@ -1,239 +1,228 @@
-<style>
-    table.wrap-box {
-        width: 100%;
-        text-align: left;
-        line-height: 97%;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    table.wrap-top {
-        width: 100%;
-        text-align: left;
-        line-height: 97%;
-    }
+<?php require_once('head.php'); ?>
 
-    table.wrap-content,
-    table.wrap-total {
-        width: 100%;
-        text-align: left;
-        line-height: 97%;
-    }
+<body>
 
-    table.wrap-content tr th {
-        font-weight: bold;
-        text-align: center;
-        background-color: #eee;
-    }
+    <?php require_once('nav.php'); ?>
 
-    table.wrap-content tr td {
-        border-bottom-color: #ddd;
-        border-bottom-style: solid;
-        border-bottom-width: 0.5px;
-    }
+    <main>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-12 mx-auto">
+                        <form class="custom-form donate-form" action="#" method="POST" role="form">
+                            <center>
+                                <div class="col-lg-12 col-12">
+                                    <h5 class="mb-3">ร่วมบริจาค คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</h5>
+                                </div>
+                                <?php
+                                if (isset($_GET['edo_id'])) {
+                                    require_once 'connection.php';
+                                    $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
+                                    $stmt->execute([$_GET['edo_id']]);
+                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                    $edo_name = $row['edo_name'];
+                                    $edo_tex = $row['edo_tex'];
+                                    $edo_pro_id = $row['edo_pro_id'];
+                                    $edo_description = $row['edo_description'];
+                                    $edo_objective = $row['edo_objective'];
+                                }
+                                ?>
+                                <div class="col-lg-12 col-12">
+                                    <h3 class="mb-3"><?= $row['edo_name']; ?></h3>
+                                    <h3 class="mb-3"><?= $row['edo_tex']; ?></h3>
+                                </div>
+                            </center>
 
-    table.wrap-total tr td {
-        text-align: right;
-    }
+                            <fieldset id="date">
+                                <!--  -->
+                                <div class="row mt-4">
+                                    <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                        <div class="form-check form-check-radio">
+                                            <input type="radio" id="date-show-1" value="yes" name="date" class="form-check-input">
+                                            <label class="form-check-label" for="date-show-1">รายละเอียดโครงการ</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-6 form-check-group form-check-group-donation-frequency">
+                                        <div class="form-check form-check-radio">
+                                            <input type="radio" id="date-show-2" value="no" name="date" class="form-check-input" checked="checked">
+                                            <label class="form-check-label" for="date-show-2">บริจาค</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="date-show-date" class=" medium-12">
+                                    <div class="container">
+                                        <?php
+                                        if (isset($_GET['edo_id'])) {
+                                            require_once 'connection.php';
+                                            $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
+                                            $stmt->execute([$_GET['edo_id']]);
+                                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        }
+                                        ?>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-12 mb-5 mb-lg-0">
+                                                <img src="images/group-people-volunteering-foodbank-poor-people.jpg" class="custom-text-box-image img-fluid" alt="">
+                                            </div>
+                                            <div class="col-lg-8 col-12">
+                                                <div class="custom-text-box">
+                                                    <h5 class="mb-2"><?= $row['edo_name']; ?></h5>
+                                                    <h5 class="mb-0"><?= $row['edo_name1']; ?></h5>
+                                                    <p class="mb-0"><?= $row['edo_slogan1']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_description1']; ?></p>
+                                                    <h5 class="mb-0"><?= $row['edo_name2']; ?></h5>
+                                                    <p class="mb-0"><?= $row['edo_slogan2']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_description2']; ?></p>
+                                                    <h5 class="mb-0"><?= $row['edo_name3']; ?></h5>
+                                                    <p class="mb-0"><?= $row['edo_slogan3']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_description3']; ?></p>
+                                                    <h5 class="mb-0"><?= $row['edo_name4']; ?></h5>
+                                                    <p class="mb-0"><?= $row['edo_slogan4']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_description4']; ?></p>
+                                                    <h5>วัตถุประสงค์</h5>
+                                                    <p class="mb-0"><?= $row['edo_objective1']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective2']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective3']; ?></p>
+                                                    <p class="mb-0"><?= $row['edo_objective4']; ?></p>
 
-    .line-top {
-        border-top: 1px solid #ccc;
-    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div id="date-show-form" class=" medium-12">
+                                    <input type="text" name="edo_name" value="<?= $edo_name; ?>" hidden>
+                                    <input type="text" name="edo_tex" value="<?= $edo_tex; ?>" hidden>
+                                    <input type="text" name="edo_pro_id" value="<?= $edo_pro_id; ?>" hidden>
+                                    <input type="text" name="edo_description" value="<?= $edo_description; ?>" hidden>
+                                    <input type="text" name="edo_objective" value="<?= $edo_objective; ?>" hidden>
+                                    <input type="text" name="payby" value="โอน/Cash Transfer" hidden>
+                                    <input type="text" name="status_donat" value="online" hidden>
+                                    <div id="show-me-2" class="medium-12">
+                                        <div class="col-lg-12 col-12 mt-2">
+                                            <label class="control-label">จำนวนเงินที่ท่านประสงค์จะบริจาค <span style="color:red;">*</span></label>
+                                            <input type="number" name="rec_money" class="form-control" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">คำนำหน้าชื่อ <span style="color:red;">*</span></label>
+                                                <input type="text" name="name_title" class="form-control" list="cars" required>
+                                                <datalist id="cars">
+                                                    <option value="นาย" />
+                                                    <option value="นาง" />
+                                                    <option value="นางสาว" />
+                                                </datalist>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">ชื่อ <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_name" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">สกุล <span style="color:red;">*</span></label>
+                                                <input type="text" name="rec_surname" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">เบอร์โทรศัพท์ <span style="color:red;">*</span></label>
+                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">อีเมล์</label>
+                                                <input type="text" name="rec_email" class="form-control">
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">เลขบัตรประชาชน<span style="color:red;">*</span></label>
+                                                <input type="text" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                            </div>
+                                            <script>
+                                                function autoTab(obj) {
+                                                    var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
+                                                    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
+                                                    var returnText = new String("");
+                                                    var obj_l = obj.value.length;
+                                                    var obj_l2 = obj_l - 1;
+                                                    for (i = 0; i < pattern.length; i++) {
+                                                        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
+                                                            returnText += obj.value + pattern_ex;
+                                                            obj.value = returnText;
+                                                        }
+                                                    }
+                                                    if (obj_l >= pattern.length) {
+                                                        obj.value = obj.value.substr(0, pattern.length);
+                                                    }
+                                                }
+                                            </script>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">ที่อยู่ <span style="color:red;">*</span></label>
+                                                <input type="text" name="address" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">ถนน </label>
+                                                <input type="text" name="road" class="form-control">
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">จังหวัด <span style="color:red;">*</span></label>
+                                                <input type="text" name="provinces" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">อำเภอ <span style="color:red;">*</span></label>
+                                                <input type="text" name="amphures" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">ตำบล <span style="color:red;">*</span></label>
+                                                <input type="text" name="districts" class="form-control" required>
+                                            </div>
+                                            <div class="col-lg-4 col-12 mt-2">
+                                                <label class="control-label">รหัสไปรษณีย์</label>
+                                                <input type="text" name="zip_code" class="form-control">
+                                            </div>
 
-    .line-bottom {
-        border-bottom: 1px solid #ccc;
-    }
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="form-control mt-4">ยืนยันข้อมูล</button>
+                                    <?php require_once 'donate_no_recript_add.php'; ?>
+                                    <?php echo '<pre>';
+                                    print_r($_POST);
+                                    echo '</pre>';
+                                    ?>
+                                </div>
+                                <script>
+                                    function showHide1(input) {
+                                        var attrVal = $(input).attr('id');
+                                        switch (attrVal) {
+                                            case 'date-show-1':
+                                                $('#date-show-form').hide();
+                                                $('#date-show-date').show();
+                                                break;
+                                            case "date-show-2":
+                                                $('#date-show-date').hide();
+                                                $('#date-show-form').show();
+                                                break;
+                                            default:
+                                                $('#date-show-form').show();
+                                                $('#date-show-date').hide();
+                                                break;
+                                        }
+                                    }
+                                    $(document).ready(function() {
+                                        $('input[type="radio"]').each(function() {
+                                            showHide1(this);
+                                        });
+                                        $('input[type="radio"]').click(function() {
+                                            showHide1(this);
+                                        });
+                                    });
+                                </script>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <?php require_once('footer.php'); ?>
+</body>
 
-    .line-left {
-        border-left: 1px solid #ccc;
-    }
-
-    .line-right {
-        border-right: 1px solid #ccc;
-    }
-
-    .header-title {
-        font-size: 22px;
-        font-weight: bold;
-    }
-</style>
-<table class="wrap-box" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width: 60%;"><span><?= $company['company_name'] ?></span>
-            <br /> Chiang Mai Universty
-            <br /> 239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200
-            <br /> 239 HuayKaew Road, Muang District, Chiang Mai, 50200
-            <br /> โทรศัพท์/Tel 053-943130
-            <br /> เลขที่ประจำตัวผู้เสียภาษี/Taxpayer identification Number 0994000423179
-        </td>
-        <td style="text-align: right;width: 40%;"><span>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</span>
-            <br /> Faculty of Nurseing, CMU
-            <br />110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200
-            <br />110/406 Inthawaroros Road, Suthep, Chiang Mai 50200
-            <br /> โทรศัพท์/Tel 053-949075
-        </td>
-    </tr>
-</table>
-<div class="line"></div>
-<table class="wrap-box line-top" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width:70%;">
-            <table class="wrap-top" cellpadding="3" cellspacing="0">
-                <tr>
-                    <td style="width:20%;"><b>ชื่อ/Name</b></td>
-                    <td><?= $document['company_name'] ?></td>
-                </tr>
-                <tr>
-                    <td style="width:20%;"><b>ที่อยู่/Address</b></td>
-                    <td><?= nl2br($document['contact_address']) ?></td>
-                </tr>
-            </table>
-        </td>
-        <td>
-            <table class="wrap-top" cellpadding="3" cellspacing="0">
-                <tr>
-                    <td style="width:25%;"><b>เลขที่เอกสาร</b></td>
-                    <td style="width:75%;"><?= $document['doc_no'] ?></td>
-                </tr>
-                <tr>
-                    <td style="width:20%;"><b>วันที่</b></td>
-                    <td style="width:75%;"><?php
-                                            function toDateThai($d)
-                                            {
-                                                $m = array("", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม");
-                                                $e = explode("/", $d);
-                                                $r = $e[0] . " " . $m[(int)$e[1]] . " " . ($e[2] + 543);
-                                                return $r;
-                                            }
-                                            $date_today = date("d/m/Y");
-                                            echo "" . toDateThai($date_today);
-                                            ?></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-<table class="wrap-box" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width:70%;">
-            <table class="wrap-box" cellpadding="3" cellspacing="0">
-                <tr>
-                    <td style="width:90%;"><b>รายละเอียด</b></td>
-                </tr>
-                <?php for ($i = $start_page; $i < $last_page; $i++) : ?>
-                    <tr>
-                        <td><?= $document['products'][$i]['name'] ?></td>
-                    </tr>
-                <?php endfor; ?>
-            </table>
-        </td>
-        <td>
-            <table class="wrap-top" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td style="width:35%;"><b>จำนวนเงิน/Amount</b></td>
-                </tr>
-                <tr>
-                    <td style="width:75%;"><?php echo number_format($document['grand_total'], 2); ?></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-<table class="wrap-total" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width: 47%; font-weight: bold;"> จำนวนเงินรวม/Total</td>
-        <td style="width: 30%;"><?php echo number_format($document['grand_total'], 2); ?> </td>
-    </tr>
-</table>
-<table class="wrap-box " cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width:100%;">
-            <table class="wrap-box" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td style="width:100%;"><b>รวมทั้งหมด <?php echo number_format($document['grand_total'], 2); ?> บาท (<?= $grand_total_text ?>)/Tatal Amouunt Received <?php echo number_format($document['grand_total'], 2); ?> Baht (<?= $grand_total_text ?>)</b></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-<table class="wrap-box " cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width:100%;">
-            <table class="wrap-box" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td style="width:100%;"><b>ชำระเงินจำนวน <?php echo number_format($document['grand_total'], 2); ?> บาท (<?= $grand_total_text ?>)/Tatal Amouunt Received <?php echo number_format($document['grand_total'], 2); ?> Baht (<?= $grand_total_text ?>)</b></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-
-<table class="wrap-box" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="width: 75%;">
-            <table class="wrap-signature" cellpadding="0" cellspacing="0">
-                <tr>
-                    <th style="width:20%; font-weight: bold;">ชำระด้วย/by</th>
-                    <td style="width:20%;"><?= nl2br($document['payment_type']) ?></td>
-                </tr>
-            </table>
-        </td>
-        <td style="width:30%;">
-            <table class="wrap-signature" cellpadding="0" cellspacing="0">
-                <tr>
-                    <td class="line-signature" colspan="2" style="line-height: 100%;"></td>
-                </tr>
-                <tr>
-                    <td colspan="2">(นางสาวชนิดา ต้นพิพัฒน์)</td>
-                </tr>
-                <tr>
-                    <td colspan="2">เจ้าหน้าที่ผู้รับเงิน/Collector</td>
-                </tr>
-                <tr>
-                    <td style="width: 20%;">วันที่</td>
-                    <td><?php
-                        function toDateThai1($d)
-                        {
-                            $m = array(  
-                                "",
-                                "มกราคม",
-                                "กุมภาพันธ์",
-                                "มีนาคม",
-                                "เมษายน",
-                                "พฤษภาคม",
-                                "กรกฎาคม",
-                                "สิงหาคม",
-                                "กันยายน",
-                                "ตุลาคม",
-                                "พฤศจิกายน",
-                                "ธันวาคม"
-                            );
-                            $e = explode("/", $d);
-                            $r = $e[0] . " " . $m[(int)$e[1]] . " " . ($e[2] + 543);
-                            return $r;
-                        }
-
-                        $date_today = date("d/m/Y");
-                        echo "" . toDateThai1($date_today);
-                        ?></td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-
-
-
-
-<?php if ($count == $curr_page) : ?>
-
-    <?php if (!empty($document['remark'])) : ?>
-        <table class="wrap-box" cellpadding="0" cellspacing="0">
-            <tr>
-                <td><b>หมายเหตุ</b><br />
-                    <?php echo nl2br($document['remark']); ?>
-                </td>
-            </tr>
-        </table>
-    <?php endif; ?>
-
-<?php endif; ?>
+</html>
