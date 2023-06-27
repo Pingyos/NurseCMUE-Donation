@@ -54,7 +54,6 @@
                     <div class="col-lg-12 col-12 text-center mb-4">
                         <h2>โครงการ</h2>
                     </div>
-                    <div class="col-lg-6 col-12">
                     <?php
                     require_once 'connection.php';
                     $stmt = $conn->prepare("SELECT* FROM pro_edo");
