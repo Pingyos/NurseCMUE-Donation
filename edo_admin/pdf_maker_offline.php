@@ -82,100 +82,163 @@ function ReadNumber($number)
 	return $ret;
 }
 
-function convertToEnglish($number)
-{
-	$ones = array(
-		0 => 'zero',
-		1 => 'one',
-		2 => 'two',
-		3 => 'three',
-		4 => 'four',
-		5 => 'five',
-		6 => 'six',
-		7 => 'seven',
-		8 => 'eight',
-		9 => 'nine',
-		10 => 'ten',
-		11 => 'eleven',
-		12 => 'twelve',
-		13 => 'thirteen',
-		14 => 'fourteen',
-		15 => 'fifteen',
-		16 => 'sixteen',
-		17 => 'seventeen',
-		18 => 'eighteen',
-		19 => 'nineteen'
-	);
+class Currency {
+  public function bahtEng($thb) {
+    list($thb, $ths) = explode('.', $thb);
+    $ths = substr($ths . '00', 0, 2);
+    $thb = $this->engFormat(intval($thb)) . ' Baht';
+    if (intval($ths) > 0) {
+      $thb .= ' ' . $this->engFormat(intval($ths)) . ' Satang';
+    }
+    return $thb;
+  }
 
-	$tens = array(
-		2 => 'twenty',
-		3 => 'thirty',
-		4 => 'forty',
-		5 => 'fifty',
-		6 => 'sixty',
-		7 => 'seventy',
-		8 => 'eighty',
-		9 => 'ninety'
-	);
-
-	$number = intval($number);
-
-	if ($number < 20) {
-		return $ones[$number];
-	}
-
-	if ($number < 100) {
-		$tensDigit = intval($number / 10);
-		$onesDigit = $number % 10;
-
-		$result = $tens[$tensDigit];
-
-		if ($onesDigit > 0) {
-			$result .= '-' . $ones[$onesDigit];
-		}
-
-		return $result;
-	}
-
-	if ($number < 1000) {
-		$hundredsDigit = intval($number / 100);
-		$remainder = $number % 100;
-
-		$result = $ones[$hundredsDigit] . ' hundred';
-
-		if ($remainder > 0) {
-			$result .= ' ' . convertToEnglish($remainder);
-		}
-
-		return $result;
-	}
-
-	$suffixes = array(
-		1000 => 'thousand',
-		1000000 => 'million',
-		1000000000 => 'billion',
-		1000000000000 => 'trillion',
-		1000000000000000 => 'quadrillion',
-		1000000000000000000 => 'quintillion'
-	);
-
-	foreach (array_reverse($suffixes, true) as $suffix => $suffixText) {
-		if ($number >= $suffix) {
-			$quotient = intval($number / $suffix);
-			$remainder = $number % $suffix;
-
-			$result = convertToEnglish($quotient) . ' ' . $suffixText;
-
-			if ($remainder > 0) {
-				$result .= ' ' . convertToEnglish($remainder);
-			}
-
-			return $result;
-		}
-	}
-
-	return 'Number out of range';
+  private function engFormat($number) {
+    $max_size = pow(10, 18);
+    if (!$number)
+      return "zero";
+    if (is_int($number) && $number < abs($max_size)) {
+      switch ($number) {
+        case $number < 0:
+          $prefix = "negative";
+          $suffix = $this->engFormat(-1 * $number);
+          $string = $prefix . " " . $suffix;
+          break;
+        case 1:
+          $string = "one";
+          break;
+        case 2:
+          $string = "two";
+          break;
+        case 3:
+          $string = "three";
+          break;
+        case 4:
+          $string = "four";
+          break;
+        case 5:
+          $string = "five";
+          break;
+        case 6:
+          $string = "six";
+          break;
+        case 7:
+          $string = "seven";
+          break;
+        case 8:
+          $string = "eight";
+          break;
+        case 9:
+          $string = "nine";
+          break;
+        case 10:
+          $string = "ten";
+          break;
+        case 11:
+          $string = "eleven";
+          break;
+        case 12:
+          $string = "twelve";
+          break;
+        case 13:
+          $string = "thirteen";
+          break;
+        case 15:
+          $string = "fifteen";
+          break;
+        case $number < 20:
+          $string = $this->engFormat($number % 10);
+          if ($number == 18) {
+            $suffix = "een";
+          } else {
+            $suffix = "teen";
+          }
+          $string .= $suffix;
+          break;
+        case 20:
+          $string = "twenty";
+          break;
+        case 30:
+          $string = "thirty";
+          break;
+        case 40:
+          $string = "forty";
+          break;
+        case 50:
+          $string = "fifty";
+          break;
+        case 60:
+          $string = "sixty";
+          break;
+        case 70:
+          $string = "seventy";
+          break;
+        case 80:
+          $string = "eighty";
+          break;
+        case 90:
+          $string = "ninety";
+          break;
+        case $number < 100:
+          $prefix = $this->engFormat($number - $number % 10);
+          $suffix = $this->engFormat($number % 10);
+          $string = $prefix . "-" . $suffix;
+          break;
+        case $number < pow(10, 3):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 2)))) . " hundred";
+          if ($number % pow(10, 2))
+            $suffix = " " . $this->engFormat($number % pow(10, 2));
+          $string = $prefix . $suffix;
+          break;
+        case $number < pow(10, 6):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 3)))) . " thousand";
+          if ($number % pow(10, 3))
+            $suffix = $this->engFormat($number % pow(10, 3));
+          $string = $prefix . " " . $suffix;
+          break;
+        case $number < pow(10, 9):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 6)))) . " million";
+          if ($number % pow(10, 6))
+            $suffix = $this->engFormat($number % pow(10, 6));
+          $string = $prefix . " " . $suffix;
+          break;
+        case $number < pow(10, 12):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 9)))) . " billion";
+          if ($number % pow(10, 9))
+            $suffix = $this->engFormat($number % pow(10, 9));
+          $string = $prefix . " " . $suffix;
+          break;
+        case $number < pow(10, 15):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 12)))) . " trillion";
+          if ($number % pow(10, 12))
+            $suffix = $this->engFormat($number % pow(10, 12));
+          $string = $prefix . " " . $suffix;
+          break;
+        case $number < pow(10, 18):
+          $prefix = $this->engFormat(intval(floor($number / pow(10, 15)))) . " quadrillion";
+          if ($number % pow(10, 15))
+            $suffix = $this->engFormat($number % pow(10, 15));
+          $string = $prefix . " " . $suffix;
+          break;
+      }
+    }
+    return $string;
+  }
 }
+
+function convertToEnglish($thb) {
+  $currency = new Currency();
+  return $currency->bahtEng($thb);
+}
+
+$inv_mst_data_row = [
+  'rec_money' => '12345.67'
+];
+
+$rec_money = $inv_mst_data_row['rec_money'];
+$convertedValue = convertToEnglish($rec_money);
+
+
 function generateReceiptNumber($numid)
 {
 	$receipt_number = str_pad($numid, 4, '0', STR_PAD_LEFT);
@@ -201,7 +264,8 @@ if ($count > 0) {
 	$rec_month = $thai_months[date("m", strtotime($rec_date_out))];
 	$rec_monen = $english_months[date("m", strtotime($rec_date_out))];
 	$rec_yearen = date("Y", strtotime($rec_date_out));
-	$rec_yearth = date('Y') + 543;
+	$rec_yearth = $rec_yearen + 543;
+	
 
 	$number = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
 	$EngBaht = convertToEnglish($number);
@@ -300,9 +364,6 @@ if ($count > 0) {
 	$year = date('Y') + 543;
 	$datetime_be = str_replace(date('Y'), $year, date('Y'));
 	// 
-
-	$rec_yearth = '2566';
-	$rec_yearth_cut = substr($rec_yearth, -2);
 	// 
 	$content = '';
 
@@ -355,12 +416,12 @@ if ($count > 0) {
 	
 	<br>
 		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
-		<td align="right"><b>เลขที่ใบเสร็จ/Receipt : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+		<td align="right"><b>เลขที่ใบเสร็จ/Receipt No. </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
 	</tr>
 
 	<tr>
 		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
-		<td align="right"><b>วันที่/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
+		<td align="right"><b>วันที่/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth. ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	
 	<tr>
@@ -380,7 +441,7 @@ if ($count > 0) {
 		<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['rec_money']) . ' บาท (' . Convert($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['rec_money']) . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ' Baht)</b></td>
+		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['rec_money']) . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
 	</tr>
 	<tr>
 		<td>
@@ -436,7 +497,7 @@ if ($count > 0) {
 	</tr>
 	<tr>
 	<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-	<td align="right"><b>ลำดับเอกสาร : </b>' . $rec_yearth_cut . '' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+	<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
 </tr>
 </table>
 

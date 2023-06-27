@@ -1,6 +1,5 @@
 <?php
 require_once 'head.php'; ?>
-
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -46,7 +45,7 @@ require_once 'head.php'; ?>
 
                                                 </td>
                                                 <td><?= $t1['edo_name']; ?></td>
-                                                <td><?= $t1['rec_money']; ?></td>
+                                                <td><?= number_format($t1['rec_money'], 2, '.', ','); ?></td>
                                                 <td>
                                                     <a href="pdf_maker_offline.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
                                                     <a href="<?php echo ($t1['status_user'] === 'person') ? 'receipt_person_edit.php?id=' . $t1['id'] : 'receipt_corporation_edit.php?id=' . $t1['id']; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> แก้ไข</a>
@@ -64,7 +63,9 @@ require_once 'head.php'; ?>
             </div>
         </div>
         <div class="clearfix"></div>
+        <?php
 
+        ?>
 
 
     </div>
