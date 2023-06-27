@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <title>NurseCMU E-Donation</title>
-    <meta name="keywords" content="Research Support Services Booking">
+    <meta name="keywords" content="NurseCMU E-Donation">
     <link href="images/logo_m.png" rel="icon">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">

@@ -302,16 +302,16 @@ if ($count > 0) {
 	// 
 
 	// ลายเช็นพี่เจี๊ยบ
-	$img = 'TCPDF/';
-	$cellWidth = 355;  // กำหนดความกว้างของเซลล์
-	$imageWidth = 30;  // กำหนดความกว้างของรูปภาพ
+	$img = 'TCPDF/signature.png';
+	$cellWidth = 360;  // กำหนดความกว้างของเซลล์
+	$imageWidth = 20;  // กำหนดความกว้างของรูปภาพ
 
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 85;
+	$y = $pdf->GetY() + 96;
 
-	$pdf->Image($img, $x, $y, $imageWidth, 25, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	$pdf->Image($img, $x, $y, $imageWidth, 20, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 
 
 	// ลายน้ำ
@@ -349,7 +349,7 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์ โดยเพิ่มค่า Y ที่ได้จากบรรทัดก่อนหน้านี้
-	$y += 150;
+	$y += 153;
 
 	$pdf->Image($img, $x, $y, $imageWidth, 30, '', '', '', false, 300, '', false, false, 0, false, false, false);
 
@@ -449,6 +449,7 @@ if ($count > 0) {
 		</td>
 	</tr>
 	<br>
+	<br>
 	<tr>
 		<td></td>
 		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน/Collector<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
@@ -461,7 +462,6 @@ if ($count > 0) {
 	</tr>
 	<tr>
 
-	<br>
 	<br>
 	<br>
 	<br>
