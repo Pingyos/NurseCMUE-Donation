@@ -15,15 +15,15 @@
                         <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="images/slide/volunteer-helping-with-donation-box.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/slide/DSC_3595.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/slide/volunteer-selecting-organizing-clothes-donations-charity.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/slide/DSC_7972.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/slide/medium-shot-people-collecting-donations.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/slide/DSC_8450.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
                             </div>
 
@@ -47,8 +47,7 @@
             <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
         </section>
 
-
-        <section class="section-padding" id="section_3">
+        <section class="section-padding" id="section_2">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-12 text-center mb-4">
@@ -56,22 +55,22 @@
                     </div>
                     <?php
                     require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT* FROM pro_edo");
+                    $stmt = $conn->prepare("SELECT * FROM pro_edo");
                     $stmt->execute();
                     $result = $stmt->fetchAll();
                     foreach ($result as $t1) {
+                        $edoId = $t1['edo_id'];
+                        $imageURL = "images/causes" . $t1['img_file'];
                     ?>
                         <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
                             <div class="custom-block-wrap">
-                                <img src="images/causes/DSC_3678.jpg" class="custom-block-image img-fluid" alt="">
-
+                                <img src="images/causes/<?= $t1['img_file']; ?>" class="custom-block-image img-fluid" alt="">
                                 <div class="custom-block">
                                     <div class="custom-block-body">
                                         <h5 class="mb-3"><?= $t1['edo_name']; ?></h5>
-
                                         <p><?= $t1['edo_tex']; ?></p>
                                     </div>
-                                    <a href="donate_details.php?edo_id=<?= $t1['edo_id']; ?>" class="custom-btn btn">บริจาค</a>
+                                    <a href="donate_details.php?edo_id=<?= $edoId; ?>" class="custom-btn btn">บริจาค</a>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +79,7 @@
             </div>
         </section>
 
-        <section class="about-section section-padding">
+        <section class="about-section section-padding" id="section_4">
             <div class="container">
                 <div class="row">
 
@@ -89,13 +88,9 @@
                     </div>
                     <div class="col-lg-4 col-md-4 col-12">
                         <div class="custom-text-block">
-                            <h2 class="mb-0">Sandy Chan</h2>
-
-                            <p class="text-muted mb-lg-4 mb-md-4">Co-Founding Partner</p>
-
-                            <p>Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito Professional charity theme based</p>
-
-                            <p>You are not allowed to redistribute this template ZIP file on any other template collection website. Please contact TemplateMo for more information.</p>
+                            <h3 class="mb-0">คุณ ชนิดา ต้นพิพัฒน์</h3>
+                            <p class="text-muted mb-lg-4 mb-md-4">งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
+                            <p>ในกรณีที่ไม่สามารถบริจาคผ่าน e-donation ได้ ติดต่อ 053-949075</p>
 
                             <ul class="social-icon mt-4">
                                 <li class="social-icon-item">
@@ -122,39 +117,24 @@
                 <div class="row">
 
                     <div class="col-lg-8 col-12 mx-auto">
-                        <h2 class="mb-lg-3">Happy Customers</h2>
+                        <h2 class="mb-lg-3">โครงการแนะนำ</h2>
 
                         <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
 
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div class="carousel-caption">
-                                        <h4 class="carousel-title">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito charity theme</h4>
-
-                                        <small class="carousel-name"><span class="carousel-name-title">Maria</span>, Boss</small>
+                                <?php
+                                require_once 'connection.php';
+                                $stmt = $conn->prepare("SELECT* FROM pro_edo");
+                                $stmt->execute();
+                                $result = $stmt->fetchAll();
+                                foreach ($result as $t1) {
+                                ?>
+                                    <div class="carousel-item active">
+                                        <div class="carousel-caption">
+                                            <h4 class="carousel-title"><?= $t1['edo_name']; ?></h4>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="carousel-item">
-                                    <div class="carousel-caption">
-                                        <h4 class="carousel-title">Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci</h4>
-
-                                        <small class="carousel-name"><span class="carousel-name-title">Thomas</span>, Partner</small>
-                                    </div>
-                                </div>
-
-                                <div class="carousel-item">
-                                    <div class="carousel-caption">
-                                        <h4 class="carousel-title">Lorem Ipsum dolor sit amet, consectetur adipsicing kengan omeg kohm tokito charity theme</h4>
-                                        <small class="carousel-name"><span class="carousel-name-title">Jane</span>, Advisor</small>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="carousel-caption">
-                                        <h4 class="carousel-title">Sed leo nisl, posuere at molestie ac, suscipit auctor mauris quis metus tempor orci</h4>
-                                        <small class="carousel-name"><span class="carousel-name-title">Bob</span>, Entreprenuer</small>
-                                    </div>
-                                </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -162,7 +142,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <?php require_once('footer.php'); ?>

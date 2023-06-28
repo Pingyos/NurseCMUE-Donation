@@ -22,11 +22,19 @@
                         $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                         $stmt->execute([$_GET['edo_id']]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        // ตรวจสอบว่าพบข้อมูลโครงการหรือไม่ก่อนแสดงรูปภาพ
+                        if ($row) {
+                            $imageURL = "images/causes/" . $row['img_file'];
+                    ?>
+                            <div class="col-lg-5 col-12 mb-5 mb-lg-0">
+                                <img src="<?= $imageURL; ?>" class="custom-text-box-image img-fluid" alt="">
+                            </div>
+                    <?php
+                        }
                     }
                     ?>
-                    <div class="col-lg-5 col-12 mb-5 mb-lg-0">
-                        <img src="images/group-people-volunteering-foodbank-poor-people.jpg" class="custom-text-box-image img-fluid" alt="">
-                    </div>
+
                     <div class="col-lg-7 col-12">
                         <div class="custom-text-box">
                             <h3 class="mb-2"><?= $row['edo_name']; ?></h3>
@@ -65,8 +73,8 @@
                             </div>
                         </div>
                         <h2></h2>
-                        <div class="col-lg-12 col-12" >
-                            <a href="#section_4" class="custom-btn btn smoothscroll">บริจาคโดยไม่ประสงค์ออกนาม</a>
+                        <div class="col-lg-12 col-12">
+                            <a href="donateion_no.php?edo_id=<?= $row['edo_id']; ?>" class="custom-btn btn smoothscroll">บริจาคโดยไม่ประสงค์ออกนาม</a>
                             <a href="donateion.php?edo_id=<?= $row['edo_id']; ?>" class="custom-btn btn smoothscroll">บริจาคเพื่อลดหย่อนภาษี</a>
                         </div>
                     </div>

@@ -22,15 +22,15 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link click-scroll" href="index.php#section_4">คู่มือการบริจาค</a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link click-scroll" href="invoice.php">รายนามผู้บริจาค</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link " href="service.php">สิทธิประโยชน์</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php#section_3">เกี่ยวกับเรา</a>
                 </li>
 
                 <li class="nav-item">

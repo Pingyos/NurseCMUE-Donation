@@ -28,7 +28,7 @@ require_once 'head.php'; ?>
                                     <tbody>
                                         <?php
                                         require_once 'connection.php';
-                                        $stmt = $conn->prepare("SELECT * FROM receipt_online");
+                                        $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online'");
                                         $stmt->execute();
                                         $result = $stmt->fetchAll();
                                         $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
@@ -41,15 +41,16 @@ require_once 'head.php'; ?>
                                                     <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
                                                     <br>
                                                     <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
+                                                    <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span> /
                                                     <span style="color: orange;"><?= $t1['rec_time']; ?></span>
+
                                                 </td>
                                                 <td><?= $t1['edo_name']; ?></td>
-                                                <td><?= $t1['rec_money']; ?></td>
+                                                <td><?= number_format($t1['rec_money'], 2, '.', ','); ?></td>
                                                 <td>
-                                                    <a href="pdf_maker_online.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
-                                                    <a href="" class="btn btn-warning btn-sm"><i class="fa fa-pencil"> แก้ไข</i></a>
+                                                    <a href="pdf_maker_offline.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
+                                                    <a href="<?php echo ($t1['status_user'] === 'person') ? 'receipt_person_edit.php?id=' . $t1['id'] : 'receipt_corporation_edit.php?id=' . $t1['id']; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i> แก้ไข</a>
                                                 </td>
-
                                             </tr>
                                         <?php $countrow++;
                                         }
@@ -63,7 +64,9 @@ require_once 'head.php'; ?>
             </div>
         </div>
         <div class="clearfix"></div>
+        <?php
 
+        ?>
 
 
     </div>

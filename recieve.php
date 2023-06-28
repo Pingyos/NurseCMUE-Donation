@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-
-
-
-</body>
-
-</html>
+<?php 
+$json = file_get_contents('php://input');
+$data = json_decode($json);
+$jsonData = json_encode($data);
+echo $jsonData;

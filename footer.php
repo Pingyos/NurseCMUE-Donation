@@ -30,7 +30,7 @@
                     <i class="bi-telephone me-2"></i>
 
                     <a href="tel: 120-240-9600" class="site-footer-link">
-                        053-935024
+                        053-949075
                     </a>
                 </p>
 
