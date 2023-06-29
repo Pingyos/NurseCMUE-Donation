@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-lg-3 col-12 mt-2">
                                 <label class="control-label">จำนวนเงิน</label>
-                                <input type="text" name="rec_fullname" value="<?= number_format($row['rec_money'], 2, '.', ','); ?>" class="form-control" readonly>
+                                <input type="text" name="rec_fullname" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
                             </div>
                             <div class="col-lg-12 col-12 mt-2">
                                 <label class="control-label">รายละเอียดโครงการ</label>
@@ -61,10 +61,15 @@
                                 <h5 class="mb-3">สแกนเพื่อชำระเงิน</h5>
                             </div>
                         </center>
-                        <div class="row">
-
+                        <div class="container">
+                            <div class="row">
+                                <center>
+                                    <div class="col-lg-3 col-12 mb-5 mb-lg-0">
+                                        <img src="QR2085.jpg" class="custom-text-box-image img-fluid" alt="">
+                                    </div>
+                                </center>
+                            </div>
                         </div>
-                        
                 </div>
                 </form>
             </div>

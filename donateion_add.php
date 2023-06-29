@@ -15,7 +15,7 @@ if (
   && isset($_POST['amphures'])
   && isset($_POST['districts'])
   && isset($_POST['zip_code'])
-  && isset($_POST['rec_money'])
+  && isset($_POST['amount'])
   && isset($_POST['edo_name'])
   && isset($_POST['edo_pro_id'])
   && isset($_POST['edo_description'])
@@ -39,7 +39,7 @@ if (
     districts,
     zip_code,
     edo_name,
-    rec_money,
+    amount,
     edo_pro_id,
     edo_description,
     edo_objective,
@@ -60,7 +60,7 @@ if (
     :districts,
     :zip_code,
     :edo_name,
-    :rec_money,
+    :amount,
     :edo_pro_id,
     :edo_description,
     :edo_objective,
@@ -82,7 +82,7 @@ if (
   $stmt->bindParam(':districts', $_POST['districts'], PDO::PARAM_STR);
   $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_money', $_POST['rec_money'], PDO::PARAM_STR);
+  $stmt->bindParam(':amount', $_POST['amount'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);

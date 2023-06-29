@@ -83,7 +83,7 @@
                             <input type="text" name="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="text" name="rec_money" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
+                            <input type="text" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
                         </div>
                     </div>
                     <div class="row">

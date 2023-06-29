@@ -40,7 +40,7 @@
                                                 <td><?= $t1['edo_name']; ?></td>
 
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn"><i class="fa fa-file-pdf-o"></i> เปิด</a>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn"></a>
                                                 </td>
                                             </tr>
                                         <?php $countrow++;
