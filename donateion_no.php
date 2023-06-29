@@ -37,8 +37,10 @@
                         <input type="text" name="edo_objective" value="<?= $row['edo_objective']; ?>" hidden>
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
-                        <input type="hidden" name="rec_date_out" hidden>
+                        <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
+                        <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="name_title" hidden>
+                        <input type="text" name="payby" value="online" hidden>
                         <input type="text" name="rec_surname" hidden>
                         <input type="text" name="rec_tel" value="-" hidden>
                         <input type="text" name="rec_idname" value="-" hidden>
@@ -49,6 +51,7 @@
                         <input type="text" name="amphures" hidden>
                         <input type="text" name="districts" hidden>
                         <input type="text" name="zip_code" hidden>
+                        <input type="text" name="comment" hidden>
 
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>

@@ -68,7 +68,7 @@
                             <input type="text" name="address" class="form-control" placeholder="ที่อยู่ *" required>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" name="road" class="form-control" placeholder="ถนน" >
+                            <input type="text" name="road" class="form-control" placeholder="ถนน">
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="text" name="provinces" class="form-control" placeholder="จังหวัด *" required>
@@ -93,7 +93,10 @@
                         <input type="text" name="edo_objective" value="<?= $row['edo_objective']; ?>" hidden>
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
-                        <input type="hidden" name="rec_date_out">
+                        <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
+                        <input type="text" name="payby" value="online" hidden>
+                        <input type="text" name="rec_date_s" hidden>
+                        <input type="text" name="comment" hidden>
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php require_once('donateion_add.php'); ?>
