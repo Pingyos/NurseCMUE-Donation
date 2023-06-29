@@ -41,7 +41,7 @@ require_once 'head.php'; ?>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td><?= $t1['rec_fullname']; ?></td>
                                                 <td><?= $t1['edo_tex']; ?></td>
-                                                <td><?= $t1['rec_money']; ?></td>
+                                                <td><?= $t1['amount']; ?></td>
                                             </tr>
 
                                         <?php $countrow++;

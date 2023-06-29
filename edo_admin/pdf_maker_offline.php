@@ -232,11 +232,10 @@ function convertToEnglish($thb) {
 }
 
 $inv_mst_data_row = [
-  'rec_money' => '12345.67'
 ];
 
-$rec_money = $inv_mst_data_row['rec_money'];
-$convertedValue = convertToEnglish($rec_money);
+$amount = $inv_mst_data_row['amount'];
+$convertedValue = convertToEnglish($amount);
 
 
 function generateReceiptNumber($numid)
@@ -252,7 +251,7 @@ $receipt_number = generateReceiptNumber($numid);
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.amount, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -267,7 +266,7 @@ if ($count > 0) {
 	$rec_yearth = $rec_yearen + 543;
 	
 
-	$number = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
+	$number = $inv_mst_data_row['amount']; // assuming the column name for the amount is 'amount'
 	$EngBaht = convertToEnglish($number);
 
 	//----- Code for generate pdf
@@ -429,19 +428,19 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . add_comma($inv_mst_data_row['rec_money']) . ' บาท </td>
+		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . add_comma($inv_mst_data_row['amount']) . ' บาท </td>
 	</tr>
 	<br>
 	<tr>
 		<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
-		<td align="right">' . add_comma($inv_mst_data_row['rec_money']) . ' บาท</td>
+		<td align="right">' . add_comma($inv_mst_data_row['amount']) . ' บาท</td>
 	</tr>
 	<br>
 	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['rec_money']) . ' บาท (' . Convert($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['rec_money']) . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['amount']) . ' Baht (' . convertToEnglish($inv_mst_data_row['amount']) . ')</b></td>
 	</tr>
 	<tr>
 		<td>
@@ -475,7 +474,7 @@ if ($count > 0) {
 		<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . add_comma($inv_mst_data_row['rec_money']) . ' บาท (' . Convert($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</td>
 	</tr>
 	<tr>
 	<br>

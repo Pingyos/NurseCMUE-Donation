@@ -98,8 +98,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_money" class="form-control" required>
+                                                <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
+                                                <input type="text" name="amount" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">

@@ -147,8 +147,8 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_money" class="control-label mb-1">จำนวนเงินที่บริจาค </label>
-                                                <input type="text" name="rec_money" class="form-control" value="<?= $row['rec_money']; ?>">
+                                                <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค </label>
+                                                <input type="text" name="amount" class="form-control" value="<?= $row['amount']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-3">

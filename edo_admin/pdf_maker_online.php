@@ -194,7 +194,7 @@ $receipt_number = generateReceiptNumber($numid);
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.rec_money, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_online T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.amount, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_online T1 WHERE T1.id='" . $id . "' ";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -208,10 +208,10 @@ if ($count > 0) {
 	$rec_yearen = date("Y", strtotime($rec_date_out));
 	$rec_yearth = date('Y') + 543;
 
-	$amount = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
+	$amount = $inv_mst_data_row['amount']; // assuming the column name for the amount is 'amount'
 	$thaiBaht = convertToThaiBaht($amount);
 
-	$number = $inv_mst_data_row['rec_money']; // assuming the column name for the amount is 'rec_money'
+	$number = $inv_mst_data_row['amount']; // assuming the column name for the amount is 'amount'
 	$EngBaht = convertToEnglish($number);
 
 	//----- Code for generate pdf
@@ -373,19 +373,19 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . $inv_mst_data_row['rec_money'] . ' บาท </td>
+		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . $inv_mst_data_row['amount'] . ' บาท </td>
 	</tr>
 	<br>
 	<tr>
 		<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
-		<td align="right">' . $inv_mst_data_row['rec_money'] . ' บาท</td>
+		<td align="right">' . $inv_mst_data_row['amount'] . ' บาท</td>
 	</tr>
 	<br>
 	<tr>
-		<td colspan="2" ><b>ชำระจำนวนเงิน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>ชำระจำนวนเงิน : ' . $inv_mst_data_row['amount'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['amount']) . ') / Tatal Amount Received ' . $inv_mst_data_row['amount'] . ' Baht (' . convertToEnglish($inv_mst_data_row['amount']) . ')</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" ><b>ชำระเงินจำนวน : ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ') / Tatal Amount Received ' . $inv_mst_data_row['rec_money'] . ' Baht (' . convertToEnglish($inv_mst_data_row['rec_money']) . ')</b></td>
+		<td colspan="2" ><b>ชำระเงินจำนวน : ' . $inv_mst_data_row['amount'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['amount']) . ') / Tatal Amount Received ' . $inv_mst_data_row['amount'] . ' Baht (' . convertToEnglish($inv_mst_data_row['amount']) . ')</b></td>
 	</tr>
 	<br>
 	<tr>
@@ -420,7 +420,7 @@ if ($count > 0) {
 		<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
 	</tr>
 	<tr>
-		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['rec_money'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['rec_money']) . ')</td>
+		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . $inv_mst_data_row['amount'] . ' บาท (' . convertToThaiBaht($inv_mst_data_row['amount']) . ')</td>
 	</tr>
 	<tr>
 		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
