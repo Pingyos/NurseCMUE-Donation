@@ -93,7 +93,7 @@
                         <input type="text" name="edo_objective" value="<?= $row['edo_objective']; ?>" hidden>
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
-                        <input type="hidden" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>">
+                        <input type="hidden" name="rec_date_out">
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php require_once('donateion_add.php'); ?>
