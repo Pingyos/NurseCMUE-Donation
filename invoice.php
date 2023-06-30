@@ -18,10 +18,9 @@
                                 <table id="myTable" class="display" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th>ลำดับ</th>
                                             <th>ชื่อ-นามสกุล</th>
-                                            <th>รายชื่อโครงการ</th>
-                                            <th>ใบเสร็จรับเงิน</th>
+                                            <th>โครงการ</th>
+                                            <th>รายละเอียดใบเสร็จ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -35,12 +34,15 @@
                                         foreach ($result as $t1) {
                                         ?>
                                             <tr>
-                                                <td><?= $countrow ?></td>
-                                                <td><?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?></td>
-                                                <td><?= $t1['edo_name']; ?></td>
-
                                                 <td>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>
+                                                    <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
+                                                    <br>
+                                                    <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
+                                                    <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span> 
+                                                </td>
+                                                <td><?= $t1['edo_name']; ?></td>
+                                                <td>
+                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn">ใบเสร็จ</a>
                                                 </td>
                                             </tr>
                                         <?php $countrow++;
