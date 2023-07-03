@@ -1,9 +1,26 @@
 <?php
-if (isset($_SESSION['login_info'])) {
-    $json = $_SESSION['login_info'];
-} else {
-    echo "You are not logged in.";
-}
+// // Check if session is not already started
+// if (session_status() == PHP_SESSION_NONE) {
+//     session_start();
+// }
+
+// // Check if session login_info is set
+// if (!isset($_SESSION['login_info'])) {
+//     header('Location: login.php');
+//     exit;
+// } else {
+//     $json = $_SESSION['login_info'];
+// }
+
+// // Check for inactivity
+// if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 600)) { //  2000 seconds = 33 minutes
+//     session_unset(); // Unset all session variables
+//     session_destroy(); // Destroy the session
+//     header('Location: login.php'); // Redirect to login.php
+//     exit;
+// }
+// // Update last activity time
+// $_SESSION['last_activity'] = time();
 ?>
 <header id="header" class="header">
     <div class="top-left">
