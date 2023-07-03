@@ -1,11 +1,10 @@
 <nav class="navbar navbar-expand-lg bg-light shadow-lg">
     <div class="container">
-        <a class="navbar-brand" href="index.php">
-            <span>
-                E-Donation
-                <small>NurseCMU</small>
-            </span>
+        <a class="navbar-brand" href="index.php" style="display: flex; align-items: center;">
+            <img src="images/logo.png" alt="" style="width: 90px; height: 90px;">
+            <h5 style="margin-left: 10px;">E-Donation</h5>
         </a>
+
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

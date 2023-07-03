@@ -82,64 +82,18 @@
         <section class="about-section section-padding" id="section_4">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-lg-8 col-12 mb-5 mb-lg-0">
+                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
                         <img src="images/bannerdonation.jpg" class="custom-text-box-image img-fluid" alt="">
                     </div>
-                    <div class="col-lg-4 col-md-4 col-12">
-                        <div class="custom-text-block">
-                            <h3 class="mb-0">คุณ ชนิดา ต้นพิพัฒน์</h3>
-                            <p class="text-muted mb-lg-4 mb-md-4">งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
-                            <p>ในกรณีที่ไม่สามารถบริจาคผ่าน e-donation ได้ ติดต่อ 053-949075</p>
-
-                            <ul class="social-icon mt-4">
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link bi-twitter"></a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link bi-facebook"></a>
-                                </li>
-
-                                <li class="social-icon-item">
-                                    <a href="#" class="social-icon-link bi-instagram"></a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                        <img src="images/bannerdonation.jpg" class="custom-text-box-image img-fluid" alt="">
                     </div>
-
                 </div>
             </div>
-        </section>
-
-        <section class="testimonial-section section-padding section-bg">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-8 col-12 mx-auto">
-                        <h2 class="mb-lg-3">โครงการแนะนำ</h2>
-
-                        <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
-
-                            <div class="carousel-inner">
-                                <?php
-                                require_once 'connection.php';
-                                $stmt = $conn->prepare("SELECT* FROM pro_edo");
-                                $stmt->execute();
-                                $result = $stmt->fetchAll();
-                                foreach ($result as $t1) {
-                                ?>
-                                    <div class="carousel-item active">
-                                        <div class="carousel-caption">
-                                            <h4 class="carousel-title"><?= $t1['edo_name']; ?></h4>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+            <br>
+            <div class="col-lg-12 col-12 text-center mb-4">
+                <h5>ในกรณีที่ไม่สามารถบริจาคผ่าน e-donation ได้ ให้ติดต่อ</h5>
+                <p>นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
             </div>
         </section>
     </main>
