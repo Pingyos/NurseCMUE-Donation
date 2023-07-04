@@ -20,7 +20,17 @@
 // // Update last activity time
 // $_SESSION['last_activity'] = time();
 require_once 'head.php'; ?>
-
+<?php
+require 'lib/Post.php';
+$post = new post();
+$postResult = $post->getAllPost();
+$columnResult = $post->getColumnName();
+if (!empty($_GET["action"])) {
+    require 'lib/ExportService.php';
+    $exportService = new ExportService();
+    $result = $exportService->exportExcel($postResult, $columnResult);
+}
+?>
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -29,7 +39,6 @@ require_once 'head.php'; ?>
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-12">
-
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
@@ -77,6 +86,8 @@ require_once 'head.php'; ?>
                                         ?>
                                     </tbody>
                                 </table>
+                                <a href="<?php echo strtok($_SERVER["REQUEST_URI"]); ?><?php echo $_SERVER["QUERY_STRING"]; ?>?action=export"><button type="button" id="btnExport" name="Export" value="Export to Excel" class="btn btn-info">Export
+                                        to Excel</button></a>
                             </div>
                         </div>
                     </div>
