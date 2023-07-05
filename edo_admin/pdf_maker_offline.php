@@ -298,22 +298,22 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 255;
+	$y = $pdf->GetY() + 250;
 
-	$pdf->Image($img, $x, $y, $imageWidth, 9, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	$pdf->Image($img, $x, $y, $imageWidth, 20, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 
 
 	// ลายเช็นพี่เจี๊ยบ
 	$img = 'TCPDF/signature.png';
-	$cellWidth = 360;  // กำหนดความกว้างของเซลล์
+	$cellWidth = 355;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 20;  // กำหนดความกว้างของรูปภาพ
 
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 96;
+	$y = $pdf->GetY() + 102;
 
-	$pdf->Image($img, $x, $y, $imageWidth, 20, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	$pdf->Image($img, $x, $y, $imageWidth, 15, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 
 
 	// ลายน้ำ
