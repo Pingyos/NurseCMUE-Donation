@@ -10,10 +10,10 @@ if (isset($_SESSION['login_info'])) {
     echo "CMU IT Account: " . $login_info['cmuitaccount'] . "<br>";
 
     // เชื่อมต่อฐานข้อมูล
-    $servername = "ชื่อเซิร์ฟเวอร์";
-    $username = "ชื่อผู้ใช้ฐานข้อมูล";
-    $password = "รหัสผ่านฐานข้อมูล";
-    $dbname = "ชื่อฐานข้อมูล";
+    $servername = "localhost";
+    $username = "edonation";
+    $password = "edonate@FON";
+    $dbname = "edonation";
 
     // สร้างการเชื่อมต่อ
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -28,9 +28,10 @@ if (isset($_SESSION['login_info'])) {
     $lastname = $login_info['lastname_EN'];
     $organization = $login_info['organization_name_EN'];
     $cmuitaccount = $login_info['cmuitaccount'];
+    $login_time = date("Y-m-d H:i:s"); // เวลาที่ล็อกอิน
 
-    $sql = "INSERT INTO users (firstname, lastname, organization, cmuitaccount)
-            VALUES ('$firstname', '$lastname', '$organization', '$cmuitaccount')";
+    $sql = "INSERT INTO users (firstname, lastname, organization, cmuitaccount, login_time)
+            VALUES ('$firstname', '$lastname', '$organization', '$cmuitaccount', '$login_time')";
 
     if ($conn->query($sql) === TRUE) {
         echo "User data has been saved to the database.";
@@ -45,8 +46,17 @@ if (isset($_SESSION['login_info'])) {
     header("Location: login.php");
     exit;
 }
-
 require_once 'head.php'; ?>
+
+<!--CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  firstname VARCHAR(255),
+  lastname VARCHAR(255),
+  organization VARCHAR(255),
+  cmuitaccount VARCHAR(255),
+  login_time DATETIME
+);
+ -->
 
 <body>
     <?php require_once 'aside.php'; ?>
