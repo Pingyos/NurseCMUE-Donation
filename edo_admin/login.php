@@ -47,26 +47,6 @@ if (isset($_GET['error']) != null) {
             echo "cURL Error #:" . $err;
         } else {
             $json = json_decode($response, true);
-
-            // Response model in Json format  
-            // ========================================
-            //"cmuitaccount_name": "XXXXX",
-            //"cmuitaccount": "XXXXX@cmu.ac.th",
-            //"student_id": "",
-            //"prename_id": "MR",
-            //"prename_TH": "นาย",
-            //"prename_EN": "Mr.",
-            //"firstname_TH": "XXXXX",
-            //"firstname_EN": "XXXXX",
-            //"lastname_TH": "XXXXX",
-            //"lastname_EN": "XXXXX",
-            //"organization_code": "53",
-            //"organization_name_TH": "สำนักบริการเทคโนโลยีสารสนเทศ",
-            //"organization_name_EN": "Information Technology Services Center",
-            //"itaccounttype_id": "MISEmpAcc",
-            //"itaccounttype_TH": "บุคลากร",
-            //"itaccounttype_EN": "MIS Employee"
-            // ===========================================
             session_start();
             $_SESSION['login_info'] = $json;
             // Show Result Text
