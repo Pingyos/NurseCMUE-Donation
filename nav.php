@@ -2,10 +2,11 @@
     <div class="container">
         <a class="navbar-brand" href="index.php" style="display: flex; align-items: center;">
             <img src="images/logo.png" alt="" style="width: 90px; height: 90px;">
-            <h5 style="margin-left: 10px;">E-Donation</h5>
+            <span>
+                <h4 style="margin-left: 10px;">E-Donation</h4>
+                <h5 style="margin-left: 10px;">NurseCMU</h5>
+            </span>
         </a>
-
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,7 +34,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php#section_4">ติดต่อเรา</a>
+                    <a class="nav-link click-scroll" href="index.php#section_5">ติดต่อเรา</a>
                 </li>
 
             </ul>
