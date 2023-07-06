@@ -1,6 +1,6 @@
 <?php
-require '../database_connection.php';
-require('../TCPDF/tcpdf.php');
+require 'database_connection.php';
+require('TCPDF/tcpdf.php');
 
 // Thai month names
 $thai_months = array(
