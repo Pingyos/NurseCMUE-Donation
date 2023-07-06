@@ -64,7 +64,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษา</div>
-                                            <div class="stat-text">฿<?php echo $total_amount05; ?></div>
+                                            <div class="stat-text">฿ <?php echo $total_amount05; ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อระดมพลัง เร่งรัดปรับปรุงคุณภาพ</div>
-                                            <div class="stat-text">฿<?php echo $total_amount06; ?></div>
+                                            <div class="stat-text">฿ <?php echo $total_amount06; ?></div>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ</div>
-                                            <div class="stat-text">฿<?php echo $total_amount07; ?></div>
+                                            <div class="stat-text">฿ <?php echo $total_amount07; ?></div>
                                         </div>
                                     </div>
                                 </div>

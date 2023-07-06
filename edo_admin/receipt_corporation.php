@@ -26,6 +26,14 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
                             </div>
                             <div class="card-body">
+
+                            </div>
+                        </div>
+                        <div class="card" id="show-me-2">
+                            <div class="card-header">
+                                <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
+                            </div>
+                            <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <input type="hidden" name="name_title">
