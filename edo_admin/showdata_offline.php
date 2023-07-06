@@ -1,36 +1,18 @@
 <?php
-// session_start();
+session_start();
 
-// // Check if session login_info is set
-// if (!isset($_SESSION['login_info'])) {
-//     header('Location: login.php');
-//     exit;
-// } else {
-//     $json = $_SESSION['login_info'];
-// }
-
-// // Check for inactivity
-// if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 600)) { //  2000seconds = 33 minutes
-//     session_unset(); // Unset all session variables
-//     session_destroy(); // Destroy the session
-//     header('Location: login.php'); // Redirect to login.php
-//     exit;
-// }
-
-// // Update last activity time
-// $_SESSION['last_activity'] = time();
-require_once 'head.php'; ?>
-<?php
-require 'lib/Post.php';
-$post = new post();
-$postResult = $post->getAllPost();
-$columnResult = $post->getColumnName();
-if (!empty($_GET["action"])) {
-    require 'lib/ExportService.php';
-    $exportService = new ExportService();
-    $result = $exportService->exportExcel($postResult, $columnResult);
+// ตรวจสอบสถานะการเข้าสู่ระบบ
+if (isset($_SESSION['login_info'])) {
+    // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
+    $login_info = $_SESSION['login_info'];
+} else {
+    // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
+    header("Location: login.php");
+    exit;
 }
-?>
+// ตรวจสอบการlogin
+require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -39,6 +21,7 @@ if (!empty($_GET["action"])) {
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-12">
+
                         <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
@@ -86,8 +69,6 @@ if (!empty($_GET["action"])) {
                                         ?>
                                     </tbody>
                                 </table>
-                                <a href="<?php echo strtok($_SERVER["REQUEST_URI"]); ?><?php echo $_SERVER["QUERY_STRING"]; ?>?action=export"><button type="button" id="btnExport" name="Export" value="Export to Excel" class="btn btn-info">Export
-                                        to Excel</button></a>
                             </div>
                         </div>
                     </div>

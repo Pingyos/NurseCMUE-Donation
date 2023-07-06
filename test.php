@@ -1,29 +1,54 @@
-<?php
-require_once('lib-crc16.inc.php');
+<!DOCTYPE html>
+<html lang="en">
 
-$invoiceId = 75085;
-$client_Id = 2025;
-$amount = 50;
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+</head>
 
-$qrcode00 = '000201';
-$qrcode01 = '010212';
+<body>
+    <table id="myTable" class="display" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>ลำดับ</th>
+                <th>ชื่อ-นามสกุล</th>
+                <th>รายชื่อโครงการ</th>
+                <th>ใบเสร็จรับเงิน</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            require_once 'connection.php';
+            $stmt = $conn->prepare("SELECT * FROM receipt_offline");
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
+            $countrow = 1;
+            foreach ($result as $t1) {
+            ?>
+                <tr>
+                    <td><?= $countrow ?></td>
+                    <td><?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?></td>
+                    <td><?= $t1['edo_name']; ?></td>
 
-$qrcode3000 = '0016A000000677010112';
-$qrcode3001 = '0115099400258783792';
-$qrcode3002 = 'INV' . str_pad($invoiceId, 10, '0', STR_PAD_LEFT);
-$qrcode3003 = 'CID' . str_pad($client_Id, 10, '0', STR_PAD_LEFT);
-$qrcode30 = $qrcode3000 . $qrcode3001 . $qrcode3002 . $qrcode3003;
-$qrcode30 = '30' . str_pad(strlen($qrcode30), 2, '0', STR_PAD_LEFT) . $qrcode30;
+                    <td>
+                        <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn"><i class="fa fa-file-pdf-o"></i> เปิด</a>
+                    </td>
+                </tr>
+            <?php $countrow++;
+            }
+            ?>
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function() {
+            $("#myTable").DataTable();
+        });
+    </script>
+</body>
 
-$qrcode54 = '54' . str_pad(strlen($amount), 2, '0', STR_PAD_LEFT) . $amount;
-$qrcode58 = '5802TH';
-$qrcode62 = '62100706SCB001';
-$qrcode63 = '6304';
-
-$qrcode = $qrcode00 . $qrcode01 . $qrcode30 . $qrcode54 . $qrcode58 . $qrcode62 . $qrcode63;
-
-$checkSum = CRC16HexDigest($qrcode);
-$result = $qrcode . $checkSum . '68';
-
-echo 'QR Code Data: ' . $result;
-?>
+</html>
