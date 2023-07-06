@@ -104,8 +104,11 @@ if (
   // เมื่อบันทึกข้อมูลสำเร็จ ส่งการแจ้งเตือนไปยัง Line Notify
   if ($result) {
     $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
-    $sMessage = "Update Booking\r\n";
-    $sMessage .= $_POST['rec_name'] . "\n";
+    $sMessage = "แจ้งเตือนการบริจาค\r\n";
+    $sMessage .= "รายชื่อ: " . $_POST['name_title'] . " " . $_POST['rec_name'] . " " . $_POST['rec_surname'] . "\n";
+    $sMessage .= "เบอร์ติดต่อ: " . $_POST['rec_tel'] . "\n";
+    $sMessage .= "โครงการ: " . $_POST['edo_pro_id'] . "\n";
+    $sMessage .= "ยอดเงิน: " . $_POST['amount'] . " บาท\n";
 
     function notify_message($sMessage, $Token)
     {
