@@ -43,20 +43,25 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_user" value="corporation">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;">*</span></label>
+                                                <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="rec_name" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_idname" class="control-label mb-1">เลขประจำตัวผู้เสียภาษี <span style="color:red;">*</span></label>
-                                                <input type="number" name="rec_idname" class="form-control" pattern="[0-9]*" required>
+                                                <label for="rec_idname"
+                                                    class="control-label mb-1">เลขประจำตัวผู้เสียภาษี <span
+                                                        style="color:red;">*</span></label>
+                                                <input type="number" name="rec_idname" class="form-control"
+                                                    pattern="[0-9]*" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
-                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
+                                                <input type="number" name="rec_tel" class="form-control"
+                                                    pattern="[0-9]*">
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +69,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;">*</span></label>
+                                                <label for="address" class="control-label mb-1">ที่อยู่ <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="address" class="form-control" required>
                                             </div>
                                         </div>
@@ -76,13 +82,15 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;">*</span></label>
+                                                <label for="provinces" class="control-label mb-1">จังหวัด <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="provinces" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;">*</span></label>
+                                                <label for="amphures" class="control-label mb-1">อำเภอ <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="amphures" class="form-control" required>
                                             </div>
                                         </div>
@@ -91,7 +99,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;">*</span></label>
+                                                <label for="districts" class="control-label mb-1">ตำบล <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="districts" class="form-control" required>
                                             </div>
                                         </div>
@@ -103,13 +112,15 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span style="color:red;">*</span></label>
+                                                <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="date" name="rec_date_s" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ <span style="color:red;">*</span></label>
+                                                <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ
+                                                    <span style="color:red;">*</span></label>
                                                 <input type="date" name="rec_date_out" class="form-control" required>
                                             </div>
                                         </div>
@@ -118,14 +129,17 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
+                                                <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค <span
+                                                        style="color:red;">*</span></label>
                                                 <input type="text" name="amount" class="form-control" required>
                                             </div>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
-                                                <label for="payby" class="control-label mb-1">ชำระโดย <span style="color:red;">*</span></label>
-                                                <input type="text" name="payby" class="form-control" list="pay" required>
+                                                <label for="payby" class="control-label mb-1">ชำระโดย <span
+                                                        style="color:red;">*</span></label>
+                                                <input type="text" name="payby" class="form-control" list="pay"
+                                                    required>
                                                 <datalist id="pay">
                                                     <option value="เงินสด / Cash" />
                                                     <option value="โอน / Prompt Pay" />
@@ -138,7 +152,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
+                                                <label for="edo_name" class="control-label mb-1">โครงการ <span
+                                                        style="color:red;">*</span></label>
                                                 <select name="edo_name" id="edo_name" class="form-control" required>
                                                     <option value="">เลือกโครงการ</option>
                                                     <?php
@@ -164,15 +179,18 @@ require_once 'head.php'; ?>
                                         </div>
 
                                         <script>
-                                            // เมื่อเลือกตัวเลือกใน <select>
-                                            document.getElementById('edo_name').addEventListener('change', function() {
-                                                var selectedOption = this.options[this.selectedIndex];
+                                        // เมื่อเลือกตัวเลือกใน <select>
+                                        document.getElementById('edo_name').addEventListener('change', function() {
+                                            var selectedOption = this.options[this.selectedIndex];
 
-                                                // รับค่าจาก data attributes และกำหนดค่าให้กับตัวแปรที่ต้องการ
-                                                document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
-                                                document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
-                                                document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');
-                                            });
+                                            // รับค่าจาก data attributes และกำหนดค่าให้กับตัวแปรที่ต้องการ
+                                            document.getElementById('edo_pro_id').value = selectedOption
+                                                .getAttribute('data-pro-id');
+                                            document.getElementById('edo_description').value = selectedOption
+                                                .getAttribute('data-description');
+                                            document.getElementById('edo_objective').value = selectedOption
+                                                .getAttribute('data-objective');
+                                        });
                                         </script>
                                         <div class="col-6">
                                             <div class="form-group">
@@ -183,7 +201,8 @@ require_once 'head.php'; ?>
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">
-                                        <button type="submit" class="btn btn-primary btn-block">ยืนยันการออกใบเสร็จ(นิติบุคคล)</button>
+                                        <button type="submit"
+                                            class="btn btn-primary btn-block">ยืนยันการออกใบเสร็จ(นิติบุคคล)</button>
                                     </div>
                                 </form>
                                 <?php require_once 'recript_add.php'; ?>
