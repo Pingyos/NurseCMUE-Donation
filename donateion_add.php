@@ -101,36 +101,7 @@ if (
   $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $result = $stmt->execute();
-  if ($result) {
-    $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
-    $sMessage = "แจ้งเตือนการบริจาค\r\n";
-    $sMessage .= "รายชื่อ: " . $_POST['name_title'] . " " . $_POST['rec_name'] . " " . $_POST['rec_surname'] . "\n";
-    $sMessage .= "เบอร์ติดต่อ: " . $_POST['rec_tel'] . "\n";
-    $sMessage .= "โครงการ: " . $_POST['edo_pro_id'] . "\n";
-    $sMessage .= "ยอดเงิน: " . $_POST['amount'] . " บาท\n";
 
-    function notify_message($sMessage, $Token)
-    {
-      $chOne = curl_init();
-      curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-      curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-      curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-      curl_setopt($chOne, CURLOPT_POST, 1);
-      curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=" . $sMessage);
-      $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $Token . '',);
-      curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-      curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-      $result = curl_exec($chOne);
-      if (curl_error($chOne)) {
-        echo 'error:' . curl_error($chOne);
-      }
-      curl_close($chOne);
-    }
-    foreach ($sToken as $Token) {
-      notify_message($sMessage, $Token);
-    }
-  }
-  //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
   echo '
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
