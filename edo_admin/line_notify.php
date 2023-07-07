@@ -3,13 +3,13 @@ require_once 'connection.php';
 
 // ตรวจสอบว่ามีการโหลดหน้าเว็บหรือการรีเฟรชหน้าเว็บ
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    // ดึงข้อมูลล่าสุดจากฐานข้อมูล
-    $query = "SELECT * FROM receipt_offline ORDER BY id DESC LIMIT 1";
+    // ดึงข้อมูลล่าสุดจากฐานข้อมูลที่มี status = 1 และยังไม่ได้รับการแจ้งเตือน
+    $query = "SELECT * FROM receipt_offline WHERE status = 1 AND id NOT IN (SELECT id FROM receipt_offline WHERE notified = 1) ORDER BY id DESC LIMIT 1";
     $result = $conn->query($query);
     $row = $result->fetch(PDO::FETCH_ASSOC);
 
-    // ตรวจสอบว่ามีการเพิ่มข้อมูลใหม่
-    if ($row && !isset($_SESSION['last_receipt_id'])) {
+    // ตรวจสอบว่ามีข้อมูลที่ต้องแจ้งเตือน
+    if ($row) {
         // สร้างข้อความแจ้งเตือน
         $sMessage = "แจ้งบริจาค\r\n";
         $sMessage .= "รายการที่บริจาค: " . $row['edo_pro_id'] . "\n";
@@ -25,8 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $sToken = "6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL";
         notify_message($sMessage, $sToken);
 
-        // เก็บ ID ใบเสร็จล่าสุดไว้ใน SESSION เพื่อใช้เป็นตัวแปรเช็คในครั้งต่อไป
-        $_SESSION['last_receipt_id'] = $row['id'];
+        // อัพเดตสถานะการแจ้งเตือนให้เป็น 1 (แจ้งเตือนแล้ว)
+        $updateQuery = "UPDATE receipt_offline SET notified = 1 WHERE id = :id";
+        $updateStmt = $conn->prepare($updateQuery);
+        $updateStmt->bindParam(':id', $row['id']);
+        $updateStmt->execute();
     }
 }
 
@@ -48,3 +51,8 @@ function notify_message($sMessage, $Token)
     curl_close($chOne);
 }
 ?>
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 60000);
+</script>

@@ -1,7 +1,7 @@
 <?php
-// session_start();
+session_start();
 
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
+// ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
 //     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
 //     $login_info = $_SESSION['login_info'];
@@ -210,6 +210,7 @@ require_once 'head.php'; ?>
                                         </div>
                                         <input type="hidden" name="status_donat" value="offline" class="form-control">
                                         <input type="hidden" name="status_user" value="person" class="form-control">
+                                        <input type="hidden" name="status" value="1" class="form-control">
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">

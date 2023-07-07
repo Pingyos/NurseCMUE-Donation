@@ -291,7 +291,7 @@ if ($count > 0) {
 	// คำสั่งที่ใช้สร้างเนื้อหาในเอกสาร PDF ต่อจากนี้...
 	$pdf->AddPage(); //default A4
 	// ลายเช็ตคณบดี
-	$img = 'TCPDF/signature_C.png';
+	$img = '../TCPDF/signature_C.png';
 	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 50;  // กำหนดความกว้างของรูปภาพ
 
@@ -304,7 +304,7 @@ if ($count > 0) {
 	// 
 
 	// ลายเช็นพี่เจี๊ยบ
-	$img = 'TCPDF/signature.png';
+	$img = '../TCPDF/signature.png';
 	$cellWidth = 355;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 20;  // กำหนดความกว้างของรูปภาพ
 
@@ -317,7 +317,7 @@ if ($count > 0) {
 	// 
 
 	// ลายน้ำ
-	$img = 'TCPDF/cmulogo20.png';
+	$img = '../TCPDF/cmulogo20.png';
 	$cellWidth = 196;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 150;  // กำหนดความกว้างของรูปภาพ
 
@@ -330,7 +330,7 @@ if ($count > 0) {
 	// 
 
 	// logo
-	$img = 'TCPDF/cmulogo.png';
+	$img = '../TCPDF/cmulogo.png';
 	$cellWidth = 194;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 25;  // กำหนดความกว้างของรูปภาพ
 
@@ -344,7 +344,7 @@ if ($count > 0) {
 	// 
 
 	// logo logo
-	$img = 'TCPDF/nurselogo.png';
+	$img = '../TCPDF/nurselogo.png';
 	$cellWidth = 194;  // กำหนดความกว้างของเซลล์
 	$imageWidth = 30;  // กำหนดความกว้างของรูปภาพ
 
