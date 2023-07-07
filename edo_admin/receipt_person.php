@@ -60,7 +60,7 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                    <div class="col-12 col-md-3">
+                                        <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_email" class="control-label mb-1">อีเมล์</label>
                                                 <input type="text" name="rec_email" class="form-control">

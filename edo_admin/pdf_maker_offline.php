@@ -447,7 +447,7 @@ if ($count > 0) {
 	</tr>
 	<tr>
 		<td>
-			<b>ชำระโดย/Pay by : </b>' . $inv_mst_data_row['payby'] . ' 
+			<b>ชำระโดย/Pay by : ' . $inv_mst_data_row['payby'] . ' </b>
 		</td>
 	</tr>
 	<br>
