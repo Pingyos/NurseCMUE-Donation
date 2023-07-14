@@ -23,7 +23,7 @@ require_once 'head.php'; ?>
 
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
+                                <strong class="card-title">รายชื่อบริจาคผ่านเว็บไซต์</strong>
                             </div>
                             <div class="card-body">
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">

@@ -1,7 +1,7 @@
 <?php
-session_start();
+// session_start();
 
-// ตรวจสอบสถานะการเข้าสู่ระบบ
+// // ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
 //     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
 //     $login_info = $_SESSION['login_info'];
@@ -12,6 +12,7 @@ session_start();
 // }
 // ตรวจสอบการlogin
 require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">

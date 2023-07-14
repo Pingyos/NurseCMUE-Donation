@@ -1,7 +1,7 @@
 <?php
-// session_start();
+session_start();
 
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
+// ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
 //     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
 //     $login_info = $_SESSION['login_info'];
@@ -46,33 +46,31 @@ require_once 'head.php'; ?>
                                 text-align: center;
                             }
                         </style>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="btn-group d-flex align-items-center justify-content-center">
-                                    <a href="receipt_person.php" class="btn btn-outline-success square-button mobile-button">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <i class="fa fa-user fa-lg"></i>
-                                            <h2>บุคคล</h2>
-                                        </div>
-                                    </a>
-                                    <a href="receipt_corporation.php" class="btn btn-outline-primary square-button mobile-button">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <i class="fa fa-users fa-lg"></i>
-                                            <h2>นิติบุคคล</h2>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <style>
-                                    @media (max-width: 767px) {
-                                        .mobile-button {
-                                            width: 100%;
-                                            margin-bottom: 10px;
-                                        }
-                                    }
-                                </style>
-
+                        <div class="card-body">
+                            <div class="btn-group d-flex align-items-center justify-content-center">
+                                <a href="receipt_person.php" class="btn btn-outline-success square-button mobile-button">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <i class="fa fa-user fa-lg"></i>
+                                        <h2>บุคคล</h2>
+                                    </div>
+                                </a>
+                                <a href="receipt_corporation.php" class="btn btn-outline-primary square-button mobile-button">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <i class="fa fa-users fa-lg"></i>
+                                        <h2>นิติบุคคล</h2>
+                                    </div>
+                                </a>
                             </div>
+
+                            <style>
+                                @media (max-width: 767px) {
+                                    .mobile-button {
+                                        width: 100%;
+                                        margin-bottom: 10px;
+                                    }
+                                }
+                            </style>
+
                         </div>
                     </div>
                 </div>

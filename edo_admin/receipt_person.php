@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 // ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
@@ -26,7 +26,7 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">ออกใบเสร็จสำหรับบุคคล</strong>
                             </div>
                             <div class="card-body">
-                                <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
@@ -60,7 +60,7 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-12 col-md-3">
+                                    <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_email" class="control-label mb-1">อีเมล์</label>
                                                 <input type="text" name="rec_email" class="form-control">
@@ -210,19 +210,18 @@ require_once 'head.php'; ?>
                                         </div>
                                         <input type="hidden" name="status_donat" value="offline" class="form-control">
                                         <input type="hidden" name="status_user" value="person" class="form-control">
-                                        <input type="hidden" name="status" value="1" class="form-control">
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">
                                         <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                     </div>
                                 </form>
-                                <?php require_once 'recript_add.php'; ?>
+                                 <?php require_once 'recript_add.php'; ?>
                                 <!-- <?php
-                                        echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>';
-                                        ?> -->
+                                echo '<pre>';
+                                print_r($_POST);
+                                echo '</pre>';
+                                ?> -->
                             </div>
                         </div>
                     </div>

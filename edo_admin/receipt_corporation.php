@@ -1,7 +1,7 @@
 <?php
-// session_start();
+session_start();
 
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
+// ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
 //     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
 //     $login_info = $_SESSION['login_info'];
@@ -21,12 +21,12 @@ require_once 'head.php'; ?>
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="card" id="show-me-2">
+                        <div class="card">
                             <div class="card-header">
                                 <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
                             </div>
                             <div class="card-body">
-                                <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <input type="hidden" name="name_title">
                                         <input type="hidden" name="rec_surname">

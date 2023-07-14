@@ -10,7 +10,7 @@
 //     header("Location: login.php");
 //     exit;
 // }
-// ตรวจสอบการlogin
+// // ตรวจสอบการlogin
 require_once 'head.php'; ?>
 
 <body>
