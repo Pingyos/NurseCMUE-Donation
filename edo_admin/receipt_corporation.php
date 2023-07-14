@@ -26,13 +26,15 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
                             </div>
                             <div class="card-body">
-                            <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <input type="hidden" name="name_title">
                                         <input type="hidden" name="rec_surname">
                                         <input type="hidden" name="rec_email">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
+                                        <input type="hidden" name="status" value="1" class="form-control">
+                                        <input type="hidden" name="notified" value="1" class="form-control">
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;">*</span></label>
