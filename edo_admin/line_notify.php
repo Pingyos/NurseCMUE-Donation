@@ -51,8 +51,3 @@ function notify_message($sMessage, $Token)
     curl_close($chOne);
 }
 ?>
-<script>
-    setInterval(function() {
-        location.reload();
-    }, 60000);
-</script>

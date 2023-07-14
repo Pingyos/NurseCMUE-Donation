@@ -29,6 +29,13 @@
                             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                             $stmt->execute();
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                            if ($row['status'] == 1) {
+                                // สร้างลิงก์ใบเสร็จรับเงิน
+                                $receiptLink = "pdf_maker.php?id=" . $row['id'] . "&ACTION=VIEW";
+                                // เปิดใบเสร็จรับเงินโดยอัตโนมัติ
+                                echo '<script>window.location.href = "' . $receiptLink . '";</script>';
+                            }
                         }
                         ?>
 
@@ -70,8 +77,22 @@
                                 </center>
                             </div>
                         </div>
+                        <br>
+                        <script>
+                            // รีเฟรชหน้าเว็บและสร้าง URL ใหม่
+                            function refreshPage() {
+                                var id = <?php echo $id; ?>; // ดึงค่า id จาก PHP
+
+                                var url = "http://localhost/git/NurseCMUE-Donation/qrgenerator_receipt.php?id=" + id;
+                                window.location.href = url;
+                            }
+                        </script>
+
+                        <!-- ปุ่มรีเฟรช -->
+                        <button type="button" class="form-control" onclick="refreshPage()">รีเฟรช</button>
+
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
         </div>
