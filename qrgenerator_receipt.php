@@ -72,7 +72,7 @@
                             <div class="row">
                                 <center>
                                     <div class="col-lg-3 col-12 mb-5 mb-lg-0">
-                                        <img src="QR2085.jpg" class="custom-text-box-image img-fluid" alt="">
+                                        <img src="<?php echo $urlRelativeFilePath; ?>" alt="QR Code">
                                     </div>
                                 </center>
                             </div>
