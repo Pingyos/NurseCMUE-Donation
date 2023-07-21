@@ -2,7 +2,7 @@
 require_once 'lib-crc16.inc.php';
 
 // ตัวแปร amount ที่กำหนดให้เป็นจำนวนเงิน
-$amount = 1000.75;
+$amount = 0;
 
 // ให้ $amount เป็นเลขทศนิยม 2 ตำแหน่ง
 $amountFormatted = number_format($amount, 2, '.', ''); // จะได้ "100.00"

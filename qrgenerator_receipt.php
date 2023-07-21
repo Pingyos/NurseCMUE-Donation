@@ -72,9 +72,38 @@
                             <div class="row">
                                 <center>
                                     <div class="col-lg-3 col-12 mb-5 mb-lg-0">
-                                        <img src="<?php echo $urlRelativeFilePath; ?>" alt="QR Code">
+                                        <?php
+                                        // ตรวจสอบว่ามีไฟล์ QR Code ในโฟลเดอร์ "qecodepayment" หรือไม่
+                                        $qrCodeFolder = "qecodepayment";
+                                        $latestQRCode = getLatestQRCode($qrCodeFolder);
+
+                                        if ($latestQRCode !== null) {
+                                            // แสดงรูปภาพ QR Code ล่าสุด
+                                            echo '<img src="' . $qrCodeFolder . '/' . $latestQRCode . '" alt="Latest QR Code">';
+                                        } else {
+                                            echo '<p>No QR Code found in the folder.</p>';
+                                        }
+
+                                        function getLatestQRCode($folderPath)
+                                        {
+                                            $latestFile = null;
+                                            $latestTime = 0;
+                                            $dir = opendir($folderPath);
+                                            while (($file = readdir($dir)) !== false) {
+                                                $filePath = $folderPath . '/' . $file;
+                                                // ตรวจสอบให้แน่ใจว่าเป็นไฟล์และเวลาแก้ไขล่าสุดใหม่กว่าเวลาก่อนหน้า
+                                                if (is_file($filePath) && filemtime($filePath) > $latestTime) {
+                                                    $latestFile = $file;
+                                                    $latestTime = filemtime($filePath);
+                                                }
+                                            }
+                                            closedir($dir);
+                                            return $latestFile;
+                                        }
+                                        ?>
                                     </div>
                                 </center>
+
                             </div>
                         </div>
                         <br>
