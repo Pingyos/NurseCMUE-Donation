@@ -298,9 +298,9 @@ if ($count > 0) {
 	// คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
 	$x = $pdf->GetX() + ($cellWidth - $imageWidth) / 2;
 	// คำนวณตำแหน่ง Y ให้รูปภาพอยู่ด้านบนของเซลล์
-	$y = $pdf->GetY() + 250;
+	$y = $pdf->GetY() + 255;
 
-	$pdf->Image($img, $x, $y, $imageWidth, 20, '', '', '', false, 300, '', false, false, 0, false, false, false);
+	$pdf->Image($img, $x, $y, $imageWidth, 10, '', '', '', false, 300, '', false, false, 0, false, false, false);
 	// 
 
 	// ลายเช็นพี่เจี๊ยบ
