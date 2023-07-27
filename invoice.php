@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php require_once('head.php'); ?>
+<?php require_once('header.php'); ?>
 
 <body>
 
@@ -13,59 +14,54 @@
                 <div class="row">
                     <div class="col-lg-12 col-12 mx-auto">
                         <form class="custom-form donate-form" action="#" method="POST" role="form">
-
-                            <body>
-                                <table id="myTable" class="display" style="width: 100%;">
-                                    <thead>
+                            <table id="myTable" class="display" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ชื่อ-นามสกุล</th>
+                                        <th>โครงการ</th>
+                                        <th>รายละเอียดใบเสร็จ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    require_once 'connection.php';
+                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online'");
+                                    $stmt->execute();
+                                    $result = $stmt->fetchAll();
+                                    $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
+                                    $countrow = 1;
+                                    foreach ($result as $t1) {
+                                    ?>
                                         <tr>
-                                            <th>#</th>
-                                            <th>ชื่อ-นามสกุล</th>
-                                            <th>โครงการ</th>
-                                            <th>รายละเอียดใบเสร็จ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        require_once 'connection.php';
-                                        $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online'");
-                                        $stmt->execute();
-                                        $result = $stmt->fetchAll();
-                                        $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
-                                        $countrow = 1;
-                                        foreach ($result as $t1) {
-                                        ?>
-                                            <tr>
-                                                <td><?= $countrow ?></td>
-                                                <td>
-                                                    <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
-                                                    <br>
-                                                    <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
-                                                    <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span>
-                                                </td>
-                                                <td><?= $t1['edo_name']; ?></td>
-                                                <td>
-                                                    <button class="custom-btn1 btn" onclick="viewReceipt('<?= $t1['id']; ?>', '<?= $t1['rec_idname']; ?>')">ดูใบเสร็จ</button>
-                                                </td>
-                                                <!-- เพิ่มสคริปต์นี้ไว้ที่ส่วนล่างของไฟล์ HTML, ภายในแท็ก <body> -->
-                                                <!-- เพิ่มสคริปต์นี้ไว้ที่ส่วนล่างของไฟล์ HTML, ภายในแท็ก <body> -->
-                                                <script>
-                                                    function viewReceipt(receiptId, recIdName) {
-                                                        var enteredId = prompt('กรุณากรอกเลขบัตรประชาชน:');
-                                                        if (enteredId === recIdName) {
-                                                            var pdfUrl = 'pdf_maker.php?id=' + receiptId + '&ACTION=VIEW';
-                                                            window.open(pdfUrl, '_blank');
-                                                        } else {
-                                                            alert('เลขบัตรประชาชนไม่ถูกต้อง กรุณากรอกใหม่');
-                                                        }
+                                            <td><?= $countrow ?></td>
+                                            <td>
+                                                <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
+                                                <br>
+                                                <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
+                                                <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span>
+                                            </td>
+                                            <td><?= $t1['edo_name']; ?></td>
+                                            <td>
+                                                <button class="custom-btn1 btn" onclick="viewReceipt('<?= $t1['id']; ?>', '<?= $t1['rec_idname']; ?>')">ดูใบเสร็จ</button>
+                                            </td>
+                                            <script>
+                                                function viewReceipt(receiptId, recIdName) {
+                                                    var enteredId = prompt('กรุณากรอกเลขบัตรประชาชน:');
+                                                    if (enteredId === recIdName) {
+                                                        var pdfUrl = 'pdf_maker.php?id=' + receiptId + '&ACTION=VIEW';
+                                                        window.open(pdfUrl, '_blank');
+                                                    } else {
+                                                        alert('เลขบัตรประชาชนไม่ถูกต้อง กรุณากรอกใหม่');
                                                     }
-                                                </script>
-                                            </tr>
-                                        <?php $countrow++;
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </body>
+                                                }
+                                            </script>
+                                        </tr>
+                                    <?php $countrow++;
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </form>
                     </div>
                 </div>
