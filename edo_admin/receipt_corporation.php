@@ -1,7 +1,7 @@
 <?php
-session_start();
+// session_start();
 
-// ตรวจสอบสถานะการเข้าสู่ระบบ
+// // ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {
 //     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
 //     $login_info = $_SESSION['login_info'];
@@ -26,25 +26,23 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">ออกใบเสร็จสำหรับนิติบุคคล</strong>
                             </div>
                             <div class="card-body">
-                                <form method="post" enctype="multipart/form-data">
+                            <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <input type="hidden" name="name_title">
                                         <input type="hidden" name="rec_surname">
                                         <input type="hidden" name="rec_email">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
-                                        <input type="hidden" name="status" value="1" class="form-control">
-                                        <input type="hidden" name="notified" value="1" class="form-control">
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
-                                                <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;">*</span></label>
-                                                <input type="text" name="rec_name" class="form-control" required>
+                                                <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;"></span></label>
+                                                <input type="text" name="rec_name" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
-                                                <label for="rec_idname" class="control-label mb-1">เลขประจำตัวผู้เสียภาษี <span style="color:red;">*</span></label>
-                                                <input type="number" name="rec_idname" class="form-control" pattern="[0-9]*" required>
+                                                <label for="rec_idname" class="control-label mb-1">เลขประจำตัวผู้เสียภาษี <span style="color:red;"></span></label>
+                                                <input type="number" name="rec_idname" class="form-control" pattern="[0-9]*" >
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -58,8 +56,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
-                                                <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;">*</span></label>
-                                                <input type="text" name="address" class="form-control" required>
+                                                <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;"></span></label>
+                                                <input type="text" name="address" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -70,14 +68,14 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
-                                                <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;">*</span></label>
-                                                <input type="text" name="provinces" class="form-control" required>
+                                                <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;"></span></label>
+                                                <input type="text" name="provinces" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
-                                                <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;">*</span></label>
-                                                <input type="text" name="amphures" class="form-control" required>
+                                                <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;"></span></label>
+                                                <input type="text" name="amphures" class="form-control" >
                                             </div>
                                         </div>
                                     </div>
@@ -85,8 +83,8 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
-                                                <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;">*</span></label>
-                                                <input type="text" name="districts" class="form-control" required>
+                                                <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;"></span></label>
+                                                <input type="text" name="districts" class="form-control" >
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">

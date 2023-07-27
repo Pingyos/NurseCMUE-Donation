@@ -1,6 +1,6 @@
 <?php
 // session_start();
-// $inactive_time = 5 * 60; // 5 minutes
+// $inactive_time = 10 * 60; // 5 minutes
 
 // // ตรวจสอบสถานะการเข้าสู่ระบบ
 // if (isset($_SESSION['login_info'])) {

@@ -23,8 +23,6 @@ if (
   && isset($_POST['comment'])
   && isset($_POST['status_donat'])
   && isset($_POST['status_user'])
-  && isset($_POST['status'])
-  && isset($_POST['notified'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -53,8 +51,6 @@ if (
   edo_objective,
   status_donat,
   status_user,
-  status,
-  notified,
   comment)
   VALUES
   (:name_title,
@@ -79,8 +75,6 @@ if (
   :edo_objective,
   :status_donat,
   :status_user,
-  :status,
-  :notified,
   :comment)");
   //bindParam data type
   $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -105,8 +99,6 @@ if (
   $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
   $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
   $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
-  $stmt->bindParam(':status', $_POST['status'], PDO::PARAM_STR);
-  $stmt->bindParam(':notified', $_POST['notified'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $result = $stmt->execute();
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
@@ -126,37 +118,6 @@ if (
           window.location.href = "showdata_offline.php"; 
           });
     </script>';
-    $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
-    $sMessage = "แจ้งบริจาค\r\n";
-    $sMessage .= "รายการที่บริจาค: " . $row['edo_pro_id'] . "\n";
-    $sMessage .= "เลขที่ใบเสร็จ: " . $row['id'] . "\n";
-    $sMessage .= "ผู้โอน: " . $row['name_title'] . " " . $row['rec_name'] . " " . $row['rec_surname'] . "\n";
-    $sMessage .= "เลข ปชช: " . $row['rec_idname'] . "\n";
-    $sMessage .= "จาก: \n";
-    $sMessage .= "จำนวน: " . $row['amount'] . " บาท\n";
-    $sMessage .= "วันที่โอน: " . $row['rec_date_out'] . " " . $row['rec_time'] . "\n";
-    $sMessage .= "บริจาคผ่านระบบ: " . $row['status_donat'] . "\n";
-
-    function notify_message($sMessage, $Token)
-    {
-      $chOne = curl_init();
-      curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
-      curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
-      curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
-      curl_setopt($chOne, CURLOPT_POST, 1);
-      curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=" . $sMessage);
-      $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $Token . '',);
-      curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
-      curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
-      $result = curl_exec($chOne);
-      if (curl_error($chOne)) {
-        echo 'error:' . curl_error($chOne);
-      }
-      curl_close($chOne);
-    }
-    foreach ($sToken as $Token) {
-      notify_message($sMessage, $Token);
-    }
   } else {
     echo '<script>
       swal({

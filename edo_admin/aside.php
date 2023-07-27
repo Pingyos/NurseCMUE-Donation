@@ -14,9 +14,6 @@
                 <li>
                     <a href="showdata_online.php"><i class="menu-icon fa fa-users"></i>รายชื่อบริจาคผ่านเว็บไซต์ </a>
                 </li>
-                <li>
-                    <a href="report.php"><i class="menu-icon fa fa-file-pdf-o"></i></i>ออกรายงาน </a>
-                </li>
             </ul>
         </div>
     </nav>
