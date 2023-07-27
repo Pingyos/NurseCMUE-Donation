@@ -422,7 +422,7 @@ if ($count > 0) {
 	</tr>
 
 	<tr>
-		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </td>
+		<td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ถนน ' . $inv_mst_data_row['road'] . ' ตำบล ' . $inv_mst_data_row['districts'] . ' อำเภอ ' . $inv_mst_data_row['amphures'] . ' จังหวัด ' . $inv_mst_data_row['provinces'] . ' </td>
 		<td align="right"><b>วันที่/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
 	</tr>
 	

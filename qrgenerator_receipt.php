@@ -29,13 +29,6 @@
                             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                             $stmt->execute();
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                            if ($row['status'] == 1) {
-                                // สร้างลิงก์ใบเสร็จรับเงิน
-                                $receiptLink = "pdf_maker.php?id=" . $row['id'] . "&ACTION=VIEW";
-                                // เปิดใบเสร็จรับเงินโดยอัตโนมัติ
-                                echo '<script>window.location.href = "' . $receiptLink . '";</script>';
-                            }
                         }
                         ?>
 
