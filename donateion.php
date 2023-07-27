@@ -138,10 +138,10 @@
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php require_once('donateion_add.php'); ?>
-                    <?php echo '<pre>';
-                    print_r($_POST);
-                    echo '</pre>';
-                    ?>
+                    <!-- <?php echo '<pre>';
+                            print_r($_POST);
+                            echo '</pre>';
+                            ?> -->
                 </form>
             </div>
         </section>

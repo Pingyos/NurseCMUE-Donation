@@ -44,9 +44,21 @@
                                                 </td>
                                                 <td><?= $t1['edo_name']; ?></td>
                                                 <td>
-                                                    <button type="button" data-toggle="modal" data-target="#mediumModal" class="custom-btn1 btn">รหัสผ่าน</button>
-                                                    <a href="pdf_maker.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="custom-btn1 btn">ใบเสร็จ</a>
+                                                    <button class="custom-btn1 btn" onclick="viewReceipt('<?= $t1['id']; ?>', '<?= $t1['rec_idname']; ?>')">ดูใบเสร็จ</button>
                                                 </td>
+                                                <!-- เพิ่มสคริปต์นี้ไว้ที่ส่วนล่างของไฟล์ HTML, ภายในแท็ก <body> -->
+                                                <!-- เพิ่มสคริปต์นี้ไว้ที่ส่วนล่างของไฟล์ HTML, ภายในแท็ก <body> -->
+                                                <script>
+                                                    function viewReceipt(receiptId, recIdName) {
+                                                        var enteredId = prompt('กรุณากรอกเลขบัตรประชาชน:');
+                                                        if (enteredId === recIdName) {
+                                                            var pdfUrl = 'pdf_maker.php?id=' + receiptId + '&ACTION=VIEW';
+                                                            window.open(pdfUrl, '_blank');
+                                                        } else {
+                                                            alert('เลขบัตรประชาชนไม่ถูกต้อง กรุณากรอกใหม่');
+                                                        }
+                                                    }
+                                                </script>
                                             </tr>
                                         <?php $countrow++;
                                         }
@@ -55,42 +67,6 @@
                                 </table>
                             </body>
                         </form>
-                        <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-md" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="mediumModalLabel">กรุณาใส่รหัสผ่าน</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="password" id="passwordInput" class="form-control" placeholder="กรอกรหัสผ่าน">
-                                        <!-- ส่งค่า rec_idname ที่เกี่ยวข้องกับ id ที่ต้องการเปิดใน input hidden -->
-                                        <input type="hidden" id="recIdInput" value="<?php echo $t1['rec_idname']; ?>">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" onclick="checkPassword()">ยืนยัน</button>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            function checkPassword() {
-
-                                var enteredPassword = document.getElementById("passwordInput").value;
-                                var correctPassword = document.getElementById("recIdInput").value;
-                                if (enteredPassword === correctPassword) {
-                                    var idToOpen = <?php echo $t1['id']; ?>;
-                                    var recIdToOpen = correctPassword;
-                                    var url = "pdf_maker.php?id=" + idToOpen + "&rec_idname=" + recIdToOpen + "&ACTION=VIEW";
-                                    window.open(url, "_blank");
-                                } else {
-                                    alert("รหัสผ่านไม่ถูกต้อง");
-                                }
-                            }
-                        </script>
                     </div>
                 </div>
             </div>
