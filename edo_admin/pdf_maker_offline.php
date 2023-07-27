@@ -1,7 +1,7 @@
 <?php
 require '../database_connection.php';
 require('../TCPDF/tcpdf.php');
-
+ob_start();
 // Thai month names
 $thai_months = array(
     "01" => "มกราคม",
@@ -254,7 +254,7 @@ $receipt_number = generateReceiptNumber($numid);
 
 $id = $_GET['id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts,T1.rec_idname,T1.address,T1.road,T1.amphures,T1.zip_code, T1.rec_date_out, T1.edo_name, T1.amount, T1.payby, T1.edo_pro_id, T1.edo_description, T1.edo_objective FROM receipt_offline T1 WHERE T1.id='" . $id . "' ";
+$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts, T1.rec_idname, T1.address, T1.road, T1.amphures, T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.amount, T1.payby, T1.edo_name, T1.edo_pro_id, T1.edo_description, T1.edo_objective, T1.comment, T1.status_donat, T1.status_user FROM receipt_offline T1 WHERE T1.id='" . $id . "'";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -372,135 +372,136 @@ if ($count > 0) {
     $content .= '
 <table>
 
-<tr>
-		<td  >
-			มหาวิทยาลัยเชียงใหม่
-		</td>
-		<td align="right"  >
-			ใบเสร็จรับเงิน/Receipt
-		</td>
-	</tr>
+	<tr>
+			<td  >
+				มหาวิทยาลัยเชียงใหม่
+			</td>
+			<td align="right"  >
+				ใบเสร็จรับเงิน/Receipt
+			</td>
+		</tr>
 
-	<tr>
-	<td>
-		Chiang Mai University
-	</td>
-	<td align="right">
-		ต้นฉบับ/Original
-	</td>
-	</tr>
-	<tr>
-	<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
-	<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
-	</tr>
-
-	<tr>
-	<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
-	<td align="right">Faculty of Nursing, CMU</td>
-	</tr>
-
-	<tr>
-	<td>เบอร์โทร 053-943130</td>
-	<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
-	</tr>
-
-	<tr>
-	<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
-	<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
-	</tr>
-
-	<tr>
-	<td>099 4 00042317 9</td>
-	<td align="right">โทรศัพท์/Tel 053-949075</td>
-	</tr>
-
-	<tr>
-	
-	<br>
-		<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
-		<td align="right"><b>เลขที่ใบเสร็จ/Receipt No. </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-	</tr>
-
-	<tr>
-    <td><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ถนน ' . $inv_mst_data_row['road'] . ' ตำบล ' . $inv_mst_data_row['districts'] . ' อำเภอ ' . $inv_mst_data_row['amphures'] . ' จังหวัด ' . $inv_mst_data_row['provinces'] . ' </td>
-    <td align="right"><b>วันที่/Date : </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
-	</tr>
-	
-	<tr>
-		<tdalign="right" colspan="2"><b>รายการ/Description</b><br>' . $inv_mst_data_row['edo_description'] . ' </tdalign=>
-	</tr>
-
-	<tr>
-		<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . add_comma($inv_mst_data_row['amount']) . ' บาท </td>
-	</tr>
-	<br>
-	<tr>
-		<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
-		<td align="right">' . add_comma($inv_mst_data_row['amount']) . ' บาท</td>
-	</tr>
-	<br>
-	<tr>
-		<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</b></td>
-	</tr>
-	<tr>
-		<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['amount']) . ' Baht (' . convertToEnglish($inv_mst_data_row['amount']) . ')</b></td>
-	</tr>
-	<tr>
+		<tr>
 		<td>
-			<b>ชำระโดย/Pay by : ' . $inv_mst_data_row['payby'] . ' </b>
+			Chiang Mai University
 		</td>
-	</tr>
-	<br>
-	<br>
-	<tr>
-		<td></td>
-		<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน/Collector<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
-	</tr>
-	<tr>
-		<td colspan="2" ><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน<br>The receipt will be valid with payment and the signature of the collector</b></td>
-	</tr>
-	<tr>
-		<td colspan="2" style="border-bottom: solid black 1px;"></td>
-	</tr>
-	<tr>
+		<td align="right">
+			ต้นฉบับ/Original
+		</td>
+		</tr>
+		<tr>
+		<td>239 ถนนห้วยแก้ว ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+		<td align="right">คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</td>
+		</tr>
 
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+		<tr>
+		<td>239 Huaykaew Road, Muang District, Chiang Mai, 50200</td>
+		<td align="right">Faculty of Nursing, CMU</td>
+		</tr>
+
+		<tr>
+		<td>เบอร์โทร 053-943130</td>
+		<td align="right">110/406 ถนนอินทวโรรส ต.สุเทพ อ.เมือง จ.เชียงใหม่ 50200</td>
+		</tr>
+
+		<tr>
+		<td>เลขประจำตัวผู้เสียภาษีอากร/Taxpayer identification Number </td>
+		<td align="right">110/406 Inthawaroros Road, Suthep, Chiang Mai 50200</td>
+		</tr>
+
+		<tr>
+		<td>099 4 00042317 9</td>
+		<td align="right">โทรศัพท์/Tel 053-949075</td>
+		</tr>
+<br>
+		<tr>
+			<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
+			<td align="right"><b>เลขที่ใบเสร็จ/Receipt No. </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+		</tr>
+
+		<tr>
+			<tdalign="right" colspan="2"><b>ที่อยู่/Address : </b>' . $inv_mst_data_row['address'] . ' ' . $inv_mst_data_row['road'] . ' ' . $inv_mst_data_row['districts'] . ' ' . $inv_mst_data_row['amphures'] . ' ' . $inv_mst_data_row['provinces'] . ' </tdalign=>
+		</tr>
+
+		<tr>
+			<td align="right" colspan="2" ><b>วันที่/Date :  </b>' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . ' / ' . $rec_day . ' ' . $rec_monen . ' ' . $rec_yearen . '</td>
+		</tr>
+
+        <tr>
+			<tdalign="right" colspan="2"><b>รายการ/Description</b><br>' . $inv_mst_data_row['edo_description'] . ' </tdalign=>
+		</tr>
+
+		<tr>
+			<td align="right" colspan="2" ><b>จำนวนเงิน/Amount : </b>' . add_comma($inv_mst_data_row['amount']) . ' บาท </td>
+		</tr>
+		<br>
+		<tr>
+			<td style="text-align: right;"><b>จำนวนเงินรวม/Total</b></td>
+			<td align="right">' . add_comma($inv_mst_data_row['amount']) . ' บาท</td>
+		</tr>
+		<br>
+		<tr>
+			<td colspan="2" ><b>รวมทั้งหมด : ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</b></td>
+		</tr>
+		<tr>
+			<td colspan="2" ><b>Total Amount Received ' . add_comma($inv_mst_data_row['amount']) . ' Baht (' . convertToEnglish($inv_mst_data_row['amount']) . ')</b></td>
+		</tr>
+		<tr>
+			<td>
+				<b>ชำระโดย/Pay by : ' . $inv_mst_data_row['payby'] . ' </b>
+			</td>
+		</tr>
+		<br>
+		<br>
+		<tr>
+			<td></td>
+			<td align="right">(นางสาวชนิดา ต้นพิพัฒน์)<br>เจ้าหน้าที่ผู้รับเงิน/Collector<br>วันที่ : ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
+		</tr>
+		<tr>
+			<td colspan="2" ><b>หมายเหตุ :ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน<br>The receipt will be valid with payment and the signature of the collector</b></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="border-bottom: solid black 1px;"></td>
+		</tr>
+		<tr>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</td>
+		</tr>
+		<tr>
+		<br>
+			<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
+		</tr>
+		<tr>
+			<td colspan="2" ><b>วัตถุประสงค์  </b>' . $inv_mst_data_row['edo_objective'] . ' </td>
+		</tr>
+		<br>
+		<tr>
+			<td colspan="2" style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี้<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
+		</tr>
+		<br>
+		<br>
+		<br>
+		<br>
+		<tr>
+			<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
+		</tr>
+		<tr>
+		<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+		<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
 	</tr>
-	<tr>
-		<td colspan="2" style="text-align: center; font-size: 18px;"><b>อนุโมทนาบัตร</b></td>
-	</tr>
-	<tr>
-		<td colspan="2" style="text-align: center;"><b>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</b></td>
-	</tr>
-	<tr>
-		<td colspan="2" style="text-align: center;">ได้รับเงินบริจาคเป็นจำนวนเงิน ' . add_comma($inv_mst_data_row['amount']) . ' บาท (' . Convert($inv_mst_data_row['amount']) . ')</td>
-	</tr>
-	<tr>
-	<br>
-		<td><b>จาก : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
-	</tr>
-	<tr>
-		<td colspan="2" ><b>วัตถุประสงค์  </b>' . $inv_mst_data_row['edo_objective'] . ' </td>
-	</tr>
-	<br>
-	<tr>
-		<td colspan="2" style="text-align: center;">ขอให้กุศลผลบุญจากการบริจาคของท่านในครั้งนี้<br>โปรดดลบันดาลให้ท่านประสบแต่ความสุขสวัสดี ปราศจากทุกข์โศกโรคภัย<br>ปราถนาสิ่งใดให้สำเร็จสมดังประสงค์ทุกประการ<br>ให้ไว้ ณ วันที่  ' . $rec_day . ' ' . $rec_month . ' ' . $rec_yearth . '</td>
-	</tr>
-	<br>
-	<br>
-	<br>
-	<br>
-	<tr>
-		<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
-	</tr>
-	<tr>
-	<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-	<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-</tr>
 </table>
 
 	';
@@ -534,3 +535,4 @@ if ($count > 0) {
 } else {
     echo 'Record not found for PDF.';
 }
+ob_end_flush();

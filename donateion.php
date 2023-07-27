@@ -71,14 +71,52 @@
                             <input type="text" name="road" class="form-control" placeholder="ถนน">
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" name="provinces" class="form-control" placeholder="จังหวัด *" required>
+                            <input type="text" name="provinces" class="form-control" id="provincesInput" placeholder="จังหวัด *" required>
                         </div>
+                        <script>
+                            document.getElementById('provincesInput').addEventListener('blur', function() {
+                                var inputElement = this;
+                                var inputValue = inputElement.value.trim();
+                                var prefix = 'จ. ';
+
+                                // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                    inputElement.value = prefix + inputValue;
+                                }
+                            });
+                        </script>
+
+
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" name="amphures" class="form-control" placeholder="อำเภอ *" required>
+                            <input type="text" name="amphures" class="form-control" id="amphuresInput" placeholder="อำเภอ *" required>
                         </div>
+                        <script>
+                            document.getElementById('amphuresInput').addEventListener('blur', function() {
+                                var inputElement = this;
+                                var inputValue = inputElement.value.trim();
+                                var prefix = 'อ. ';
+
+                                // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                    inputElement.value = prefix + inputValue;
+                                }
+                            });
+                        </script>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" name="districts" class="form-control" placeholder="ตำบล *" required>
+                            <input type="text" name="districts" class="form-control" id="districtsInput" placeholder="ตำบล *" required>
                         </div>
+                        <script>
+                            document.getElementById('districtsInput').addEventListener('blur', function() {
+                                var inputElement = this;
+                                var inputValue = inputElement.value.trim();
+                                var prefix = 'ต. ';
+
+                                // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                    inputElement.value = prefix + inputValue;
+                                }
+                            });
+                        </script>
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="text" name="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
                         </div>
@@ -94,16 +132,16 @@
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
-                        <input type="text" name="payby" value="online" hidden>
+                        <input type="text" name="payby" value="เงินโอน" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="comment" hidden>
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php require_once('donateion_add.php'); ?>
-                    <!-- <?php echo '<pre>';
-                            print_r($_POST);
-                            echo '</pre>';
-                            ?> -->
+                    <?php echo '<pre>';
+                    print_r($_POST);
+                    echo '</pre>';
+                    ?>
                 </form>
             </div>
         </section>

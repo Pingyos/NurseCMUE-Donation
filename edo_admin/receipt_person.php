@@ -26,12 +26,12 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">ออกใบเสร็จสำหรับบุคคล</strong>
                             </div>
                             <div class="card-body">
-                            <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ <span style="color:red;"></span></label>
-                                                <input type="text" name="name_title" class="form-control" list="cars" >
+                                                <input type="text" name="name_title" class="form-control" list="cars">
                                                 <datalist id="cars">
                                                     <option value="นาย" />
                                                     <option value="นาง" />
@@ -42,13 +42,13 @@ require_once 'head.php'; ?>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">ชื่อ <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_name" class="form-control" >
+                                                <input type="text" name="rec_name" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_surname" class="control-label mb-1">สกุล <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_surname" class="form-control" >
+                                                <input type="text" name="rec_surname" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -60,7 +60,7 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                    <div class="col-12 col-md-3">
+                                        <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_email" class="control-label mb-1">อีเมล์</label>
                                                 <input type="text" name="rec_email" class="form-control">
@@ -69,7 +69,7 @@ require_once 'head.php'; ?>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;"></span></label>
-                                                <input type="text"  tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                                <input type="text" tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
                                             </div>
                                             <script>
                                                 function autoTab(obj) {
@@ -93,7 +93,7 @@ require_once 'head.php'; ?>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;"></span></label>
-                                                <input type="text" name="address" class="form-control" >
+                                                <input type="text" name="address" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -108,19 +108,55 @@ require_once 'head.php'; ?>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;"></span></label>
-                                                <input type="text" name="provinces" class="form-control" >
+                                                <input type="text" name="provinces" class="form-control" id="provincesInput">
+                                                <script>
+                                                    document.getElementById('provincesInput').addEventListener('blur', function() {
+                                                        var inputElement = this;
+                                                        var inputValue = inputElement.value.trim();
+                                                        var prefix = 'จ. ';
+
+                                                        // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                                            inputElement.value = prefix + inputValue;
+                                                        }
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;"></span></label>
-                                                <input type="text" name="amphures" class="form-control" >
+                                                <input type="text" name="amphures" id="amphuresInput" class="form-control">
+                                                <script>
+                                                    document.getElementById('amphuresInput').addEventListener('blur', function() {
+                                                        var inputElement = this;
+                                                        var inputValue = inputElement.value.trim();
+                                                        var prefix = 'อ. ';
+
+                                                        // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                                            inputElement.value = prefix + inputValue;
+                                                        }
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;"></span></label>
-                                                <input type="text" name="districts" class="form-control" >
+                                                <input type="text" name="districts" id="districtsInput" class="form-control">
+                                                <script>
+                                                    document.getElementById('districtsInput').addEventListener('blur', function() {
+                                                        var inputElement = this;
+                                                        var inputValue = inputElement.value.trim();
+                                                        var prefix = 'ต. ';
+
+                                                        // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
+                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
+                                                            inputElement.value = prefix + inputValue;
+                                                        }
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -135,7 +171,7 @@ require_once 'head.php'; ?>
                                         <div class="col-12 col-md-3">
                                             <div class="form-group">
                                                 <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span style="color:red;"></span></label>
-                                                <input type="date" name="rec_date_s" class="form-control" >
+                                                <input type="date" name="rec_date_s" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3">
@@ -216,12 +252,12 @@ require_once 'head.php'; ?>
                                         <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                     </div>
                                 </form>
-                                 <?php require_once 'recript_add.php'; ?>
+                                <?php require_once 'recript_add.php'; ?>
                                 <!-- <?php
-                                echo '<pre>';
-                                print_r($_POST);
-                                echo '</pre>';
-                                ?> -->
+                                        echo '<pre>';
+                                        print_r($_POST);
+                                        echo '</pre>';
+                                        ?> -->
                             </div>
                         </div>
                     </div>
