@@ -33,19 +33,19 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="rec_email">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
-                                        <div class="col-12 col-md-6">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;"></span></label>
                                                 <input type="text" name="rec_name" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขประจำตัวผู้เสียภาษี <span style="color:red;"></span></label>
                                                 <input type="number" name="rec_idname" class="form-control" pattern="[0-9]*">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
                                                 <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
@@ -54,19 +54,19 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;"></span></label>
                                                 <input type="text" name="address" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="road" class="control-label mb-1">ถนน</label>
                                                 <input type="text" name="road" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;"></span></label>
                                                 <input type="text" name="provinces" class="form-control" id="provincesInput">
@@ -84,7 +84,7 @@ require_once 'head.php'; ?>
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;"></span></label>
                                                 <input type="text" name="amphures" id="amphuresInput" class="form-control">
@@ -105,7 +105,7 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;"></span></label>
                                                 <input type="text" name="districts" id="districtsInput" class="form-control">
@@ -123,19 +123,19 @@ require_once 'head.php'; ?>
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="zip_code" class="control-label mb-1">รหัสไปรษณีย์</label>
                                                 <input type="text" name="zip_code" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_date-s" class="control-label mb-1">วันที่รับเงิน <span style="color:red;">*</span></label>
                                                 <input type="date" name="rec_date_s" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_date-out" class="control-label mb-1">วันที่ออกใบเสร็จ <span style="color:red;">*</span></label>
                                                 <input type="date" name="rec_date_out" class="form-control" required>
@@ -144,13 +144,13 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค <span style="color:red;">*</span></label>
                                                 <input type="text" name="amount" class="form-control" required>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="payby" class="control-label mb-1">ชำระโดย <span style="color:red;">*</span></label>
                                                 <input type="text" name="payby" class="form-control" list="pay" required>
@@ -164,7 +164,7 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
                                                 <select name="edo_name" id="edo_name" class="form-control" required>
@@ -184,19 +184,53 @@ require_once 'head.php'; ?>
                                                         echo "Query failed: " . $e->getMessage();
                                                     }
                                                     ?>
+                                                    <option value="">อื่นๆ</option>
                                                 </select>
+                                            </div>
+                                            &nbsp;
+                                            <div class="form-group" id="otherFields" style="display: none;">
+                                                <label for="other_description" class="control-label mb-1">โครงการอื่นๆ <span style="color:red;">*</span></label>
+                                                <input type="text" name="other_description" class="form-control" placeholder="โปรดระบุชื่อโครงการ">
                                             </div>
                                             <input type="hidden" name="edo_pro_id" id="edo_pro_id">
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
                                         </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var edoNameSelect = document.getElementById('edo_name');
+                                                var edoProIdInput = document.getElementsByName('edo_pro_id')[0];
+                                                var descriptionInput = document.getElementById('edo_description');
+                                                var objectiveInput = document.getElementById('edo_objective');
+                                                var otherDescriptionInput = document.getElementsByName('other_description')[0];
+                                                var otherFieldsDiv = document.getElementById('otherFields');
+
+                                                edoNameSelect.addEventListener('change', function() {
+                                                    var selectedOption = edoNameSelect.options[edoNameSelect.selectedIndex];
+
+                                                    descriptionInput.value = selectedOption.getAttribute('data-description');
+
+                                                    if (selectedOption.value === '') {
+                                                        otherFieldsDiv.style.display = 'block';
+                                                        edoProIdInput.value = '121208';
+                                                        objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
+                                                    } else {
+                                                        otherFieldsDiv.style.display = 'none';
+                                                        edoProIdInput.value = selectedOption.getAttribute('data-pro-id');
+                                                        objectiveInput.value = selectedOption.getAttribute('data-objective');
+                                                    }
+                                                });
+
+                                                otherDescriptionInput.addEventListener('input', function() {
+                                                    descriptionInput.value = otherDescriptionInput.value;
+                                                    objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
+                                                });
+                                            });
+                                        </script>
 
                                         <script>
-                                            // เมื่อเลือกตัวเลือกใน <select>
                                             document.getElementById('edo_name').addEventListener('change', function() {
                                                 var selectedOption = this.options[this.selectedIndex];
-
-                                                // รับค่าจาก data attributes และกำหนดค่าให้กับตัวแปรที่ต้องการ
                                                 document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
                                                 document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
                                                 document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');

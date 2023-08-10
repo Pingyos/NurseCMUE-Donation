@@ -148,7 +148,7 @@ require_once 'head.php'; ?>
                                                 <input type="text" name="comment" class="form-control" value="<?= $row['comment']; ?>">
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
                                                 <select name="edo_name" id="edo_name" class="form-control" required>
@@ -168,19 +168,53 @@ require_once 'head.php'; ?>
                                                         echo "Query failed: " . $e->getMessage();
                                                     }
                                                     ?>
+                                                    <option value="">อื่นๆ</option>
                                                 </select>
+                                            </div>
+                                            &nbsp;
+                                            <div class="form-group" id="otherFields" style="display: none;">
+                                                <label for="other_description" class="control-label mb-1">โครงการอื่นๆ <span style="color:red;">*</span></label>
+                                                <input type="text" name="other_description" class="form-control" placeholder="โปรดระบุชื่อโครงการ">
                                             </div>
                                             <input type="hidden" name="edo_pro_id" id="edo_pro_id">
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
                                         </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var edoNameSelect = document.getElementById('edo_name');
+                                                var edoProIdInput = document.getElementsByName('edo_pro_id')[0];
+                                                var descriptionInput = document.getElementById('edo_description');
+                                                var objectiveInput = document.getElementById('edo_objective');
+                                                var otherDescriptionInput = document.getElementsByName('other_description')[0];
+                                                var otherFieldsDiv = document.getElementById('otherFields');
+
+                                                edoNameSelect.addEventListener('change', function() {
+                                                    var selectedOption = edoNameSelect.options[edoNameSelect.selectedIndex];
+
+                                                    descriptionInput.value = selectedOption.getAttribute('data-description');
+
+                                                    if (selectedOption.value === '') {
+                                                        otherFieldsDiv.style.display = 'block';
+                                                        edoProIdInput.value = '121208';
+                                                        objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
+                                                    } else {
+                                                        otherFieldsDiv.style.display = 'none';
+                                                        edoProIdInput.value = selectedOption.getAttribute('data-pro-id');
+                                                        objectiveInput.value = selectedOption.getAttribute('data-objective');
+                                                    }
+                                                });
+
+                                                otherDescriptionInput.addEventListener('input', function() {
+                                                    descriptionInput.value = otherDescriptionInput.value;
+                                                    objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
+                                                });
+                                            });
+                                        </script>
 
                                         <script>
-                                            // เมื่อเลือกตัวเลือกใน <select>
                                             document.getElementById('edo_name').addEventListener('change', function() {
                                                 var selectedOption = this.options[this.selectedIndex];
-
-                                                // รับค่าจาก data attributes และกำหนดค่าให้กับตัวแปรที่ต้องการ
                                                 document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
                                                 document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
                                                 document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');

@@ -85,7 +85,7 @@ require_once 'head.php'; ?>
                     $total_records05 = $result['total_records05'];
                     $total_amount05 = $result['total_amount05'];
                     ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -115,7 +115,7 @@ require_once 'head.php'; ?>
                     $total_records06 = $result['total_records06'];
                     $total_amount06 = $result['total_amount06'];
                     ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -143,7 +143,7 @@ require_once 'head.php'; ?>
                     $total_records07 = $result['total_records07'];
                     $total_amount07 = $result['total_amount07'];
                     ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -155,6 +155,33 @@ require_once 'head.php'; ?>
                                             <div class="stat-heading">บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ</div>
                                             <div class="stat-text">฿ <?php echo $total_amount07; ?></div>
                                             <div class="stat-heading"><?php echo $total_records07; ?> ราย</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    require_once 'connection.php';
+                    $stmt = $conn->prepare("SELECT COUNT(*) AS total_records08, SUM(amount) AS total_amount08 FROM receipt_offline WHERE edo_pro_id = 121208");
+                    $stmt->execute();
+                    $result = $stmt->fetch();
+                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
+                    $total_records08 = $result['total_records08'];
+                    $total_amount08 = $result['total_amount08'];
+                    ?>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="stat-widget-five">
+                                    <div class="stat-icon dib flat-color-7">
+                                        <i class="pe-7s-cash"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="text-left dib">
+                                            <div class="stat-heading">โครงการอื่น ๆ</div>
+                                            <div class="stat-text">฿ <?php echo $total_amount08; ?></div>
+                                            <div class="stat-heading"><?php echo $total_records08; ?> ราย</div>
                                         </div>
                                     </div>
                                 </div>

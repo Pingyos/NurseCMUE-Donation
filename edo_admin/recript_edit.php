@@ -17,6 +17,7 @@ if (
   && isset($_POST['amount'])
   && isset($_POST['payby'])
   && isset($_POST['edo_name'])
+  && isset($_POST['other_description'])
   && isset($_POST['edo_pro_id'])
   && isset($_POST['edo_description'])
   && isset($_POST['edo_objective'])
@@ -44,6 +45,7 @@ if (
     rec_date_s = :rec_date_s,
     rec_date_out = :rec_date_out,
     edo_name = :edo_name,
+    other_description = :other_description,
     amount = :amount,
     payby = :payby,
     edo_pro_id = :edo_pro_id,
@@ -70,6 +72,7 @@ if (
   $stmt->bindParam(':rec_date_s', $_POST['rec_date_s'], PDO::PARAM_STR);
   $stmt->bindParam(':rec_date_out', $_POST['rec_date_out'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
+  $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
   $stmt->bindParam(':amount', $_POST['amount'], PDO::PARAM_STR);
   $stmt->bindParam(':payby', $_POST['payby'], PDO::PARAM_STR);
   $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);

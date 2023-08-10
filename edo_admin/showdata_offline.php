@@ -57,7 +57,7 @@ require_once 'head.php'; ?>
                                                     <span style="color: orange;"><?= $t1['rec_time']; ?></span>
 
                                                 </td>
-                                                <td><?= $t1['edo_name']; ?></td>
+                                                <td><?= $t1['edo_name']; ?><?= $t1['other_description']; ?></td>
                                                 <td><?= number_format($t1['amount'], 2, '.', ','); ?></td>
                                                 <td>
                                                     <a href="pdf_maker_offline.php?id=<?php echo $t1['id']; ?>&ACTION=VIEW" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"> ใบเสร็จ</i></a>

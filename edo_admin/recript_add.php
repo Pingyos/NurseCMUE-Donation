@@ -23,6 +23,7 @@ if (
   && isset($_POST['comment'])
   && isset($_POST['status_donat'])
   && isset($_POST['status_user'])
+  && isset($_POST['other_description'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -51,6 +52,7 @@ if (
   edo_objective,
   status_donat,
   status_user,
+  other_description,
   comment)
   VALUES
   (:name_title,
@@ -75,6 +77,7 @@ if (
   :edo_objective,
   :status_donat,
   :status_user,
+  :other_description,
   :comment)");
   //bindParam data type
   $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -100,6 +103,7 @@ if (
   $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
   $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
+  $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
   $result = $stmt->execute();
   //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
   echo '
