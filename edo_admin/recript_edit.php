@@ -24,6 +24,7 @@ if (
   && isset($_POST['comment'])
   && isset($_POST['status_donat'])
   && isset($_POST['status_user'])
+  && isset($_POST['status_receipt'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -53,6 +54,7 @@ if (
     edo_objective = :edo_objective,
     status_donat = :status_donat,
     status_user = :status_user,
+    status_receipt = :status_receipt,
     comment = :comment
     WHERE id = :id");
 
@@ -80,6 +82,7 @@ if (
   $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
   $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
   $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
+  $stmt->bindParam(':status_receipt', $_POST['status_receipt'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
 

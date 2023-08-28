@@ -185,6 +185,7 @@ require_once 'head.php'; ?>
                                         </div>
                                         <input type="text" name="status_donat" value="offline" hidden>
                                         <input type="text" name="status_user" value="person" hidden>
+                                        <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         <input type="text" name="id" value="<?= $row['id']; ?>" hidden>
                                         <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">

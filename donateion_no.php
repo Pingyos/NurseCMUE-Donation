@@ -37,6 +37,7 @@
                         <input type="text" name="edo_objective" value="<?= $row['edo_objective']; ?>" hidden>
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
+                        <input type="text" name="status_receipt" value="no" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="name_title" hidden>

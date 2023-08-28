@@ -195,6 +195,7 @@ require_once 'head.php'; ?>
                                             <input type="hidden" name="edo_pro_id" id="edo_pro_id">
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
+                                            <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         </div>
                                         <script>
                                             document.addEventListener('DOMContentLoaded', function() {

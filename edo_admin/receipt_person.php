@@ -278,6 +278,7 @@ require_once 'head.php'; ?>
                                         </div>
                                         <input type="hidden" name="status_donat" value="offline" class="form-control">
                                         <input type="hidden" name="status_user" value="person" class="form-control">
+                                        <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">
