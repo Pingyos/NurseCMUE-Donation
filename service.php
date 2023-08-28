@@ -6,21 +6,6 @@
     <?php require_once('header.php');
     require_once('nav.php'); ?>
     <main>
-
-        <section class="news-detail-header-section text-center">
-            <div class="section-overlay"></div>
-
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-12 col-12">
-                        <h1 class="text-white">สิทธิประโยชน์</h1>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
         <section class="section-padding">
             <div class="container">
                 <div class="row">

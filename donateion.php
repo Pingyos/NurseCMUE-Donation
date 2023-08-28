@@ -41,25 +41,7 @@
                             <input type="text" name="rec_tel" class="form-control" placeholder="เบอร์โทรศัพท์ *" required>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" required tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
-                            <script>
-                                function autoTab(obj) {
-                                    var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
-                                    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
-                                    var returnText = new String("");
-                                    var obj_l = obj.value.length;
-                                    var obj_l2 = obj_l - 1;
-                                    for (i = 0; i < pattern.length; i++) {
-                                        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
-                                            returnText += obj.value + pattern_ex;
-                                            obj.value = returnText;
-                                        }
-                                    }
-                                    if (obj_l >= pattern.length) {
-                                        obj.value = obj.value.substr(0, pattern.length);
-                                    }
-                                }
-                            </script>
+                            <input type="text" name="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" maxlength="13" pattern="[0-9]{13}" required>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="text" name="rec_email" class="form-control" placeholder="อีเมล์">

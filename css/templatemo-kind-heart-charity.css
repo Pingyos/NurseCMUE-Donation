@@ -9,36 +9,36 @@ https://templatemo.com/tm-581-kind-heart-charity
 
 
 @font-face {
-    font-family: 'Mitr-Regular';
-    src: url('../fonts/Metropolis/Mitr-Regular.woff') format('woff'),
-        url('../fonts/Metropolis/Mitr-Regular.woff') format('woff2');
+    font-family: 'BaiJamjuree-Regular';
+    src: url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff'),
+        url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mitr-Regular';
-    src: url('../fonts/Metropolis/Mitr-Regular.woff') format('woff'),
-        url('../fonts/Metropolis/Mitr-Regular.woff') format('woff2');
+    font-family: 'BaiJamjuree-Regular';
+    src: url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff'),
+        url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mitr-Regular';
-    src: url('../fonts/Metropolis/Mitr-Regular.woff') format('woff'),
-        url('../fonts/Metropolis/Mitr-Regular.woff') format('woff2');
+    font-family: 'BaiJamjuree-Regular';
+    src: url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff'),
+        url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mitr-Regular';
-    src: url('../fonts/Metropolis/Mitr-Regular.woff') format('woff'),
-        url('../fonts/Metropolis/Mitr-Regular.woff') format('woff2');
+    font-family: 'BaiJamjuree-Regular';
+    src: url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff'),
+        url('../fonts/Metropolis/BaiJamjuree-Regular.woff') format('woff2');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -59,7 +59,7 @@ https://templatemo.com/tm-581-kind-heart-charity
   --p-color:                      #3b3b3b;
   --border-color:                 #e9eaeb;
 
-  --body-font-family:             'Mitr-Regular', sans-serif;
+  --body-font-family:             'BaiJamjuree-Regular', sans-serif;
 
   --h1-font-size:                 52px;
   --h2-font-size:                 46px;
