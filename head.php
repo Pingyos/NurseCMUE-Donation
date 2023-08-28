@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="โครงการที่รอการบริจาค,บริจาค,ทำบุญ">
-    <meta name="keywords" content="โครงการที่รอการบริจาค,บริจาค,ทำบุญ">
+    <meta name="keywords" content="โครงการที่รอการบริจาค,บริจาคคณะพยาบาล มช,ทำบุญ,คณะพยาบาล มช,บริจาค มช">
     <title>NurseCMU E-Donation</title>
 
     <link href="images/logo_m.png" rel="icon">

@@ -19,7 +19,7 @@
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/slide/DSC_7972.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/banner.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
@@ -43,8 +43,10 @@
             </div>
         </section>
 
-        <section class="cta-section section-padding section-bg">
-            <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
+        <section class="cta-section section-padding ">
+            <div class="container">
+                <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
+            </div>
         </section>
 
         <section class="section-padding" id="section_2">
