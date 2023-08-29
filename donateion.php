@@ -114,8 +114,21 @@
                             <input type="number" name="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="number" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
+                            <input type="number" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค" step="0.01" required>
                         </div>
+                        <script>
+                            const amountInput = document.getElementById('amountInput');
+
+                            amountInput.addEventListener('input', () => {
+                                if (amountInput.value.includes('.')) {
+                                    const parts = amountInput.value.split('.');
+                                    if (parts[1].length > 2) {
+                                        parts[1] = parts[1].substring(0, 2);
+                                        amountInput.value = parts.join('.');
+                                    }
+                                }
+                            });
+                        </script>
                     </div>
                     <div class="row">
                         <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" hidden>
@@ -125,6 +138,7 @@
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="status_receipt" value="yes" hidden>
+                        <input type="text" name="id_receipt" value="<?= date('Y') + 543 ?>-<?= $row['edo_pro_id']; ?>-E<?= str_pad($row['edo_id'], 4, '0', STR_PAD_LEFT); ?>" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="payby" value="เงินโอน" hidden>
                         <input type="text" name="rec_date_s" hidden>
