@@ -10,7 +10,6 @@
         <section class="hero-section hero-section-full-height">
             <div class="container-fluid">
                 <div class="row">
-
                     <div class="col-lg-12 col-12 p-0">
                         <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">

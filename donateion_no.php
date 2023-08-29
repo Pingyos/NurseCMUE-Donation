@@ -8,7 +8,9 @@
     require_once('nav.php'); ?>
     <main>
         <section class="cta-section section-padding section-bg">
-            <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
+            <div class="container">
+                <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
+            </div>
             <?php
             if (isset($_GET['edo_id'])) {
                 require_once 'connection.php';
@@ -27,7 +29,7 @@
                             <input type="text" name="rec_name" value="ไม่ประสงค์ออกนาม" class="form-control" readonly>
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="text" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค" required>
+                            <input type="number" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค" required>
                         </div>
                     </div>
                     <div class="row">

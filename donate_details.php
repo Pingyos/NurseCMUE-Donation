@@ -9,12 +9,6 @@
     <main>
         <section class="cta-section section-padding section-bg">
             <div class="container">
-                <div class="row justify-content-center align-items-center">
-                    <img src="images/banner.jpg" class="custom-block-image img-fluid" alt="">
-                </div>
-            </div>
-            <br>
-            <div class="container">
                 <div class="row">
                     <?php
                     if (isset($_GET['edo_id'])) {

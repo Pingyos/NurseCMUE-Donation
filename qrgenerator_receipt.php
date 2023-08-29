@@ -4,10 +4,8 @@
 <?php require_once('head.php'); ?>
 
 <body id="section_1">
-
     <?php require_once('header.php');
     require_once('nav.php'); ?>
-
     <main>
         <div class="container">
             <div class="row">
@@ -159,13 +157,27 @@
                                     }
                                 } catch (PDOException $e) {
                                     echo "Error: " . $e->getMessage();
-                                    $amount = 0; // Set a default value for $amount if an error occurs
+                                    $amount = 0;
                                 }
                                 ?>
                             </div>
                         </div>
                         <br>
                     </form>
+                    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+                    <script>
+                        $(document).ready(function() {
+                            swal({
+                                title: "คำเตือน",
+                                text: "เพื่อประโยชน์ในการลดหย่อนภาษี กรุณาใช้ บัญชีอิเล็กทรอนิกส์ ของตัวท่านเอง",
+                                type: "warning",
+                                showConfirmButton: true,
+                                confirmButtonText: "ตกลง"
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>
