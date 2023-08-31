@@ -8,15 +8,20 @@
     require_once('nav.php'); ?>
     <main>
         <section class="cta-section section-padding section-bg">
-            <div class="container">
-                <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
-            </div>
             <?php
             if (isset($_GET['edo_id'])) {
                 require_once 'connection.php';
                 $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                 $stmt->execute([$_GET['edo_id']]);
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row) {
+                    $imageURL = "images/" . $row['img_banner'];
+            ?>
+                    <div class="container">
+                        <img src="<?= $imageURL; ?>" class="custom-text-box-image img-fluid" alt="">
+                    </div>
+            <?php
+                }
             }
             ?>
             <div class="col-lg-8 col-12 mx-auto">
@@ -63,7 +68,7 @@
                             if ($last_id_result) {
                                 $last_id_row = $last_id_result->fetch(PDO::FETCH_ASSOC);
                                 $last_id = $last_id_row['max_id'];
-                                $id_receipt = date('Y') + 543 . '-' . $row['edo_pro_id'] . '-E' . str_pad($last_id, 4, '0', STR_PAD_LEFT);
+                                $id_receipt = date('Y') + 543 . '-' . $row['edo_pro_id'] . '-E' . str_pad($last_id + 1, 4, '0', STR_PAD_LEFT);
                             } else {
                                 echo "Error querying database: " . $conn->errorInfo()[2];
                             }
@@ -72,14 +77,13 @@
                         }
                         ?>
                         <input type="text" name="id_receipt" value="<?= $id_receipt ?>" hidden>
-
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="name_title" hidden>
-                        <input type="text" name="payby" value="online" hidden>
+                        <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_surname" hidden>
-                        <input type="text" name="rec_tel" value="-" hidden>
-                        <input type="text" name="rec_idname" value="-" hidden>
+                        <input type="text" name="rec_tel" hidden>
+                        <input type="text" name="rec_idname" hidden>
                         <input type="text" name="rec_email" hidden>
                         <input type="text" name="address" hidden>
                         <input type="text" name="road" hidden>
@@ -92,10 +96,10 @@
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php require_once('donateion_add.php'); ?>
-                    <?php echo '<pre>';
-                    print_r($_POST);
-                    echo '</pre>';
-                    ?>
+                    <!-- <?php echo '<pre>';
+                            print_r($_POST);
+                            echo '</pre>';
+                            ?> -->
                 </form>
             </div>
         </section>

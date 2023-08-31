@@ -8,13 +8,20 @@
     require_once('nav.php'); ?>
     <main>
         <section class="cta-section section-padding section-bg">
-            <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
             <?php
             if (isset($_GET['edo_id'])) {
                 require_once 'connection.php';
                 $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                 $stmt->execute([$_GET['edo_id']]);
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($row) {
+                    $imageURL = "images/" . $row['img_banner'];
+            ?>
+                    <div class="container">
+                        <img src="<?= $imageURL; ?>" class="custom-text-box-image img-fluid" alt="">
+                    </div>
+            <?php
+                }
             }
             ?>
             <div class="col-lg-8 col-12 mx-auto">
@@ -114,7 +121,7 @@
                             <input type="number" name="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="number" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค" step="0.01" required>
+                            <input type="number" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" step="0.01" required>
                         </div>
                         <script>
                             const amountInput = document.getElementById('amountInput');
@@ -138,9 +145,27 @@
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="status_receipt" value="yes" hidden>
-                        <input type="text" name="id_receipt" value="<?= date('Y') + 543 ?>-<?= $row['edo_pro_id']; ?>-E<?= str_pad($row['edo_id'], 4, '0', STR_PAD_LEFT); ?>" hidden>
+                        <?php
+                        require_once 'connection.php';
+
+                        try {
+                            $last_id_query = "SELECT MAX(id) AS max_id FROM receipt_offline;";
+                            $last_id_result = $conn->query($last_id_query);
+
+                            if ($last_id_result) {
+                                $last_id_row = $last_id_result->fetch(PDO::FETCH_ASSOC);
+                                $last_id = $last_id_row['max_id'];
+                                $id_receipt = date('Y') + 543 . '-' . $row['edo_pro_id'] . '-E' . str_pad($last_id + 1, 4, '0', STR_PAD_LEFT);
+                            } else {
+                                echo "Error querying database: " . $conn->errorInfo()[2];
+                            }
+                        } catch (PDOException $e) {
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
+                        <input type="text" name="id_receipt" value="<?= $id_receipt ?>" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
-                        <input type="text" name="payby" value="เงินโอน" hidden>
+                        <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="other_description" hidden>
                         <input type="text" name="comment" hidden>

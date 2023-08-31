@@ -226,7 +226,7 @@ require_once 'head.php'; ?>
                                                 <label for="other_description" class="control-label mb-1">โครงการอื่นๆ <span style="color:red;">*</span></label>
                                                 <input type="text" name="other_description" class="form-control" placeholder="โปรดระบุชื่อโครงการ">
                                             </div>
-                                            <input type="hidden" name="edo_pro_id" id="edo_pro_id">
+                                            <input type="hidden" name="edo_pro_id" value="<?php $row['edo_pro_id'] ?>">
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
                                         </div>
@@ -262,14 +262,6 @@ require_once 'head.php'; ?>
                                             });
                                         </script>
 
-                                        <script>
-                                            document.getElementById('edo_name').addEventListener('change', function() {
-                                                var selectedOption = this.options[this.selectedIndex];
-                                                document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
-                                                document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
-                                                document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');
-                                            });
-                                        </script>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="comment" class="control-label mb-1">หมายเหตุ</label>
@@ -285,12 +277,13 @@ require_once 'head.php'; ?>
                                         <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                     </div>
                                 </form>
-                                <?php require_once 'recript_add.php'; ?>
-                                <!-- <?php
-                                        echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>';
-                                        ?> -->
+
+                                <?php
+                                require_once 'recript_add.php';
+                                echo '<pre>';
+                                print_r($_POST);
+                                echo '</pre>';
+                                ?>
                             </div>
                         </div>
                     </div>

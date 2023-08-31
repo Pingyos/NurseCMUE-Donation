@@ -18,11 +18,11 @@
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/banner.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/banner_tex2.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/slide/DSC_8450.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/banner_tex1.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
                             </div>
 
@@ -42,11 +42,11 @@
             </div>
         </section>
 
-        <section class="cta-section section-padding ">
+        <!-- <section class="cta-section section-padding ">
             <div class="container">
                 <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
             </div>
-        </section>
+        </section> -->
 
         <section class="section-padding" id="section_2">
             <div class="container">
@@ -80,7 +80,7 @@
             </div>
         </section>
 
-        <section class="about-section section-padding" id="section_4">
+        <!-- <section class="about-section section-padding" id="section_4">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">
@@ -97,7 +97,7 @@
                 <p>โทรศัพท์ 053-949075</p>
                 <p>นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
             </div>
-        </section>
+        </section> -->
     </main>
 
     <?php require_once('footer.php'); ?>

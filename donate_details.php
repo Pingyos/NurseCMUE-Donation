@@ -16,8 +16,6 @@
                         $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                         $stmt->execute([$_GET['edo_id']]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                        // ตรวจสอบว่าพบข้อมูลโครงการหรือไม่ก่อนแสดงรูปภาพ
                         if ($row) {
                             $imageURL = "images/causes/" . $row['img_file'];
                     ?>
@@ -60,6 +58,12 @@
                                             <li class="custom-list-item d-flex">
                                                 <i class="bi-check custom-text-box-icon me-2"></i>
                                                 <?= $row['edo_name4']; ?>
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if (!empty($row['edo_name5'])) : ?>
+                                            <li class="custom-list-item d-flex">
+                                                <i class="bi-check custom-text-box-icon me-2"></i>
+                                                <?= $row['edo_name5']; ?>
                                             </li>
                                         <?php endif; ?>
                                     </ul>
