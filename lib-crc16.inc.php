@@ -1,5 +1,26 @@
 <?php 
 
+/*************************************************************************
+ * phpCrc16 v1.1 -- CRC16/CCITT implementation 
+ *
+ * By Matteo Beccati <matteo@beccati.com>
+ * 
+ * Original code by:
+ * Ashley Roll
+ * Digital Nemesis Pty Ltd
+ * www.digitalnemesis.com
+ * ash@digitalnemesis.com 
+ *
+ * Test Vector: "123456789" (character string, no quotes)
+ * Generated CRC: 0x29B1
+ * 
+ *************************************************************************/
+
+
+
+/*
+ * Returns CRC16 of a string as int value
+ */
 function CRC16($str)
 {
 	static $CRC16_Lookup = array(

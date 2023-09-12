@@ -45,19 +45,55 @@
                             <input type="text" name="rec_surname" class="form-control" placeholder="สกุล *" required>
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="number" name="rec_tel" class="form-control" placeholder="เบอร์โทรศัพท์ *" required>
+                            <input type="text" name="rec_tel" class="form-control" placeholder="เบอร์โทรศัพท์ *" required>
                         </div>
+
+                        <script>
+                            const recTelInput = document.querySelector('input[name="rec_tel"]');
+
+                            recTelInput.addEventListener("input", function() {
+                                let value = this.value;
+                                value = value.replace(/\D/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+
+                                if (value.length < 8) {
+                                    // หากมีน้อยกว่า 8 ตัวเลขให้แสดงข้อความแจ้งเตือน
+                                    recTelInput.setCustomValidity("กรุณากรอกเบอร์โทรศัพท์ที่ถูกต้อง");
+                                } else if (value.length > 10) {
+                                    // หากมีมากกว่า 10 ตัวเลขให้ตัดทิ้งส่วนที่เกิน
+                                    value = value.slice(0, 10);
+                                    recTelInput.setCustomValidity("");
+                                } else {
+                                    recTelInput.setCustomValidity("");
+                                }
+
+                                this.value = value;
+                            });
+                        </script>
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="number" name="rec_idname" id="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" min="0" required>
                         </div>
 
                         <script>
-                            document.getElementById("rec_idname").addEventListener("input", function() {
-                                if (this.value.length > 13) {
-                                    this.value = this.value.slice(0, 13); // ตัดตัวเลขที่เกิน 13 ตัวออก
+                            const recIdnameInput = document.getElementById("rec_idname");
+
+                            recIdnameInput.addEventListener("input", function() {
+                                let value = this.value;
+                                value = value.replace(/\D/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+
+                                if (value < 0) {
+                                    value = '';
                                 }
+                                if (value.length < 13) {
+                                    // หากมีน้อยกว่า 13 ตัวเลขให้แสดงข้อความแจ้งเตือน
+                                    recIdnameInput.setCustomValidity("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
+                                } else {
+                                    recIdnameInput.setCustomValidity("");
+                                }
+
+                                this.value = value;
                             });
                         </script>
+
 
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="text" name="rec_email" class="form-control" placeholder="อีเมล์">
@@ -118,22 +154,44 @@
                         </script>
 
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="number" name="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
+                            <input type="number" name="zip_code" id="zip_code" class="form-control" placeholder="รหัสไปรษณีย์">
                         </div>
+
+                        <script>
+                            document.getElementById("zip_code").addEventListener("input", function() {
+                                let value = this.value;
+                                value = value.replace(/\D/g, '');
+                                this.value = value;
+                            });
+                        </script>
+
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="number" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" step="0.01" required>
+                            <input type="text" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
                         </div>
+
                         <script>
                             const amountInput = document.getElementById('amountInput');
 
                             amountInput.addEventListener('input', () => {
-                                if (amountInput.value.includes('.')) {
-                                    const parts = amountInput.value.split('.');
+                                let value = amountInput.value;
+                                if (value.charAt(0).match(/[^0-9]/)) {
+                                    value = value.substring(1); // ลบอักขระพิเศษที่อยู่ที่ตำแหน่งแรก
+                                }
+                                const cleanedValue = value.replace(/[^0-9.]/g, ''); // ลบทุกอักขระที่ไม่ใช่ตัวเลขหรือจุดทศนิยม
+
+                                const parts = cleanedValue.split('.');
+                                if (parts[0].length > 7) {
+                                    parts[0] = parts[0].substring(0, 7);
+                                }
+
+                                if (parts.length > 1) {
+                                    // มีทศนิยม
                                     if (parts[1].length > 2) {
                                         parts[1] = parts[1].substring(0, 2);
-                                        amountInput.value = parts.join('.');
                                     }
                                 }
+
+                                amountInput.value = parts.join('.');
                             });
                         </script>
                     </div>
@@ -145,24 +203,6 @@
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="status_receipt" value="yes" hidden>
-                        <?php
-                        require_once 'connection.php';
-
-                        try {
-                            $last_id_query = "SELECT MAX(id) AS max_id FROM receipt_offline;";
-                            $last_id_result = $conn->query($last_id_query);
-
-                            if ($last_id_result) {
-                                $last_id_row = $last_id_result->fetch(PDO::FETCH_ASSOC);
-                                $last_id = $last_id_row['max_id'];
-                                $id_receipt = date('Y') + 543 . '-' . $row['edo_pro_id'] . '-E' . str_pad($last_id + 1, 4, '0', STR_PAD_LEFT);
-                            } else {
-                                echo "Error querying database: " . $conn->errorInfo()[2];
-                            }
-                        } catch (PDOException $e) {
-                            echo "Error: " . $e->getMessage();
-                        }
-                        ?>
                         <input type="text" name="id_receipt" value="<?= $id_receipt ?>" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="payby" value="QR CODE" hidden>

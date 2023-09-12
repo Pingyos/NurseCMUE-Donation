@@ -4,8 +4,10 @@
 <?php require_once('head.php'); ?>
 
 <body id="section_1">
+
     <?php require_once('header.php');
     require_once('nav.php'); ?>
+
     <main>
         <div class="container">
             <div class="row">
@@ -17,18 +19,25 @@
                                 <h5 class="mb-3">ยืนยันข้อมูล</h5>
                             </div>
                         </center>
-                        <?php
-                        require_once 'connection.php';
+                        <!-- <?php
+                                require_once 'connection.php';
 
-                        if (isset($_GET['id'])) {
-                            $id = $_GET['id'];
+                                if (isset($_GET['id'])) {
+                                    $id = $_GET['id'];
 
-                            $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
-                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                            $stmt->execute();
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        }
-                        ?>
+                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
+                                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                                    $stmt->execute();
+                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                                    if ($row['status'] == 1) {
+                                        // สร้างลิงก์ใบเสร็จรับเงิน
+                                        $receiptLink = "pdf_maker.php?id=" . $row['id'] . "&ACTION=VIEW";
+                                        // เปิดใบเสร็จรับเงินโดยอัตโนมัติ
+                                        echo '<script>window.location.href = "' . $receiptLink . '";</script>';
+                                    }
+                                }
+                                ?> -->
 
                         <div class="row">
                             <div class="col-lg-3 col-12 mt-2">
@@ -157,12 +166,18 @@
                                     }
                                 } catch (PDOException $e) {
                                     echo "Error: " . $e->getMessage();
-                                    $amount = 0;
+                                    $amount = 0; // Set a default value for $amount if an error occurs
                                 }
                                 ?>
                             </div>
                         </div>
                         <br>
+                        <style>
+                            .container {
+                                display: flex;
+                                justify-content: center;
+                            }
+                        </style>
                     </form>
                     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

@@ -33,6 +33,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="rec_email">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
+                                        <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;"></span></label>
@@ -195,7 +196,6 @@ require_once 'head.php'; ?>
                                             <input type="hidden" name="edo_pro_id" id="edo_pro_id">
                                             <input type="hidden" name="edo_description" id="edo_description">
                                             <input type="hidden" name="edo_objective" id="edo_objective">
-                                            <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         </div>
                                         <script>
                                             document.addEventListener('DOMContentLoaded', function() {

@@ -34,19 +34,32 @@
                             <input type="text" name="rec_name" value="ไม่ประสงค์ออกนาม" class="form-control" readonly>
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="number" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค" step="0.01" required>
+                            <input type="text" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
                         </div>
+
                         <script>
                             const amountInput = document.getElementById('amountInput');
 
                             amountInput.addEventListener('input', () => {
-                                if (amountInput.value.includes('.')) {
-                                    const parts = amountInput.value.split('.');
+                                let value = amountInput.value;
+                                if (value.charAt(0).match(/[^0-9]/)) {
+                                    value = value.substring(1); // ลบอักขระพิเศษที่อยู่ที่ตำแหน่งแรก
+                                }
+                                const cleanedValue = value.replace(/[^0-9.]/g, ''); // ลบทุกอักขระที่ไม่ใช่ตัวเลขหรือจุดทศนิยม
+
+                                const parts = cleanedValue.split('.');
+                                if (parts[0].length > 7) {
+                                    parts[0] = parts[0].substring(0, 7);
+                                }
+
+                                if (parts.length > 1) {
+                                    // มีทศนิยม
                                     if (parts[1].length > 2) {
                                         parts[1] = parts[1].substring(0, 2);
-                                        amountInput.value = parts.join('.');
                                     }
                                 }
+
+                                amountInput.value = parts.join('.');
                             });
                         </script>
                     </div>
@@ -58,32 +71,14 @@
                         <input type="text" name="status_donat" value="online" hidden>
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="status_receipt" value="no" hidden>
-                        <?php
-                        require_once 'connection.php';
-
-                        try {
-                            $last_id_query = "SELECT MAX(id) AS max_id FROM receipt_offline;";
-                            $last_id_result = $conn->query($last_id_query);
-
-                            if ($last_id_result) {
-                                $last_id_row = $last_id_result->fetch(PDO::FETCH_ASSOC);
-                                $last_id = $last_id_row['max_id'];
-                                $id_receipt = date('Y') + 543 . '-' . $row['edo_pro_id'] . '-E' . str_pad($last_id + 1, 4, '0', STR_PAD_LEFT);
-                            } else {
-                                echo "Error querying database: " . $conn->errorInfo()[2];
-                            }
-                        } catch (PDOException $e) {
-                            echo "Error: " . $e->getMessage();
-                        }
-                        ?>
-                        <input type="text" name="id_receipt" value="<?= $id_receipt ?>" hidden>
+                        <input type="text" name="other_description" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="name_title" hidden>
                         <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_surname" hidden>
-                        <input type="text" name="rec_tel" hidden>
-                        <input type="text" name="rec_idname" hidden>
+                        <input type="text" name="rec_tel" value="-" hidden>
+                        <input type="text" name="rec_idname" value="-" hidden>
                         <input type="text" name="rec_email" hidden>
                         <input type="text" name="address" hidden>
                         <input type="text" name="road" hidden>

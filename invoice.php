@@ -14,6 +14,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-12 mx-auto">
                         <form class="custom-form donate-form" action="#" method="POST" role="form">
+
                             <table id="myTable" class="display" style="width: 100%;">
                                 <thead>
                                     <tr>

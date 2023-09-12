@@ -7,9 +7,23 @@
                 <h5 style="margin-left: 10px;">NurseCMU</h5>
             </span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" id="navbarToggleBtn" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const navbarToggleBtn = document.getElementById("navbarToggleBtn");
+                const navbarNav = document.getElementById("navbarNav");
+
+                navbarToggleBtn.addEventListener("click", function() {
+                    if (navbarNav.classList.contains("show")) {
+                        navbarNav.classList.remove("show");
+                    } else {
+                        navbarNav.classList.add("show");
+                    }
+                });
+            });
+        </script>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
@@ -29,12 +43,12 @@
                     <a class="nav-link click-scroll" href="invoice.php">รายนามผู้บริจาค</a>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link " href="service.php">สิทธิประโยชน์</a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="index.php#section_5">ติดต่อเรา</a>
+                    <a class="nav-link click-scroll" href="index.php#section_4">ติดต่อเรา</a>
                 </li>
 
             </ul>

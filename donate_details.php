@@ -8,6 +8,7 @@
     require_once('nav.php'); ?>
     <main>
         <section class="cta-section section-padding section-bg">
+            <br>
             <div class="container">
                 <div class="row">
                     <?php
@@ -16,6 +17,8 @@
                         $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
                         $stmt->execute([$_GET['edo_id']]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        // ตรวจสอบว่าพบข้อมูลโครงการหรือไม่ก่อนแสดงรูปภาพ
                         if ($row) {
                             $imageURL = "images/causes/" . $row['img_file'];
                     ?>

@@ -10,6 +10,7 @@
         <section class="hero-section hero-section-full-height">
             <div class="container-fluid">
                 <div class="row">
+
                     <div class="col-lg-12 col-12 p-0">
                         <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -41,7 +42,6 @@
                 </div>
             </div>
         </section>
-
         <!-- <section class="cta-section section-padding ">
             <div class="container">
                 <img src="images/banner.jpg" class="col-lg-12 col-md-5 col-12" alt="">
@@ -67,7 +67,7 @@
                             <div class="custom-block-wrap">
                                 <img src="images/causes/<?= $t1['img_file']; ?>" class="custom-block-image img-fluid" alt="">
                                 <div class="custom-block">
-                                    <div class="custom-block-body">
+                                    <div class="custom-block-body" style="height: 200px;">
                                         <h5 class="mb-3"><?= $t1['edo_name']; ?></h5>
                                         <p><?= $t1['edo_tex']; ?></p>
                                     </div>
@@ -79,27 +79,16 @@
                 </div>
             </div>
         </section>
-
-        <!-- <section class="about-section section-padding" id="section_4">
+        <section class="about-section section-padding" id="section_4">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                        <img src="images/bannerdonation.jpg" class="custom-text-box-image img-fluid" alt="">
-                    </div>
+                <center>
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">
                         <img src="images/banner_web-03.jpg" class="custom-text-box-image img-fluid" alt="">
                     </div>
-                </div>
+                </center>
             </div>
-            <br>
-            <div class="col-lg-12 col-12 text-center mb-4">
-                <h5>ในกรณีที่ไม่สามารถบริจาคผ่าน e-donation ได้ ให้ติดต่อ</h5>
-                <p>โทรศัพท์ 053-949075</p>
-                <p>นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
-            </div>
-        </section> -->
+        </section>
     </main>
-
     <?php require_once('footer.php'); ?>
     <script src="js/main.js"></script>
 
