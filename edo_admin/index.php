@@ -80,8 +80,6 @@ require_once 'head.php'; ?>
                     $stmt = $conn->prepare("SELECT COUNT(*) AS total_records05, SUM(amount) AS total_amount05 FROM receipt_offline WHERE edo_pro_id = 121205");
                     $stmt->execute();
                     $result = $stmt->fetch();
-
-                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
                     $total_records05 = $result['total_records05'];
                     $total_amount05 = $result['total_amount05'];
                     ?>
@@ -95,7 +93,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษา</div>
-                                            <div class="stat-text">฿ <?php echo $total_amount05; ?></div>
+                                            <div class="stat-text"><?php echo '฿ ' . number_format($total_amount05, 2); ?></div>
                                             <div class="stat-heading"><?php echo $total_records05; ?> ราย</div>
                                         </div>
                                     </div>
@@ -125,7 +123,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อระดมพลัง เร่งรัดปรับปรุงคุณภาพ</div>
-                                            <div class="stat-text">฿ <?php echo $total_amount06; ?></div>
+                                            <div class="stat-text">฿ <?php echo number_format($total_amount06, 2); ?></div>
                                             <div class="stat-heading"><?php echo $total_records06; ?> ราย</div>
                                         </div>
                                     </div>
@@ -153,7 +151,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ</div>
-                                            <div class="stat-text">฿ <?php echo $total_amount07; ?></div>
+                                            <div class="stat-text">฿ <?php echo number_format($total_amount07, 2); ?></div>
                                             <div class="stat-heading"><?php echo $total_records07; ?> ราย</div>
                                         </div>
                                     </div>
@@ -180,7 +178,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">โครงการอื่น ๆ</div>
-                                            <div class="stat-text">฿ <?php echo $total_amount08; ?></div>
+                                            <div class="stat-text">฿ <?php echo number_format($total_amount08, 2); ?></div>
                                             <div class="stat-heading"><?php echo $total_records08; ?> ราย</div>
                                         </div>
                                     </div>
@@ -293,7 +291,7 @@ require_once 'head.php'; ?>
                                     <div class="stat-content">
                                         <div class="text-left dib">
                                             <div class="stat-heading">ยอดเงินรวม</div>
-                                            <div class="stat-text">฿ <?php echo $total_amountsum; ?></div>
+                                            <div class="stat-text">฿ <?php echo number_format($total_amountsum, 2); ?></div>
                                         </div>
                                     </div>
                                 </div>

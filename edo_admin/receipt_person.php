@@ -132,8 +132,6 @@ require_once 'head.php'; ?>
                                                         var inputElement = this;
                                                         var inputValue = inputElement.value.trim();
                                                         var prefix = 'อ. ';
-
-                                                        // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
                                                         if (inputValue !== '' && !inputValue.startsWith(prefix)) {
                                                             inputElement.value = prefix + inputValue;
                                                         }
@@ -209,8 +207,6 @@ require_once 'head.php'; ?>
                                                     try {
                                                         $query = "SELECT edo_name, edo_pro_id, edo_description, edo_objective FROM pro_offline";
                                                         $result = $conn->query($query);
-
-                                                        // สร้างตัวเลือก
                                                         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                                                             echo "<option value='" . $row['edo_name'] . "' data-pro-id='" . $row['edo_pro_id'] . "' data-description='" . $row['edo_description'] . "' data-objective='" . $row['edo_objective'] . "'>" . $row['edo_name'] . "</option>";
                                                         }
@@ -261,15 +257,6 @@ require_once 'head.php'; ?>
                                                 });
                                             });
                                         </script>
-
-                                        <!-- <script>
-                                            document.getElementById('edo_name').addEventListener('change', function() {
-                                                var selectedOption = this.options[this.selectedIndex];
-                                                document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
-                                                document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
-                                                document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');
-                                            });
-                                        </script> -->
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="comment" class="control-label mb-1">หมายเหตุ</label>
@@ -279,11 +266,10 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_donat" value="offline" class="form-control">
                                         <input type="hidden" name="status_user" value="person" class="form-control">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
-                                    </div>
-                                    <hr>
-                                    <div class="btn-group col-12">
-                                        <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
-                                    </div>
+                                        <hr>
+                                        <div class="btn-group col-12">
+                                            <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
+                                        </div>
                                 </form>
                                 <?php
                                 require_once 'recript_add.php';

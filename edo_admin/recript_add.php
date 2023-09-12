@@ -109,7 +109,17 @@ if (
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
   $result = $stmt->execute();
-  //เงื่อนไขตรวจสอบการเพิ่มข้อมูล
+  if ($result) {
+    $lastInsertedId = $conn->lastInsertId();
+
+    $id_year = date('Y') + 543; 
+    $id_suffix = $_POST['edo_pro_id'] . '-E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
+
+    $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}-{$id_suffix}' WHERE id = :lastInsertedId";
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bindParam(':lastInsertedId', $lastInsertedId, PDO::PARAM_INT);
+    $updateStmt->execute();
+  }
   echo '
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
