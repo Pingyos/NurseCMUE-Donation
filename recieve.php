@@ -32,7 +32,7 @@ if ($data !== null) {
     $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
     $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
     $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
-    $stmt->bindParam(':transactionDateandTime', $data->transactionDateandTime, PDO::PARAM_STR);
+    $stmt->bindParam(':transactionDateandTime', $transactionDateandTime, PDO::PARAM_STR);
     $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
     $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
     $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
@@ -45,7 +45,7 @@ if ($data !== null) {
     if ($result) {
         $response = array(
             "resCode" => "00",
-            "resDesc" => "",
+            "resDesc" => "success",
             "transactionId" => $data->transactionId,
             "confirmId" => $conn->lastInsertId()
         );

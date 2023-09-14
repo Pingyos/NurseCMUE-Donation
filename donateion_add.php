@@ -120,31 +120,30 @@ if (
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
   if ($result) {
     $id = $conn->lastInsertId();
+    $rec_idname = $_POST['rec_idname'];
+    $rec_date_out = $_POST['rec_date_out'];
     echo '
-<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-<script>
-  swal({
-    title: "บันทึกข้อมูลบริจาคสำเร็จ",
-    text: "กรุณารอสักครู่",
-    type: "success",
-    timer: 2000,
-    showConfirmButton: false
-  }, function(){
-    window.location.href = "qrgenerator_receipt.php?id=' . $id . '";
-  });
-</script>';
+    <script>
+      swal({
+        title: "บันทึกข้อมูลบริจาคสำเร็จ",
+        text: "กรุณารอสักครู่",
+        type: "success",
+        timer: 2000,
+        showConfirmButton: false
+      }, function(){
+        window.location.href = "qrgenerator_receipt.php?id=' . $id . '&rec_idname=' . $rec_idname . '&rec_date_out=' . $rec_date_out . '";
+      });
+    </script>';
   } else {
     // Error message
     echo '
-<script>
-  swal({
-    title: "เกิดข้อผิดพลาด",
-    type: "error"
-  }, function() {
-    window.location = "index.php";
-  });
-</script>';
+    <script>
+      swal({
+        title: "เกิดข้อผิดพลาด",
+        type: "error"
+      }, function() {
+        window.location = "index.php";
+      });
+    </script>';
   }
 }

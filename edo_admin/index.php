@@ -83,7 +83,7 @@ require_once 'head.php'; ?>
                     $total_records05 = $result['total_records05'];
                     $total_amount05 = $result['total_amount05'];
                     ?>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -113,7 +113,7 @@ require_once 'head.php'; ?>
                     $total_records06 = $result['total_records06'];
                     $total_amount06 = $result['total_amount06'];
                     ?>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -141,7 +141,7 @@ require_once 'head.php'; ?>
                     $total_records07 = $result['total_records07'];
                     $total_amount07 = $result['total_amount07'];
                     ?>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -168,7 +168,7 @@ require_once 'head.php'; ?>
                     $total_records08 = $result['total_records08'];
                     $total_amount08 = $result['total_amount08'];
                     ?>
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -199,7 +199,7 @@ require_once 'head.php'; ?>
                     $total_recordsoffline = $result['total_recordsoffline'];
                     ?>
 
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">
@@ -230,7 +230,7 @@ require_once 'head.php'; ?>
                     $total_recordsonline = $result['total_recordsonline'];
                     ?>
 
-                    <div class="col-lg-6 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <div class="stat-widget-five">

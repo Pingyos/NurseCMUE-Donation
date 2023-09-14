@@ -175,9 +175,9 @@
                             amountInput.addEventListener('input', () => {
                                 let value = amountInput.value;
                                 if (value.charAt(0).match(/[^0-9]/)) {
-                                    value = value.substring(1); // ลบอักขระพิเศษที่อยู่ที่ตำแหน่งแรก
+                                    value = value.substring(1);
                                 }
-                                const cleanedValue = value.replace(/[^0-9.]/g, ''); // ลบทุกอักขระที่ไม่ใช่ตัวเลขหรือจุดทศนิยม
+                                const cleanedValue = value.replace(/[^0-9.]/g, '');
 
                                 const parts = cleanedValue.split('.');
                                 if (parts[0].length > 7) {
@@ -185,7 +185,6 @@
                                 }
 
                                 if (parts.length > 1) {
-                                    // มีทศนิยม
                                     if (parts[1].length > 2) {
                                         parts[1] = parts[1].substring(0, 2);
                                     }
