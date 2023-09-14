@@ -109,7 +109,7 @@
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php
-                    require_once('donateion_add.php');
+                    require_once('donateion_no_db.php');
                     // echo '<pre>';
                     // print_r($_POST);
                     // echo '</pre>';

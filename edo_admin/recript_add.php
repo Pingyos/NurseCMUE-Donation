@@ -25,6 +25,7 @@ if (
   && isset($_POST['status_user'])
   && isset($_POST['status_receipt'])
   && isset($_POST['other_description'])
+  && isset($_POST['resDesc'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -55,6 +56,7 @@ if (
   status_user,
   other_description,
   status_receipt,
+  resDesc,
   comment)
   VALUES
   (:name_title,
@@ -81,6 +83,7 @@ if (
   :status_user,
   :other_description,
   :status_receipt,
+  :resDesc,
   :comment)");
   //bindParam data type
   $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -108,11 +111,12 @@ if (
   $stmt->bindParam(':status_receipt', $_POST['status_receipt'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
+  $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $result = $stmt->execute();
   if ($result) {
     $lastInsertedId = $conn->lastInsertId();
 
-    $id_year = date('Y') + 543; 
+    $id_year = date('Y') + 543;
     $id_suffix = $_POST['edo_pro_id'] . '-E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
 
     $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}-{$id_suffix}' WHERE id = :lastInsertedId";

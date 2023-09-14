@@ -266,6 +266,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_donat" value="offline" class="form-control">
                                         <input type="hidden" name="status_user" value="person" class="form-control">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
+                                        <input type="hidden" name="resDesc" value="success" class="form-control">
                                         <hr>
                                         <div class="btn-group col-12">
                                             <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>

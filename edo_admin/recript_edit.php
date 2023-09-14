@@ -25,6 +25,7 @@ if (
   && isset($_POST['status_donat'])
   && isset($_POST['status_user'])
   && isset($_POST['status_receipt'])
+  && isset($_POST['resDesc'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -55,6 +56,7 @@ if (
     status_donat = :status_donat,
     status_user = :status_user,
     status_receipt = :status_receipt,
+    resDesc = :resDesc,
     comment = :comment
     WHERE id = :id");
 
@@ -84,11 +86,11 @@ if (
   $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
   $stmt->bindParam(':status_receipt', $_POST['status_receipt'], PDO::PARAM_STR);
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
+  $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
 
   $result = $stmt->execute();
 
-  //เงื่อนไขตรวจสอบการอัปเดตข้อมูล
   echo '
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

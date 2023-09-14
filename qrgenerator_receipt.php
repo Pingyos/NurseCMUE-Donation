@@ -179,7 +179,7 @@
                     require_once 'connection.php';
                     $rec_idname = $_GET['rec_idname'];
                     $rec_date_out = $_GET['rec_date_out'];
-                    $timeout = time() + 1;
+                    $timeout = time() + 1.5;
 
                     function checkForData($conn)
                     {

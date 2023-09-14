@@ -19,25 +19,18 @@
                                 <h5 class="mb-3">ยืนยันข้อมูล</h5>
                             </div>
                         </center>
-                        <!-- <?php
-                                require_once 'connection.php';
+                        <?php
+                        require_once 'connection.php';
 
-                                if (isset($_GET['id'])) {
-                                    $id = $_GET['id'];
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
 
-                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
-                                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                                    $stmt->execute();
-                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                                    if ($row['status'] == 1) {
-                                        // สร้างลิงก์ใบเสร็จรับเงิน
-                                        $receiptLink = "pdf_maker.php?id=" . $row['id'] . "&ACTION=VIEW";
-                                        // เปิดใบเสร็จรับเงินโดยอัตโนมัติ
-                                        echo '<script>window.location.href = "' . $receiptLink . '";</script>';
-                                    }
-                                }
-                                ?> -->
+                            $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
+                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                            $stmt->execute();
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        }
+                        ?>
 
                         <div class="row">
                             <div class="col-lg-3 col-12 mt-2">
@@ -93,14 +86,10 @@
 
                                     if ($row) {
                                         $amount = $row["amount"];
-                                        // ดึงข้อมูลอื่น ๆ ที่ต้องการสำหรับ qrcode3002
                                         $rec_date_out = $row["rec_date_out"];
                                         $edo_pro_id = $row["edo_pro_id"];
                                         $id = $row["id"];
-                                        // แปลงวันที่ให้เหลือเฉพาะปี (พ.ศ.)
                                         $rec_date_out_year = (int)date('Y', strtotime($rec_date_out)) + 543;
-
-                                        // ต่อไปให้ทำการคำนวณและสร้าง QR Code
                                         $amountFormatted = number_format($amount, 2, '.', '');
                                         $amountWithPadding = str_pad($amountFormatted, 10, '0', STR_PAD_LEFT);
                                         $qrcode00 = '000201';
@@ -139,21 +128,14 @@
                                         $urlRelativeFilePath = $tempDir . $fileName;
 
                                         $qrCodeSize = 350;
-
-                                        // กำหนดความละเอียดในระดับ Q
                                         $qrCodeECLevel = QR_ECLEVEL_Q;
-
-                                        // สร้างรูปภาพ QR code ที่มีขนาดตามที่กำหนดและความละเอียด Q
                                         if (!file_exists($pngAbsoluteFilePath)) {
                                             QRcode::png($codeContents, $pngAbsoluteFilePath, $qrCodeECLevel, $qrCodeSize);
                                         }
-
-                                        // แสดงรูปภาพ "Thai_QR_Payment_Logo.png" และ QR code
                                         echo '<center>';
                                         echo '<img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="350" height="144">';
                                         echo '<br>';
                                         echo '<img src="' . $urlRelativeFilePath . '" width="' . $qrCodeSize . '" height="' . $qrCodeSize . '">';
-                                        // สร้างลิงก์ดาวน์โหลด QR Code
                                         echo '<br><br>';
                                         echo '<a href="' . $urlRelativeFilePath . '" download="qrcode.png" class="custom-btn btn">บันทึก QR Code</a>';
                                         echo '</center>';
@@ -177,18 +159,20 @@
                     </form>
                     <?php
                     require_once 'connection.php';
-                    $rec_idname = $_GET['rec_idname'];
+                    $amount = $_GET['amount'];
                     $rec_date_out = $_GET['rec_date_out'];
-                    $timeout = time() + 1;
+                    $id_receipt = $_GET['id_receipt'];
+                    $timeout = time() + 1.5;
 
                     function checkForData($conn)
                     {
-                        global $rec_idname, $rec_date_out, $timeout;
+                        global $amount, $rec_date_out, $id_receipt, $timeout;
                         while (time() <= $timeout) {
-                            $sql = "SELECT * FROM json_confirm WHERE billPaymentRef2 = :rec_idname AND date = :rec_date_out";
+                            $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :id_receipt";
                             $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':rec_idname', $rec_idname);
+                            $stmt->bindParam(':amount', $amount);
                             $stmt->bindParam(':rec_date_out', $rec_date_out);
+                            $stmt->bindParam(':id_receipt', $id_receipt);
                             if ($stmt->execute()) {
                                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 if (count($result) > 0) {
@@ -212,7 +196,7 @@
                                                 showConfirmButton: false
                                             });
                                             setTimeout(function() {
-                                                window.location.href = "pdf_maker.php?id=' . $id . '&ACTION=VIEW";
+                                                window.location.href = "index.php#section_2";
                                             }, 3000);
                                         });
                                     </script>';

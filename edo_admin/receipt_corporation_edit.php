@@ -44,6 +44,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="name_title">
                                         <input type="hidden" name="rec_surname">
                                         <input type="hidden" name="rec_email">
+                                        <input type="hidden" name="resDesc" value="success">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">

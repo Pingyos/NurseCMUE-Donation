@@ -27,10 +27,7 @@ if (
   && isset($_POST['other_description'])
   && isset($_POST['id_receipt'])
 ) {
-
-  //ไฟล์เชื่อมต่อฐานข้อมูล
   require_once 'connection.php';
-  //sql insert
   $stmt = $conn->prepare("INSERT INTO receipt_offline
   (name_title,
   rec_name,
@@ -120,8 +117,10 @@ if (
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
   if ($result) {
     $id = $conn->lastInsertId();
-    $rec_idname = $_POST['rec_idname'];
+    $amount = $_POST['amount'];
     $rec_date_out = $_POST['rec_date_out'];
+    $id_receipt = $_POST['id_receipt'];
+    $id_receipt = preg_replace('/[^a-zA-Z0-9]/', '', $id_receipt);
     echo '
     <script>
       swal({
@@ -131,7 +130,7 @@ if (
         timer: 2000,
         showConfirmButton: false
       }, function(){
-        window.location.href = "qrgenerator_receipt.php?id=' . $id . '&rec_idname=' . $rec_idname . '&rec_date_out=' . $rec_date_out . '";
+        window.location.href = "qrgenerator.php?id=' . $id . '&amount=' . $amount . '&rec_date_out=' . $rec_date_out . '&id_receipt=' . $id_receipt . '";
       });
     </script>';
   } else {

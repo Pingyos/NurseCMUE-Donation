@@ -186,6 +186,7 @@ require_once 'head.php'; ?>
                                         <input type="text" name="status_donat" value="offline" hidden>
                                         <input type="text" name="status_user" value="person" hidden>
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
+                                        <input type="hidden" name="resDesc" value="success">
                                         <input type="text" name="id" value="<?= $row['id']; ?>" hidden>
                                         <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
@@ -267,11 +268,6 @@ require_once 'head.php'; ?>
                                     </div>
                                 </form>
                                 <?php require_once 'recript_edit.php'; ?>
-                                <!-- <?php
-                                        echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>';
-                                        ?> -->
                             </div>
                         </div>
                     </div>
