@@ -161,16 +161,18 @@
                     require_once 'connection.php';
                     $amount = $_GET['amount'];
                     $rec_date_out = $_GET['rec_date_out'];
+                    $rec_idname = $_GET['rec_idname'];
                     $id_receipt = $_GET['id_receipt'];
                     $timeout = time() + 1.5;
 
                     function checkForData($conn)
                     {
-                        global $amount, $rec_date_out, $id_receipt, $timeout;
+                        global $amount, $rec_date_out, $id_receipt, $rec_idname, $timeout;
                         while (time() <= $timeout) {
-                            $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :id_receipt";
+                            $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :id_receipt AND billPaymentRef2 = :rec_idname";
                             $stmt = $conn->prepare($sql);
                             $stmt->bindParam(':amount', $amount);
+                            $stmt->bindParam(':rec_idname', $rec_idname);
                             $stmt->bindParam(':rec_date_out', $rec_date_out);
                             $stmt->bindParam(':id_receipt', $id_receipt);
                             if ($stmt->execute()) {
@@ -196,7 +198,7 @@
                                                 showConfirmButton: false
                                             });
                                             setTimeout(function() {
-                                                window.location.href = "index.php#section_2";
+                                                window.location.href = "invoice.php";
                                             }, 3000);
                                         });
                                     </script>';

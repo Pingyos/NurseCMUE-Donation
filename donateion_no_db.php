@@ -26,6 +26,7 @@ if (
   && isset($_POST['status_receipt'])
   && isset($_POST['other_description'])
   && isset($_POST['id_receipt'])
+  && isset($_POST['resDesc'])
 ) {
   require_once 'connection.php';
   $stmt = $conn->prepare("INSERT INTO receipt_offline
@@ -54,6 +55,7 @@ if (
   status_receipt,
   other_description,
   id_receipt,
+  resDesc,
   comment)
   VALUES
   (:name_title,
@@ -81,6 +83,7 @@ if (
   :status_receipt,
   :other_description,
   :id_receipt,
+  :resDesc,
   :comment)");
   //bindParam data type
   $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -109,6 +112,7 @@ if (
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
   $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
+  $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $result = $stmt->execute();
 
   echo '

@@ -16,18 +16,28 @@ function checkForData($conn)
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (count($result) > 0) {
                 $id = $_GET['id'];
-                // ส่งข้อความเป็น JSON กลับไป
-                $response = array(
-                    'success' => true,
-                    'message' => 'ชำระเงินเสร็จสิ้น'
-                );
-                header('Content-Type: application/json');
-                echo json_encode($response);
+                echo '
+                                        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+                                        <script>
+                                            $(document).ready(function() {
+                                                swal({
+                                                    title: "ชำระเงินเสร็จสิ้น",
+                                                    text: "ระบบกำลังเปิดใบเสร็จ",
+                                                    type: "success",
+                                                    timer: 5000,
+                                                    showConfirmButton: false
+                                                });
+                                                setTimeout(function() {
+                                                    window.location.href = "pdf_maker.php?id=' . $id . '&ACTION=VIEW";
+                                                }, 3000);
+                                            });
+                                        </script>';
                 exit;
             }
         }
     }
-    // ถ้าไม่พบข้อมูลตรงกัน ส่งข้อความ "hello" กลับไป
     echo 'hello';
 }
 

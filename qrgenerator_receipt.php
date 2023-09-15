@@ -19,25 +19,18 @@
                                 <h5 class="mb-3">ยืนยันข้อมูล</h5>
                             </div>
                         </center>
-                        <!-- <?php
-                                require_once 'connection.php';
+                        <?php
+                        require_once 'connection.php';
 
-                                if (isset($_GET['id'])) {
-                                    $id = $_GET['id'];
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
 
-                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
-                                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-                                    $stmt->execute();
-                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                                    if ($row['status'] == 1) {
-                                        // สร้างลิงก์ใบเสร็จรับเงิน
-                                        $receiptLink = "pdf_maker.php?id=" . $row['id'] . "&ACTION=VIEW";
-                                        // เปิดใบเสร็จรับเงินโดยอัตโนมัติ
-                                        echo '<script>window.location.href = "' . $receiptLink . '";</script>';
-                                    }
-                                }
-                                ?> -->
+                            $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE id = :id");
+                            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                            $stmt->execute();
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        }
+                        ?>
 
                         <div class="row">
                             <div class="col-lg-3 col-12 mt-2">

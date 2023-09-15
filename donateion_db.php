@@ -116,6 +116,12 @@ if (
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
     if ($result) {
+        $id = $conn->lastInsertId();
+        $amount = $_POST['amount'];
+        $rec_idname = $_POST['rec_idname'];
+        $rec_date_out = $_POST['rec_date_out'];
+        $id_receipt = $_POST['id_receipt'];
+        $id_receipt = preg_replace('/[^a-zA-Z0-9]/', '', $id_receipt);
         echo '
     <script>
       swal({
@@ -125,7 +131,7 @@ if (
         timer: 2000,
         showConfirmButton: false
       }, function(){
-        window.location.href = "invoice.php";
+        window.location.href = "qrgenerator.php?id=' . $id . '&amount=' . $amount . '&rec_date_out=' . $rec_date_out . '&id_receipt=' . $id_receipt . '&rec_idname=' . $rec_idname . '";
       });
     </script>';
     } else {

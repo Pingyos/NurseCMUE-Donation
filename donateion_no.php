@@ -87,6 +87,7 @@
                         <input type="text" name="districts" hidden>
                         <input type="text" name="zip_code" hidden>
                         <input type="text" name="comment" hidden>
+                        <input type="text" name="resDesc" hidden>
                         <?php
                         require_once 'connection.php';
                         $sql = "SELECT MAX(id) AS max_id, edo_pro_id FROM receipt_offline";

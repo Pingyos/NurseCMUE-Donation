@@ -1,15 +1,15 @@
 <?php
-// session_start();
+session_start();
 
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
-// if (isset($_SESSION['login_info'])) {
-//     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
-//     $login_info = $_SESSION['login_info'];
-// } else {
-//     // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
-//     header("Location: login.php");
-//     exit;
-// }
+// ตรวจสอบสถานะการเข้าสู่ระบบ
+if (isset($_SESSION['login_info'])) {
+    // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
+    $login_info = $_SESSION['login_info'];
+} else {
+    // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
+    header("Location: login.php");
+    exit;
+}
 // ตรวจสอบการlogin
 require_once 'head.php'; ?>
 

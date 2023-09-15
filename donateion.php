@@ -207,6 +207,7 @@
                         <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="other_description" hidden>
+                        <input type="text" name="resDesc" hidden>
                         <input type="text" name="comment" hidden>
                         <?php
                         require_once 'connection.php';

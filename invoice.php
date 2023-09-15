@@ -13,8 +13,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-12 mx-auto">
-                        <form class="custom-form donate-form" method="POST" role="form">
-                            <table id="myTable" class="display">
+                        <form class="custom-form donate-form" action="#" method="POST" role="form">
+
+                            <table id="myTable" class="display" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -26,7 +27,7 @@
                                 <tbody>
                                     <?php
                                     require_once 'connection.php';
-                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes' AND resDesc = 'success'");
+                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes'");
                                     $stmt->execute();
                                     $result = $stmt->fetchAll();
                                     $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์

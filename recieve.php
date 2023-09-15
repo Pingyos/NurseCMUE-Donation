@@ -45,7 +45,7 @@ if ($data !== null) {
     if ($result) {
         $response = array(
             "resCode" => "00",
-            "resDesc" => "success",
+            "resDesc" => "Success",
             "transactionId" => $data->transactionId,
             "confirmId" => $conn->lastInsertId()
         );
