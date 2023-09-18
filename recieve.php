@@ -3,10 +3,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 
 if ($data !== null) {
-    // การเชื่อมต่อฐานข้อมูล
     require_once 'connection.php';
-
-    // ทำการเตรียมคำสั่ง SQL INSERT
     $stmt = $conn->prepare("INSERT INTO json_confirm 
     (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
     payerAccountNumber, payerAccountName, payerName, sendingBankCode, 
@@ -19,8 +16,6 @@ if ($data !== null) {
     :receivingBankCode, :amount, :transactionId, :transactionDateandTime, 
     :billPaymentRef1, :billPaymentRef2, :currencyCode, :channelCode, 
     :transactionType)");
-
-    // ผูกค่า JSON กับพารามิเตอร์ในคำสั่ง SQL
     $stmt->bindParam(':payeeProxyId', $data->payeeProxyId, PDO::PARAM_STR);
     $stmt->bindParam(':payeeProxyType', $data->payeeProxyType, PDO::PARAM_STR);
     $stmt->bindParam(':payeeAccountNumber', $data->payeeAccountNumber, PDO::PARAM_STR);
@@ -38,14 +33,12 @@ if ($data !== null) {
     $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
     $stmt->bindParam(':channelCode', $data->channelCode, PDO::PARAM_STR);
     $stmt->bindParam(':transactionType', $data->transactionType, PDO::PARAM_STR);
-
-    // ทำการ execute คำสั่ง SQL
     $result = $stmt->execute();
 
     if ($result) {
         $response = array(
             "resCode" => "00",
-            "resDesc" => "Success",
+            "resDesc" => "success",
             "transactionId" => $data->transactionId,
             "confirmId" => $conn->lastInsertId()
         );

@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <?php require_once('head.php'); ?>
 
 <body id="section_1">
@@ -33,20 +32,11 @@
                         ?>
 
                         <div class="row">
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">ชื่อ-สกุล</label>
-                                <input type="text" name="rec_name" value="<?= $row['name_title']; ?> <?= $row['rec_name']; ?> <?= $row['rec_surname']; ?>" class="form-control" readonly>
+                            <div class="col-lg-6 col-12 mt-2">
+                                <label class="control-label">เลขที่ใบเสร็จ</label>
+                                <input type="text" name="id_receipt" value="<?= $row['id_receipt']; ?>" class="form-control" readonly>
                             </div>
-
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">เบอร์โทรศัพท์</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control" readonly>
-                            </div>
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">เลขบัตรประชาชน</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control" readonly>
-                            </div>
-                            <div class="col-lg-3 col-12 mt-2">
+                            <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">จำนวนเงิน</label>
                                 <input type="text" name="rec_fullname" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
                             </div>
@@ -132,13 +122,6 @@
                                         if (!file_exists($pngAbsoluteFilePath)) {
                                             QRcode::png($codeContents, $pngAbsoluteFilePath, $qrCodeECLevel, $qrCodeSize);
                                         }
-                                        echo '<center>';
-                                        echo '<img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="350" height="144">';
-                                        echo '<br>';
-                                        echo '<img src="' . $urlRelativeFilePath . '" width="' . $qrCodeSize . '" height="' . $qrCodeSize . '">';
-                                        echo '<br><br>';
-                                        echo '<a href="' . $urlRelativeFilePath . '" download="qrcode.png" class="custom-btn btn">บันทึก QR Code</a>';
-                                        echo '</center>';
                                     } else {
                                         echo "No data found.";
                                     }
@@ -147,69 +130,62 @@
                                     $amount = 0;
                                 }
                                 ?>
+                                <div class="col-lg-12 col-12 mt-2 text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="text-center" style="position: relative;">
+                                            <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
+                                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
+                                                <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br>
-                        <style>
-                            .container {
-                                display: flex;
-                                justify-content: center;
-                            }
-                        </style>
-                    </form>
-                    <?php
-                    require_once 'connection.php';
-                    $amount = $_GET['amount'];
-                    $rec_date_out = $_GET['rec_date_out'];
-                    $rec_idname = $_GET['rec_idname'];
-                    $id_receipt = $_GET['id_receipt'];
-                    $timeout = time() + 1.5;
-
-                    function checkForData($conn)
-                    {
-                        global $amount, $rec_date_out, $id_receipt, $rec_idname, $timeout;
-                        while (time() <= $timeout) {
-                            $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :id_receipt AND billPaymentRef2 = :rec_idname";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':amount', $amount);
-                            $stmt->bindParam(':rec_idname', $rec_idname);
-                            $stmt->bindParam(':rec_date_out', $rec_date_out);
-                            $stmt->bindParam(':id_receipt', $id_receipt);
-                            if ($stmt->execute()) {
-                                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                if (count($result) > 0) {
-                                    $id = $_GET['id'];
-                                    $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
-                                    $updateStmt = $conn->prepare($updateSql);
-                                    $updateStmt->bindParam(':id', $id);
-                                    $updateStmt->execute();
-
-                                    echo '
-                                    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-                                    <script>
-                                        $(document).ready(function() {
-                                            swal({
-                                                title: "ชำระเงินเสร็จสิ้น",
-                                                text: "ระบบกำลังเปิดใบเสร็จ",
-                                                type: "success",
-                                                timer: 5000,
-                                                showConfirmButton: false
-                                            });
-                                            setTimeout(function() {
-                                                window.location.href = "invoice.php";
-                                            }, 3000);
-                                        });
-                                    </script>';
-                                    exit;
+                        <script>
+                            function fetchData() {
+                                var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+                                var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
+                                var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
+                                var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
+                                if (amount !== '' && rec_date_out !== '' && id_receipt !== '' && id !== '') {
+                                    var data = {
+                                        id: id,
+                                        amount: amount,
+                                        rec_date_out: rec_date_out,
+                                        id_receipt: id_receipt
+                                    };
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "data_check.php", true);
+                                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                            var response = JSON.parse(xhr.responseText);
+                                            console.log(response);
+                                            if (response.message === 'success') {
+                                                swal({
+                                                    title: "ชำระเงินเสร็จสิ้น",
+                                                    text: "ระบบกำลังเปิดใบเสร็จ",
+                                                    type: "success",
+                                                    timer: 5000,
+                                                    showConfirmButton: false
+                                                });
+                                                setTimeout(function() {
+                                                    window.location.href = "invoice.php";
+                                                }, 3000);
+                                            }
+                                        }
+                                    };
+                                    xhr.send(JSON.stringify(data));
+                                } else {
+                                    console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                 }
                             }
-                        }
-                        echo '<script>window.location.reload();</script>';
-                    }
-                    checkForData($conn);
-                    ?>
+                            fetchData();
+                            setInterval(fetchData, 5000);
+                        </script>
+                    </form>
                 </div>
             </div>
         </div>

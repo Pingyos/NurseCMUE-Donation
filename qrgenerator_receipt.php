@@ -86,14 +86,10 @@
 
                                     if ($row) {
                                         $amount = $row["amount"];
-                                        // ดึงข้อมูลอื่น ๆ ที่ต้องการสำหรับ qrcode3002
                                         $rec_date_out = $row["rec_date_out"];
                                         $edo_pro_id = $row["edo_pro_id"];
                                         $id = $row["id"];
-                                        // แปลงวันที่ให้เหลือเฉพาะปี (พ.ศ.)
                                         $rec_date_out_year = (int)date('Y', strtotime($rec_date_out)) + 543;
-
-                                        // ต่อไปให้ทำการคำนวณและสร้าง QR Code
                                         $amountFormatted = number_format($amount, 2, '.', '');
                                         $amountWithPadding = str_pad($amountFormatted, 10, '0', STR_PAD_LEFT);
                                         $qrcode00 = '000201';
@@ -132,24 +128,10 @@
                                         $urlRelativeFilePath = $tempDir . $fileName;
 
                                         $qrCodeSize = 350;
-
-                                        // กำหนดความละเอียดในระดับ Q
                                         $qrCodeECLevel = QR_ECLEVEL_Q;
-
-                                        // สร้างรูปภาพ QR code ที่มีขนาดตามที่กำหนดและความละเอียด Q
                                         if (!file_exists($pngAbsoluteFilePath)) {
                                             QRcode::png($codeContents, $pngAbsoluteFilePath, $qrCodeECLevel, $qrCodeSize);
                                         }
-
-                                        // แสดงรูปภาพ "Thai_QR_Payment_Logo.png" และ QR code
-                                        echo '<center>';
-                                        echo '<img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="350" height="144">';
-                                        echo '<br>';
-                                        echo '<img src="' . $urlRelativeFilePath . '" width="' . $qrCodeSize . '" height="' . $qrCodeSize . '">';
-                                        // สร้างลิงก์ดาวน์โหลด QR Code
-                                        echo '<br><br>';
-                                        echo '<a href="' . $urlRelativeFilePath . '" download="qrcode.png" class="custom-btn btn">บันทึก QR Code</a>';
-                                        echo '</center>';
                                     } else {
                                         echo "No data found.";
                                     }
@@ -158,65 +140,62 @@
                                     $amount = 0;
                                 }
                                 ?>
+                                <div class="col-lg-12 col-12 mt-2 text-center">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <div class="text-center" style="position: relative;">
+                                            <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
+                                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
+                                                <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br>
-                        <style>
-                            .container {
-                                display: flex;
-                                justify-content: center;
-                            }
-                        </style>
-                    </form>
-                    <?php
-                    require_once 'connection.php';
-                    $rec_idname = $_GET['rec_idname'];
-                    $rec_date_out = $_GET['rec_date_out'];
-                    $timeout = time() + 1.5;
-
-                    function checkForData($conn)
-                    {
-                        global $rec_idname, $rec_date_out, $timeout;
-                        while (time() <= $timeout) {
-                            $sql = "SELECT * FROM json_confirm WHERE billPaymentRef2 = :rec_idname AND date = :rec_date_out";
-                            $stmt = $conn->prepare($sql);
-                            $stmt->bindParam(':rec_idname', $rec_idname);
-                            $stmt->bindParam(':rec_date_out', $rec_date_out);
-                            if ($stmt->execute()) {
-                                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                if (count($result) > 0) {
-                                    $id = $_GET['id'];
-                                    $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
-                                    $updateStmt = $conn->prepare($updateSql);
-                                    $updateStmt->bindParam(':id', $id);
-                                    $updateStmt->execute();
-
-                                    echo '
-                                    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-                                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-                                    <script>
-                                        $(document).ready(function() {
-                                            swal({
-                                                title: "ชำระเงินเสร็จสิ้น",
-                                                text: "ระบบกำลังเปิดใบเสร็จ",
-                                                type: "success",
-                                                timer: 5000,
-                                                showConfirmButton: false
-                                            });
-                                            setTimeout(function() {
-                                                window.location.href = "pdf_maker.php?id=' . $id . '&ACTION=VIEW";
-                                            }, 3000);
-                                        });
-                                    </script>';
-                                    exit;
+                        <script>
+                            function fetchData() {
+                                var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+                                var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
+                                var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
+                                var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
+                                if (amount !== '' && rec_date_out !== '' && id_receipt !== '' && id !== '') {
+                                    var data = {
+                                        id: id,
+                                        amount: amount,
+                                        rec_date_out: rec_date_out,
+                                        id_receipt: id_receipt
+                                    };
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "data_check.php", true);
+                                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                            var response = JSON.parse(xhr.responseText);
+                                            console.log(response);
+                                            if (response.message === 'success') {
+                                                swal({
+                                                    title: "ชำระเงินเสร็จสิ้น",
+                                                    text: "ระบบกำลังเปิดใบเสร็จ",
+                                                    type: "success",
+                                                    timer: 5000,
+                                                    showConfirmButton: false
+                                                });
+                                                setTimeout(function() {
+                                                    window.location.href = "invoice.php";
+                                                }, 3000);
+                                            }
+                                        }
+                                    };
+                                    xhr.send(JSON.stringify(data));
+                                } else {
+                                    console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                 }
                             }
-                        }
-                        echo '<script>window.location.reload();</script>';
-                    }
-                    checkForData($conn);
-                    ?>
+                            fetchData();
+                            setInterval(fetchData, 5000);
+                        </script>
+                    </form>
                 </div>
             </div>
         </div>

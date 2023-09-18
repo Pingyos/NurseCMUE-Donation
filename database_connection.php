@@ -1,7 +1,7 @@
 <?php
 $hostname = "localhost";
-$username = "edonation";
-$password = "edonate@FON";
+$username = "root";
+$password = "";
 $database = "edonation";
 $con = mysqli_connect($hostname, $username, $password, $database);
  
@@ -12,4 +12,3 @@ if (mysqli_connect_errno()) {
  
 // Set charset to utf8
 mysqli_set_charset($con, "utf8");
-?>

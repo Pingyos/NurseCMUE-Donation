@@ -1,44 +1,66 @@
 <?php
-require_once 'connection.php';
-$rec_idname = $_GET['rec_idname'];
-$rec_date_out = $_GET['rec_date_out'];
-$timeout = time() + 200;
+$json_data = file_get_contents('php://input');
+$data = json_decode($json_data, true);
 
-function checkForData($conn)
-{
-    global $rec_idname, $rec_date_out, $timeout;
-    while (time() <= $timeout) {
-        $sql = "SELECT * FROM json_confirm WHERE billPaymentRef2 = :rec_idname AND date = :rec_date_out";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':rec_idname', $rec_idname);
-        $stmt->bindParam(':rec_date_out', $rec_date_out);
-        if ($stmt->execute()) {
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if (count($result) > 0) {
-                $id = $_GET['id'];
-                echo '
-                                        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-                                        <script>
-                                            $(document).ready(function() {
-                                                swal({
-                                                    title: "ชำระเงินเสร็จสิ้น",
-                                                    text: "ระบบกำลังเปิดใบเสร็จ",
-                                                    type: "success",
-                                                    timer: 5000,
-                                                    showConfirmButton: false
-                                                });
-                                                setTimeout(function() {
-                                                    window.location.href = "pdf_maker.php?id=' . $id . '&ACTION=VIEW";
-                                                }, 3000);
-                                            });
-                                        </script>';
-                exit;
+if ($data !== null) {
+    $amount = $data['amount'];
+    $id = $data['id'];
+    $rec_date_out = $data['rec_date_out'];
+    $id_receipt = $data['id_receipt'];
+    $pdo = new PDO('mysql:host=localhost;dbname=edonation', 'root', '');
+
+    $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :id_receipt";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':amount', $amount);
+    $stmt->bindParam(':rec_date_out', $rec_date_out);
+    $stmt->bindParam(':id_receipt', $id_receipt);
+    $interval = 3;
+    $loopCount = 0;
+
+    while (true) {
+        $stmt->execute();
+        $found = false;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $found = true;
+            $loopCount++;
+            $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
+            $updateStmt = $pdo->prepare($updateSql);
+            $updateStmt->bindParam(':id', $id);
+            $updateResult = $updateStmt->execute();
+
+            if ($updateResult) {
+                $response = [
+                    'message' => 'success',
+                    'id' => $id,
+                    'amount' => $amount,
+                    'rec_date_out' => $rec_date_out,
+                    'id_receipt' => $id_receipt,
+                    'loop_count' => $loopCount
+                ];
+            } else {
+                $response = [
+                    'message' => 'ไม่สามารถอัปเดตข้อมูลในฐานข้อมูลได้',
+                    'loop_count' => $loopCount
+                ];
             }
-        }
-    }
-    echo 'hello';
-}
 
-checkForData($conn);
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            break 2;
+        }
+
+        if (!$found) {
+            $loopCount++;
+            $response = [
+                'message' => 'ไม่พบข้อมูลที่ตรงกันในฐานข้อมูล',
+                'loop_count' => $loopCount
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        }
+        sleep($interval);
+    }
+} else {
+    echo 'ไม่สามารถแปลงข้อมูล JSON ได้';
+}

@@ -28,125 +28,145 @@ if (
   && isset($_POST['id_receipt'])
   && isset($_POST['resDesc'])
 ) {
-  require_once 'connection.php';
-  $stmt = $conn->prepare("INSERT INTO receipt_offline
-  (name_title,
-  rec_name,
-  rec_surname,
-  rec_tel,
-  rec_email,
-  rec_idname,
-  address,
-  road,
-  provinces,
-  amphures,
-  districts,
-  zip_code,
-  rec_date_s,
-  rec_date_out,
-  edo_name,
-  amount,
-  payby,
-  edo_pro_id,
-  edo_description,
-  edo_objective,
-  status_donat,
-  status_user,
-  status_receipt,
-  other_description,
-  id_receipt,
-  resDesc,
-  comment)
-  VALUES
-  (:name_title,
-  :rec_name,
-  :rec_surname,
-  :rec_tel,
-  :rec_email,
-  :rec_idname,
-  :address,
-  :road,
-  :provinces,
-  :amphures,
-  :districts,
-  :zip_code,
-  :rec_date_s,
-  :rec_date_out,
-  :edo_name,
-  :amount,
-  :payby,
-  :edo_pro_id,
-  :edo_description,
-  :edo_objective,
-  :status_donat,
-  :status_user,
-  :status_receipt,
-  :other_description,
-  :id_receipt,
-  :resDesc,
-  :comment)");
-  //bindParam data type
-  $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_name', $_POST['rec_name'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_surname', $_POST['rec_surname'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_tel', $_POST['rec_tel'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_email', $_POST['rec_email'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_idname', $_POST['rec_idname'], PDO::PARAM_STR);
-  $stmt->bindParam(':address', $_POST['address'], PDO::PARAM_STR);
-  $stmt->bindParam(':road', $_POST['road'], PDO::PARAM_STR);
-  $stmt->bindParam(':provinces', $_POST['provinces'], PDO::PARAM_STR);
-  $stmt->bindParam(':amphures', $_POST['amphures'], PDO::PARAM_STR);
-  $stmt->bindParam(':districts', $_POST['districts'], PDO::PARAM_STR);
-  $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_date_s', $_POST['rec_date_s'], PDO::PARAM_STR);
-  $stmt->bindParam(':rec_date_out', $_POST['rec_date_out'], PDO::PARAM_STR);
-  $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
-  $stmt->bindParam(':amount', $_POST['amount'], PDO::PARAM_STR);
-  $stmt->bindParam(':payby', $_POST['payby'], PDO::PARAM_STR);
-  $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
-  $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
-  $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
-  $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
-  $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
-  $stmt->bindParam(':status_receipt', $_POST['status_receipt'], PDO::PARAM_STR);
-  $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
-  $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
-  $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
-  $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
-  $result = $stmt->execute();
+  try {
+    // Include the file to connect to the database
+    require_once 'connection.php';
 
-  echo '
-  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
-  if ($result) {
-    $id = $conn->lastInsertId();
-    $amount = $_POST['amount'];
-    $rec_date_out = $_POST['rec_date_out'];
-    $id_receipt = $_POST['id_receipt'];
-    $id_receipt = preg_replace('/[^a-zA-Z0-9]/', '', $id_receipt);
-    echo '
-    <script>
-      swal({
-        title: "บันทึกข้อมูลบริจาคสำเร็จ",
-        text: "กรุณารอสักครู่",
-        type: "success",
-        timer: 2000,
-        showConfirmButton: false
-      }, function(){
-        window.location.href = "qrgenerator.php?id=' . $id . '&amount=' . $amount . '&rec_date_out=' . $rec_date_out . '&id_receipt=' . $id_receipt . '";
-      });
-    </script>';
-  } else {
-    // Error message
-    echo '
-    <script>
-      swal({
-        title: "เกิดข้อผิดพลาด",
-        type: "error"
-      }, function() {
-        window.location = "index.php";
-      });
-    </script>';
+    // SQL insert query
+    $stmt = $conn->prepare("INSERT INTO receipt_offline
+    (name_title,
+    rec_name,
+    rec_surname,
+    rec_tel,
+    rec_email,
+    rec_idname,
+    address,
+    road,
+    provinces,
+    amphures,
+    districts,
+    zip_code,
+    rec_date_s,
+    rec_date_out,
+    edo_name,
+    amount,
+    payby,
+    edo_pro_id,
+    edo_description,
+    edo_objective,
+    status_donat,
+    status_user,
+    other_description,
+    status_receipt,
+    resDesc,
+    comment,
+    id_receipt)
+    VALUES
+    (:name_title,
+    :rec_name,
+    :rec_surname,
+    :rec_tel,
+    :rec_email,
+    :rec_idname,
+    :address,
+    :road,
+    :provinces,
+    :amphures,
+    :districts,
+    :zip_code,
+    :rec_date_s,
+    :rec_date_out,
+    :edo_name,
+    :amount,
+    :payby,
+    :edo_pro_id,
+    :edo_description,
+    :edo_objective,
+    :status_donat,
+    :status_user,
+    :other_description,
+    :status_receipt,
+    :resDesc,
+    :comment,
+    :id_receipt)");
+
+    $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_name', $_POST['rec_name'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_surname', $_POST['rec_surname'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_tel', $_POST['rec_tel'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_email', $_POST['rec_email'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_idname', $_POST['rec_idname'], PDO::PARAM_STR);
+    $stmt->bindParam(':address', $_POST['address'], PDO::PARAM_STR);
+    $stmt->bindParam(':road', $_POST['road'], PDO::PARAM_STR);
+    $stmt->bindParam(':provinces', $_POST['provinces'], PDO::PARAM_STR);
+    $stmt->bindParam(':amphures', $_POST['amphures'], PDO::PARAM_STR);
+    $stmt->bindParam(':districts', $_POST['districts'], PDO::PARAM_STR);
+    $stmt->bindParam(':zip_code', $_POST['zip_code'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_date_s', $_POST['rec_date_s'], PDO::PARAM_STR);
+    $stmt->bindParam(':rec_date_out', $_POST['rec_date_out'], PDO::PARAM_STR);
+    $stmt->bindParam(':edo_name', $_POST['edo_name'], PDO::PARAM_STR);
+    $stmt->bindParam(':amount', $_POST['amount'], PDO::PARAM_STR);
+    $stmt->bindParam(':payby', $_POST['payby'], PDO::PARAM_STR);
+    $stmt->bindParam(':edo_pro_id', $_POST['edo_pro_id'], PDO::PARAM_STR);
+    $stmt->bindParam(':edo_description', $_POST['edo_description'], PDO::PARAM_STR);
+    $stmt->bindParam(':edo_objective', $_POST['edo_objective'], PDO::PARAM_STR);
+    $stmt->bindParam(':status_donat', $_POST['status_donat'], PDO::PARAM_STR);
+    $stmt->bindParam(':status_user', $_POST['status_user'], PDO::PARAM_STR);
+    $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
+    $stmt->bindParam(':status_receipt', $_POST['status_receipt'], PDO::PARAM_STR);
+    $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
+    $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
+    $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
+    $result = $stmt->execute();
+
+    if ($result) {
+      $lastInsertedId = $conn->lastInsertId();
+      $id_year = date('Y') + 543;
+      $id_suffix = $_POST['edo_pro_id'] . 'E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
+
+      $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}' WHERE id = :lastInsertedId";
+      $updateStmt = $conn->prepare($updateSql);
+      $updateStmt->bindParam(':lastInsertedId', $lastInsertedId, PDO::PARAM_INT);
+      $updateResult = $updateStmt->execute();
+      if ($updateResult) {
+        echo '
+        <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+        <script>
+          swal({
+            title: "บันทึกข้อมูลบริจาคสำเร็จ",
+            text: "กรุณารอสักครู่",
+            type: "success",
+            timer: 2000,
+            showConfirmButton: false
+          }, function(){
+            window.location.href = "qrgenerator.php?id=' . $lastInsertedId . '&amount=' . $_POST['amount'] . '&rec_date_out=' . $_POST['rec_date_out'] . '&id_receipt=' . $id_year  . $id_suffix . '";
+          });
+        </script>';
+      } else {
+        echo '
+        <script>
+          swal({
+            title: "เกิดข้อผิดพลาดในการอัปเดต",
+            type: "error"
+          }, function() {
+            window.location = "index.php";
+          });
+        </script>';
+      }
+    } else {
+      echo '
+      <script>
+        swal({
+          title: "เกิดข้อผิดพลาดในการบันทึกข้อมูล",
+          type: "error"
+        }, function() {
+          window.location = "donate_no_receipt.php";
+        });
+      </script>';
+    }
+  } catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
   }
 }
