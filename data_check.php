@@ -14,7 +14,7 @@ if ($data !== null) {
     $stmt->bindParam(':amount', $amount);
     $stmt->bindParam(':rec_date_out', $rec_date_out);
     $stmt->bindParam(':id_receipt', $id_receipt);
-    $interval = 3;
+    $interval = 5;
     $loopCount = 0;
 
     while (true) {

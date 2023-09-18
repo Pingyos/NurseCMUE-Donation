@@ -53,7 +53,7 @@
 
                             recTelInput.addEventListener("input", function() {
                                 let value = this.value;
-                                value = value.replace(/\D/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+                                value = value.replace(/\D/g, '');
 
                                 if (value.length < 8) {
                                     // หากมีน้อยกว่า 8 ตัวเลขให้แสดงข้อความแจ้งเตือน
@@ -70,7 +70,7 @@
                             });
                         </script>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="number" name="rec_idname" id="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" min="0" required>
+                            <input type="number" name="rec_idname" id="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" min="0"  required>
                         </div>
 
                         <script>
@@ -78,13 +78,13 @@
 
                             recIdnameInput.addEventListener("input", function() {
                                 let value = this.value;
-                                value = value.replace(/\D/g, ''); // ลบอักขระที่ไม่ใช่ตัวเลข
+                                value = value.replace(/\D/g, '');
 
                                 if (value < 0) {
                                     value = '';
                                 }
-                                if (value.length < 13) {
-                                    // หากมีน้อยกว่า 13 ตัวเลขให้แสดงข้อความแจ้งเตือน
+                                if (value.length < 12) {
+
                                     recIdnameInput.setCustomValidity("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
                                 } else {
                                     recIdnameInput.setCustomValidity("");
