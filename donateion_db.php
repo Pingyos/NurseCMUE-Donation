@@ -141,7 +141,7 @@ if (
             timer: 2000,
             showConfirmButton: false
           }, function(){
-            window.location.href = "qrgenerator_receipt.php?id=' . $lastInsertedId . '&amount=' . $_POST['amount'] . '&rec_idname=' . $_POST['rec_idname'] . '&rec_date_out=' . $_POST['rec_date_out'] . '&id_receipt=' . $id_year  . $id_suffix . '";
+            window.location.href = "qrgenerator_receipt.php?id=' . $lastInsertedId . '&amount=' . $_POST['amount'] . '&rec_idname=' . $_POST['rec_idname'] . '&id_receipt=' . $id_year  . $id_suffix . '";
           });
         </script>';
       } else {

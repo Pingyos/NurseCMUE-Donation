@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-
 <?php require_once('head.php'); ?>
 
 <body id="section_1">
@@ -33,28 +32,15 @@
                         ?>
 
                         <div class="row">
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">ชื่อ-สกุล</label>
-                                <input type="text" name="rec_name" value="<?= $row['name_title']; ?> <?= $row['rec_name']; ?> <?= $row['rec_surname']; ?>" class="form-control" readonly>
-                            </div>
-
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">เบอร์โทรศัพท์</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['rec_tel']; ?>" class="form-control" readonly>
-                            </div>
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">เลขบัตรประชาชน</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['rec_idname']; ?>" class="form-control" readonly>
-                            </div>
-                            <div class="col-lg-3 col-12 mt-2">
-                                <label class="control-label">จำนวนเงิน</label>
-                                <input type="text" name="rec_fullname" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
-                            </div>
                             <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">เลขที่ใบเสร็จ</label>
                                 <input type="text" name="id_receipt" value="<?= $row['id_receipt']; ?>" class="form-control" readonly>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
+                                <label class="control-label">จำนวนเงิน</label>
+                                <input type="text" name="rec_fullname" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
+                            </div>
+                            <div class="col-lg-12 col-12 mt-2">
                                 <label class="control-label">รายละเอียดโครงการ</label>
                                 <input type="text" name="rec_fullname" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
                             </div>
@@ -161,15 +147,13 @@
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
-                                var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
-                                var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
                                 var rec_idname = "<?php echo isset($_GET['rec_idname']) ? $_GET['rec_idname'] : ''; ?>";
-                                if (amount !== '' && rec_date_out !== '' && id_receipt !== '' && id !== '' && rec_idname !== '') {
+                                var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
+                                if (amount !== '' && rec_idname !== '' && id_receipt !== '' && id !== '') {
                                     var data = {
                                         id: id,
                                         amount: amount,
-                                        id_receipt: id_receipt,
-                                        rec_date_out: rec_date_out,
+                                        rec_idname: rec_idname,
                                         id_receipt: id_receipt
                                     };
                                     var xhr = new XMLHttpRequest();
