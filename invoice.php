@@ -30,7 +30,7 @@
                                     $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes'");
                                     $stmt->execute();
                                     $result = $stmt->fetchAll();
-                                    $result = array_reverse($result); // เรียงลำดับข้อมูลใหม่โดยพลิกลำดับของอาร์เรย์
+                                    $result = array_reverse($result);
                                     $countrow = 1;
                                     foreach ($result as $t1) {
                                     ?>

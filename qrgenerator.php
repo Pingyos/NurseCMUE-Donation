@@ -172,7 +172,7 @@
                                                     showConfirmButton: false
                                                 });
                                                 setTimeout(function() {
-                                                    window.location.href = "invoice.php";
+                                                    window.location.href = "index.php#section_2";
                                                 }, 3000);
                                             }
                                         }
