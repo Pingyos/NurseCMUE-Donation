@@ -14,52 +14,42 @@ if ($data !== null) {
     $stmt->bindParam(':amount', $amount);
     $stmt->bindParam(':rec_idname', $rec_idname);
     $stmt->bindParam(':id_receipt', $id_receipt);
-    $interval = 5;
-    $loopCount = 0;
 
-    while (true) {
-        $stmt->execute();
-        $found = false;
+    $stmt->execute();
+    $found = false;
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $found = true;
-            $loopCount++;
-            $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
-            $updateStmt = $pdo->prepare($updateSql);
-            $updateStmt->bindParam(':id', $id);
-            $updateResult = $updateStmt->execute();
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $found = true;
+        $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
+        $updateStmt = $pdo->prepare($updateSql);
+        $updateStmt->bindParam(':id', $id);
+        $updateResult = $updateStmt->execute();
 
-            if ($updateResult) {
-                $response = [
-                    'message' => 'success',
-                    'id' => $id,
-                    'amount' => $amount,
-                    'rec_idname' => $rec_idname,
-                    'id_receipt' => $id_receipt,
-                    'loop_count' => $loopCount
-                ];
-            } else {
-                $response = [
-                    'message' => 'ไม่สามารถอัปเดตข้อมูลในฐานข้อมูลได้',
-                    'loop_count' => $loopCount
-                ];
-            }
-
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            break 2;
-        }
-
-        if (!$found) {
-            $loopCount++;
+        if ($updateResult) {
             $response = [
-                'message' => 'ไม่พบข้อมูลที่ตรงกันในฐานข้อมูล',
-                'loop_count' => $loopCount
+                'message' => 'success',
+                'id' => $id,
+                'amount' => $amount,
+                'rec_idname' => $rec_idname,
+                'id_receipt' => $id_receipt
             ];
-            header('Content-Type: application/json');
-            echo json_encode($response);
+        } else {
+            $response = [
+                'message' => 'ไม่สามารถอัปเดตข้อมูลในฐานข้อมูลได้'
+            ];
         }
-        sleep($interval);
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        break;
+    }
+
+    if (!$found) {
+        $response = [
+            'message' => 'ไม่พบข้อมูลที่ตรงกันในฐานข้อมูล'
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
 } else {
     echo 'ไม่สามารถแปลงข้อมูล JSON ได้';

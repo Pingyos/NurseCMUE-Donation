@@ -38,11 +38,15 @@
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">จำนวนเงิน</label>
-                                <input type="text" name="rec_fullname" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
+                                <input type="text" name="amount" value="<?= number_format($row['amount'], 2, '.', ','); ?>" class="form-control" readonly>
                             </div>
-                            <div class="col-lg-12 col-12 mt-2">
+                            <div class="col-lg-6 col-12 mt-2">
+                                <label class="control-label">ชื่อสกุล</label>
+                                <input type="text" name="fullname" value="<?= $row['name_title']; ?> <?= $row['rec_name']; ?> <?= $row['rec_surname']; ?>" class="form-control" readonly>
+                            </div>
+                              <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">รายละเอียดโครงการ</label>
-                                <input type="text" name="rec_fullname" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
+                                <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
                             </div>
                         </div>
                         <hr>
