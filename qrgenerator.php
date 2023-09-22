@@ -168,12 +168,12 @@
                                                     title: "ชำระเงินเสร็จสิ้น",
                                                     text: "ระบบกำลังเปิดใบเสร็จ",
                                                     type: "success",
-                                                    timer: 5000,
+                                                    timer: 6000,
                                                     showConfirmButton: false
                                                 });
                                                 setTimeout(function() {
                                                     window.location.href = "index.php#section_2";
-                                                }, 3000);
+                                                }, 6000);
                                             }
                                         }
                                     };

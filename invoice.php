@@ -17,6 +17,7 @@
                             <table id="myTable" class="display" style="width: 100%;">
                                 <thead>
                                     <tr>
+                                        <th>#</th>
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>โครงการ</th>
                                         <th>รายละเอียดใบเสร็จ</th>
@@ -25,12 +26,15 @@
                                 <tbody>
                                     <?php
                                     require_once 'connection.php';
-                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes'AND resDesc = 'success'");
+                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes' AND resDesc = 'success'");
                                     $stmt->execute();
                                     $result = $stmt->fetchAll();
+                                    $result = array_reverse($result);
+                                    $countrow = 1;
                                     foreach ($result as $t1) {
                                     ?>
                                         <tr>
+                                            <td><?= $countrow ?></td>
                                             <td>
                                                 <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
                                                 <br>
@@ -98,12 +102,11 @@
                                             </td>
 
                                         </tr>
-                                    <?php
+                                    <?php $countrow++;
                                     }
                                     ?>
                                 </tbody>
                             </table>
-
                         </form>
                     </div>
                 </div>
