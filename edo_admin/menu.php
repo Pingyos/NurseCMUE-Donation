@@ -11,7 +11,7 @@
 //     exit;
 // }
 // // ตรวจสอบการlogin
-// require_once 'head.php'; ?>
+require_once 'head.php'; ?>
 
 <body>
     <?php require_once 'aside.php'; ?>
