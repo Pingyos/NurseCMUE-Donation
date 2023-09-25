@@ -1,25 +1,25 @@
 <?php
 // ตรวจสอบสถานะการเข้าสู่ระบบ
-if (isset($_SESSION['login_info'])) {
-    // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
-    $login_info = $_SESSION['login_info'];
-    $_SESSION['last_activity'] = time(); // ตั้งค่าเวลาล่าสุดที่มีการใช้งาน
+// if (isset($_SESSION['login_info'])) {
+//     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
+//     $login_info = $_SESSION['login_info'];
+//     $_SESSION['last_activity'] = time(); // ตั้งค่าเวลาล่าสุดที่มีการใช้งาน
 
-    // เช็คเวลาไม่ใช้งาน
-    $inactive_time = 5 * 60; // 5 minutes
-    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive_time)) {
-        // ไม่มีการใช้งานเกินเวลาที่กำหนด
-        // ทำการลบข้อมูลเซสชัน
-        session_unset();
-        session_destroy();
-        header("Location: login.php");
-        exit;
-    }
-} else {
-    // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
-    header("Location: login.php");
-    exit;
-}
+//     // เช็คเวลาไม่ใช้งาน
+//     $inactive_time = 5 * 60; // 5 minutes
+//     if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > $inactive_time)) {
+//         // ไม่มีการใช้งานเกินเวลาที่กำหนด
+//         // ทำการลบข้อมูลเซสชัน
+//         session_unset();
+//         session_destroy();
+//         header("Location: login.php");
+//         exit;
+//     }
+// } else {
+//     // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
+//     header("Location: login.php");
+//     exit;
+// }
 ?>
 <header id="header" class="header">
     <div class="top-left">

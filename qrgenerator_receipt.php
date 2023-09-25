@@ -1,3 +1,17 @@
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+<script>
+    $(document).ready(function() {
+        swal({
+            title: "คำเตือน",
+            text: "เพื่อประโยชน์ในการลดหย่อนภาษี กรุณาใช้ บัญชีอิเล็กทรอนิกส์ ของตัวท่านเอง",
+            type: "warning",
+            showConfirmButton: true,
+            confirmButtonText: "ตกลง"
+        });
+    });
+</script>
 <!doctype html>
 <html lang="en">
 <?php require_once('head.php'); ?>
@@ -44,7 +58,7 @@
                                 <label class="control-label">ชื่อสกุล</label>
                                 <input type="text" name="fullname" value="<?= $row['name_title']; ?> <?= $row['rec_name']; ?> <?= $row['rec_surname']; ?>" class="form-control" readonly>
                             </div>
-                              <div class="col-lg-6 col-12 mt-2">
+                            <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">รายละเอียดโครงการ</label>
                                 <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" class="form-control" readonly>
                             </div>
