@@ -26,6 +26,7 @@ if (
   && isset($_POST['status_user'])
   && isset($_POST['status_receipt'])
   && isset($_POST['resDesc'])
+  && isset($_POST['pdflink'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -57,6 +58,7 @@ if (
     status_user = :status_user,
     status_receipt = :status_receipt,
     resDesc = :resDesc,
+    pdflink=:pdflink,
     comment = :comment
     WHERE id = :id");
 
@@ -88,6 +90,7 @@ if (
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
+  $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_INT);
 
   $result = $stmt->execute();
 

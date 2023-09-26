@@ -27,6 +27,7 @@ if (
   && isset($_POST['other_description'])
   && isset($_POST['id_receipt'])
   && isset($_POST['resDesc'])
+  && isset($_POST['pdflink'])
 ) {
   try {
     // Include the file to connect to the database
@@ -60,6 +61,7 @@ if (
     status_receipt,
     resDesc,
     comment,
+    pdflink,
     id_receipt)
     VALUES
     (:name_title,
@@ -88,6 +90,7 @@ if (
     :status_receipt,
     :resDesc,
     :comment,
+    :pdflink,
     :id_receipt)");
 
     $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -117,6 +120,7 @@ if (
     $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
     $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
     $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
+    $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
     $result = $stmt->execute();
 
     if ($result) {
@@ -124,9 +128,12 @@ if (
       $id_year = date('Y') + 543;
       $id_suffix = $_POST['edo_pro_id'] . 'E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
 
-      $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}' WHERE id = :lastInsertedId";
+      $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
+
+      $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
       $updateStmt = $conn->prepare($updateSql);
       $updateStmt->bindParam(':lastInsertedId', $lastInsertedId, PDO::PARAM_INT);
+      $updateStmt->bindParam(':pdf_url', $pdf_url, PDO::PARAM_STR);
       $updateResult = $updateStmt->execute();
       if ($updateResult) {
         echo '

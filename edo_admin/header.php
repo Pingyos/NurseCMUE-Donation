@@ -25,7 +25,6 @@
     <div class="top-left">
         <div class="navbar-header">
             <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-            <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
             <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
     </div>
@@ -37,7 +36,7 @@
                 </a>
 
                 <div class="user-menu dropdown-menu">
-                    <a class="nav-link"><i class="fa fa- user"></i> <?php echo $login_info['firstname_EN'] . "<br>"; ?></a>
+                    <!-- <a class="nav-link"><i class="fa fa- user"></i> <?php echo $login_info['firstname_EN'] . "<br>"; ?></a> -->
                     <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
                     <a class="nav-link" href="logout.php"><i class="fa fa-power -off"></i>Logout</a>
                 </div>

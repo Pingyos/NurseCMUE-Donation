@@ -26,6 +26,7 @@ if (
   && isset($_POST['status_receipt'])
   && isset($_POST['other_description'])
   && isset($_POST['resDesc'])
+  && isset($_POST['pdflink'])
 ) {
 
   //ไฟล์เชื่อมต่อฐานข้อมูล
@@ -57,6 +58,7 @@ if (
   other_description,
   status_receipt,
   resDesc,
+  pdflink,
   comment)
   VALUES
   (:name_title,
@@ -84,6 +86,7 @@ if (
   :other_description,
   :status_receipt,
   :resDesc,
+  :pdflink,
   :comment)");
   //bindParam data type
   $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -112,18 +115,23 @@ if (
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':other_description', $_POST['other_description'], PDO::PARAM_STR);
   $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
+  $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
   $result = $stmt->execute();
   if ($result) {
     $lastInsertedId = $conn->lastInsertId();
 
     $id_year = date('Y') + 543;
-    $id_suffix = $_POST['edo_pro_id'] . '-E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
+    $id_suffix = $_POST['edo_pro_id'] . 'E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
 
-    $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}-{$id_suffix}' WHERE id = :lastInsertedId";
+    $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
+
+    $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
     $updateStmt = $conn->prepare($updateSql);
     $updateStmt->bindParam(':lastInsertedId', $lastInsertedId, PDO::PARAM_INT);
+    $updateStmt->bindParam(':pdf_url', $pdf_url, PDO::PARAM_STR);
     $updateStmt->execute();
   }
+
   echo '
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

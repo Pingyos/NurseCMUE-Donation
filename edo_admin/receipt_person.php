@@ -69,26 +69,8 @@ require_once 'head.php'; ?>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;"></span></label>
-                                                <input type="text" tabindex="1" placeholder="x-xxxxx-xxxxx-xx-x" name="rec_idname" id="rec_idname" size="25" value="" class="form-control" onkeyup="autoTab(this)" minlength="13" maxlength="20" />
+                                                <input type="text" name="rec_idname" id="rec_idname" class="form-control" minlength="13" />
                                             </div>
-                                            <script>
-                                                function autoTab(obj) {
-                                                    var pattern = new String("_-____-_____-_-__"); // กำหนดรูปแบบในนี้
-                                                    var pattern_ex = new String("-"); // กำหนดสัญลักษณ์หรือเครื่องหมายที่ใช้แบ่งในนี้
-                                                    var returnText = new String("");
-                                                    var obj_l = obj.value.length;
-                                                    var obj_l2 = obj_l - 1;
-                                                    for (i = 0; i < pattern.length; i++) {
-                                                        if (obj_l2 == i && pattern.charAt(i + 1) == pattern_ex) {
-                                                            returnText += obj.value + pattern_ex;
-                                                            obj.value = returnText;
-                                                        }
-                                                    }
-                                                    if (obj_l >= pattern.length) {
-                                                        obj.value = obj.value.substr(0, pattern.length);
-                                                    }
-                                                }
-                                            </script>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
@@ -253,7 +235,7 @@ require_once 'head.php'; ?>
 
                                                 otherDescriptionInput.addEventListener('input', function() {
                                                     descriptionInput.value = otherDescriptionInput.value;
-                                                    objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
+                                                    objectiveInput.value = otherDescriptionInput.value;
                                                 });
                                             });
                                         </script>
@@ -267,6 +249,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_user" value="person" class="form-control">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         <input type="hidden" name="resDesc" value="success" class="form-control">
+                                        <input type="hidden" name="pdflink" value="https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=id&ACTION=VIEW">
                                         <hr>
                                         <div class="btn-group col-12">
                                             <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>

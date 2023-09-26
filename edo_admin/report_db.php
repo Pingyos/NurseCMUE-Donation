@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') { // รับข้อมูลผ่
         $selected_status_user = isset($_GET['status_user']) ? $_GET['status_user'] : null;
         $selected_status_receipt = isset($_GET['status_receipt']) ? $_GET['status_receipt'] : null;
         $selected_edo_description = isset($_GET['edo_description']) ? $_GET['edo_description'] : null;
-        $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount FROM receipt_offline WHERE 1=1 ";
+        $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount, rec_email, road, districts, amphures, provinces, zip_code, rec_date_s, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_receipt, resDesc,pdflink, dateCreate FROM receipt_offline WHERE 1=1 ";
 
         if (!empty($start_date)) {
             $sql .= "AND rec_date_out >= :start_date ";
@@ -56,44 +56,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') { // รับข้อมูลผ่
 
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // ตรวจสอบว่ามีข้อมูลที่ค้นพบหรือไม่
         if (!empty($results)) {
-
             require_once '../vendor/autoload.php';
 
-            // สร้างสเปรดชีต Excel
             $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
 
-            // กำหนดหัวของตาราง
-            $columns = ['ID Receipt', 'Status User', 'Rec ID Name', 'ชื่อ-สกุล', 'Address', 'Rec Tel', 'Rec Date Out', 'Rec Time', 'Pay By', 'Amount'];
+            $columns = ['เลขที่ใบเสร็จ', 'เลขประจำตัวผู้เสียภาษี', 'ชื่อ-สกุล', 'ที่อยู่', 'เบอร์โทรศัพท์', 'อีเมล์', 'วันที่บริจาค', 'เวลา', 'ชำระโดย', 'จำนวนเงิน', 'ใบเสร็จ'];
             $col = 'A';
 
             foreach ($columns as $column) {
                 $sheet->setCellValue($col . '1', $column);
                 $col++;
             }
-
-
             $row = 2;
-
             foreach ($results as $result) {
                 $col = 'A';
-
-                // รวม name_title และ rec_name เป็น 'ชื่อ-สกุล'
-                $full_name = $result['name_title'] . ' ' . $result['rec_name'] . ' ' . $result['rec_surname'];
-                unset($result['name_title']); // ไม่ต้องใช้งาน name_title แล้ว
-                unset($result['rec_name']); // ไม่ต้องใช้งาน rec_name แล้ว
-                unset($result['rec_surname']); // ไม่ต้องใช้งาน rec_surname แล้ว
-
-                $result['ชื่อ-สกุล'] = $full_name;
-
-                foreach ($result as $value) {
-                    $sheet->setCellValue($col . $row, $value);
-                    $col++;
-                }
-
+                $sheet->setCellValue($col . $row, $result['id_receipt']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['rec_idname']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['name_title'] . ' ' . $result['rec_name'] . ' ' . $result['rec_surname']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['address'] . ' ' . $result['road'] . ' ' . $result['districts'] . ' ' . $result['amphures'] . ' ' . $result['provinces'] . ' ' . $result['zip_code']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['rec_tel']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['rec_email']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['rec_date_out']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['rec_time']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['payby']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['amount']);
+                $col++;
+                $sheet->setCellValue($col . $row, $result['pdflink']);
                 $row++;
             }
 

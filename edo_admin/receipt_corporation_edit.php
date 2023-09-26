@@ -48,6 +48,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
+                                        <input type="hidden" name="pdflink">
                                         <input type="text" name="id" value="<?= $row['id']; ?>" hidden>
                                         <div class="col-6">
                                             <div class="form-group">

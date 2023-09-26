@@ -70,7 +70,7 @@
                             });
                         </script>
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="number" name="rec_idname" id="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" min="0"  required>
+                            <input type="number" name="rec_idname" id="rec_idname" class="form-control" placeholder="เลขบัตรประชาชน *" min="0" required>
                         </div>
 
                         <script>
@@ -209,6 +209,7 @@
                         <input type="text" name="other_description" hidden>
                         <input type="text" name="resDesc" hidden>
                         <input type="text" name="comment" hidden>
+                        <input type="text" name="pdflink" hidden>
                         <?php
                         require_once 'connection.php';
                         $sql = "SELECT MAX(id) AS max_id, edo_pro_id FROM receipt_offline";

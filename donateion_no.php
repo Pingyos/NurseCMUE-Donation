@@ -88,6 +88,7 @@
                         <input type="text" name="zip_code" hidden>
                         <input type="text" name="comment" hidden>
                         <input type="text" name="resDesc" hidden>
+                        <input type="text" name="pdflink" hidden>
                         <input type="text" name="id_receipt" value="0" hidden>
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
