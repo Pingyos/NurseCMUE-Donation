@@ -90,7 +90,7 @@ if (
   $stmt->bindParam(':comment', $_POST['comment'], PDO::PARAM_STR);
   $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
-  $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_INT);
+  $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
 
   $result = $stmt->execute();
 

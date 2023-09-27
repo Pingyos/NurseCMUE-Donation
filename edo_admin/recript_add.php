@@ -123,7 +123,7 @@ if (
     $id_year = date('Y') + 543;
     $id_suffix = $_POST['edo_pro_id'] . 'E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
 
-    $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
+    $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker_offline.php?id=$lastInsertedId&ACTION=VIEW";
 
     $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
     $updateStmt = $conn->prepare($updateSql);
