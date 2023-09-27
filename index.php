@@ -56,11 +56,11 @@
                     </div>
                     <?php
                     require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT * FROM pro_edo");
+                    $stmt = $conn->prepare("SELECT * FROM pro_offline");
                     $stmt->execute();
                     $result = $stmt->fetchAll();
                     foreach ($result as $t1) {
-                        $edoId = $t1['edo_id'];
+                        $edoId = $t1['id'];
                         $imageURL = "images/causes" . $t1['img_file'];
                     ?>
                         <div class="col-lg-4 col-md-6 col-12 mb-4 mb-lg-0">
@@ -71,7 +71,7 @@
                                         <h5 class="mb-3"><?= $t1['edo_name']; ?></h5>
                                         <p><?= $t1['edo_tex']; ?></p>
                                     </div>
-                                    <a href="donate_details.php?edo_id=<?= $edoId; ?>" class="custom-btn btn">บริจาค</a>
+                                    <a href="donate_details.php?id=<?= $edoId; ?>" class="custom-btn btn">บริจาค</a>
                                 </div>
                             </div>
                         </div>

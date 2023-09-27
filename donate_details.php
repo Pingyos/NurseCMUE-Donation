@@ -12,10 +12,10 @@
             <div class="container">
                 <div class="row">
                     <?php
-                    if (isset($_GET['edo_id'])) {
+                    if (isset($_GET['id'])) {
                         require_once 'connection.php';
-                        $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
-                        $stmt->execute([$_GET['edo_id']]);
+                        $stmt = $conn->prepare("SELECT * FROM pro_offline WHERE id=?");
+                        $stmt->execute([$_GET['id']]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                         // ตรวจสอบว่าพบข้อมูลโครงการหรือไม่ก่อนแสดงรูปภาพ
@@ -36,7 +36,7 @@
 
                             <h5 class="mb-3"><?= $row['edo_tex']; ?></h5>
 
-                            <p class="mb-0"><?= $row['edo_description1']; ?></p>
+                            <p class="mb-0"><?= $row['edo_details']; ?></p>
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-12">
@@ -44,29 +44,29 @@
                                     <h5 class="mb-3">วัตถุประสงค์</h5>
                                     <p>รายละเอียดวัตถุประสงค์ ขอโครงการ</p>
                                     <ul class="custom-list mt-2">
-                                        <?php if (!empty($row['edo_name2'])) : ?>
+                                        <?php if (!empty($row['edo_details_objective1'])) : ?>
                                             <li class="custom-list-item d-flex">
                                                 <i class="bi-check custom-text-box-icon me-2"></i>
-                                                <?= $row['edo_name2']; ?>
+                                                <?= $row['edo_details_objective1']; ?>
                                             </li>
                                         <?php endif; ?>
 
-                                        <?php if (!empty($row['edo_name3'])) : ?>
+                                        <?php if (!empty($row['edo_details_objective2'])) : ?>
                                             <li class="custom-list-item d-flex">
                                                 <i class="bi-check custom-text-box-icon me-2"></i>
-                                                <?= $row['edo_name3']; ?>
+                                                <?= $row['edo_details_objective2']; ?>
                                             </li>
                                         <?php endif; ?>
-                                        <?php if (!empty($row['edo_name4'])) : ?>
+                                        <?php if (!empty($row['edo_details_objective3'])) : ?>
                                             <li class="custom-list-item d-flex">
                                                 <i class="bi-check custom-text-box-icon me-2"></i>
-                                                <?= $row['edo_name4']; ?>
+                                                <?= $row['edo_details_objective3']; ?>
                                             </li>
                                         <?php endif; ?>
-                                        <?php if (!empty($row['edo_name5'])) : ?>
+                                        <?php if (!empty($row['edo_details_objective4'])) : ?>
                                             <li class="custom-list-item d-flex">
                                                 <i class="bi-check custom-text-box-icon me-2"></i>
-                                                <?= $row['edo_name5']; ?>
+                                                <?= $row['edo_details_objective4']; ?>
                                             </li>
                                         <?php endif; ?>
                                     </ul>
@@ -75,8 +75,8 @@
                         </div>
                         <h2></h2>
                         <div class="col-lg-12 col-12">
-                            <a href="donateion_no.php?edo_id=<?= $row['edo_id']; ?>" class="custom-btn btn smoothscroll">บริจาคโดยไม่ประสงค์ออกนาม</a>
-                            <a href="donateion.php?edo_id=<?= $row['edo_id']; ?>" class="custom-btn btn smoothscroll">บริจาคเพื่อลดหย่อนภาษี</a>
+                            <a href="donateion_no.php?id=<?= $row['id']; ?>" class="custom-btn btn smoothscroll">บริจาคโดยไม่ประสงค์ออกนาม</a>
+                            <a href="donateion.php?id=<?= $row['id']; ?>" class="custom-btn btn smoothscroll">บริจาคเพื่อลดหย่อนภาษี</a>
                         </div>
                     </div>
                 </div>

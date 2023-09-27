@@ -9,10 +9,10 @@
     <main>
         <section class="cta-section section-padding section-bg">
             <?php
-            if (isset($_GET['edo_id'])) {
+            if (isset($_GET['id'])) {
                 require_once 'connection.php';
-                $stmt = $conn->prepare("SELECT * FROM pro_edo WHERE edo_id=?");
-                $stmt->execute([$_GET['edo_id']]);
+                $stmt = $conn->prepare("SELECT * FROM pro_offline WHERE id=?");
+                $stmt->execute([$_GET['id']]);
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($row) {
                     $imageURL = "images/" . $row['img_banner'];
