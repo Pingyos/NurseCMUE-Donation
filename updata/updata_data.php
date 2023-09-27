@@ -37,12 +37,12 @@ require_once 'head.php'; ?>
                                     <tbody>
                                         <?php
                                         require_once 'connection.php';
-                                        $stmt = $conn->prepare("SELECT * FROM pro_edo ");
+                                        $stmt = $conn->prepare("SELECT * FROM pro_offline ");
                                         $stmt->execute();
                                         $result = $stmt->fetchAll();
                                         $countrow = 1;
                                         foreach ($result as $t1) {
-                                            $edo_id = $t1['edo_id'];
+                                            $id = $t1['id'];
                                         ?>
                                             <tr>
                                                 <td><?= $countrow ?></td>
@@ -50,7 +50,7 @@ require_once 'head.php'; ?>
                                                     <?= $t1['edo_name']; ?>
                                                 </td>
                                                 <td>
-                                                    <a href="pro_edo.php?edo_id=<?= $edo_id; ?>" class="custom-btn btn">แก้ไข</a>
+                                                    <a href="pro_edo.php?id=<?= $id; ?>" class="custom-btn btn">แก้ไข</a>
                                                 </td>
                                             </tr>
                                         <?php $countrow++;

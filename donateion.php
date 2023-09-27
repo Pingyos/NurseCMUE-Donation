@@ -15,7 +15,7 @@
                 $stmt->execute([$_GET['id']]);
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($row) {
-                    $imageURL = "images/" . $row['img_banner'];
+                    $imageURL = "images/causes/" . $row['img_banner'];
             ?>
                     <div class="container">
                         <img src="<?= $imageURL; ?>" class="custom-text-box-image img-fluid" alt="">

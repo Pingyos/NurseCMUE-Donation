@@ -15,15 +15,15 @@
                         <div id="hero-slide" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="images/banner_web-04.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/causes/banner_web-04.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/banner_tex2.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/causes/banner_tex2.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
 
                                 <div class="carousel-item">
-                                    <img src="images/banner_tex1.jpg" class="carousel-image img-fluid" alt="...">
+                                    <img src="images/causes/banner_tex1.jpg" class="carousel-image img-fluid" alt="...">
                                 </div>
                             </div>
 
@@ -83,7 +83,7 @@
             <div class="container">
                 <center>
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                        <img src="images/banner_web-03.jpg" class="custom-text-box-image img-fluid" alt="">
+                        <img src="images/causes/banner_web-03.jpg" class="custom-text-box-image img-fluid" alt="">
                     </div>
                 </center>
             </div>

@@ -25,97 +25,117 @@ require_once 'head.php'; ?>
                             <div class="card-header">
                                 <strong class="card-title">แก้ไขใบเสร็จบุคคล</strong>
                             </div>
-                            <?php
-                            if (isset($_GET['edo_id'])) {
-                                require_once 'connection.php';
-                                $stmt = $conn->prepare("SELECT* FROM pro_edo WHERE edo_id=?");
-                                $stmt->execute([$_GET['edo_id']]);
-                                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                                if ($stmt->rowCount() < 1) {
-                                    header('Location: index.php');
-                                    exit();
-                                }
-                            } //isset
-                            ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <?php
+                                        if (isset($_GET['id'])) {
+                                            require_once 'connection.php';
+                                            $stmt = $conn->prepare("SELECT* FROM pro_offline WHERE id=?");
+                                            $stmt->execute([$_GET['id']]);
+                                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                            if ($stmt->rowCount() < 1) {
+                                                header('Location: index.php');
+                                                exit();
+                                            }
+                                        } //isset
+                                        ?>
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="edo_pro_id" class="control-label mb-1">edo_pro_id </label>
-                                                <input type="text" name="edo_pro_id" class="form-control" value="<?= $row['edo_pro_id']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="edo_tex" class="control-label mb-1">edo_tex </label>
+                                                <label for="edo_tex" class="control-label mb-1">ลดหย่อนภาษี </label>
                                                 <input type="text" name="edo_tex" class="form-control" value="<?= $row['edo_tex']; ?>">
                                             </div>
                                         </div>
-                                        &nbsp;
-                                        <hr>
-                                        <div class="col-6">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">edo_name </label>
+                                                <label for="edo_pro_id" class="control-label mb-1">เลขที่โครงการ </label>
+                                                <input type="text" name="edo_pro_id" class="form-control" value="<?= $row['edo_pro_id']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="edo_name" class="control-label mb-1">ชื่อโครงการ </label>
                                                 <input type="text" name="edo_name" class="form-control" value="<?= $row['edo_name']; ?>">
                                             </div>
                                         </div>
-
-                                        <div class="col-6">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="edo_description1" class="control-label mb-1">edo_description1 </label>
-                                                <input type="text" name="edo_description1" class="form-control" value="<?= $row['edo_description1']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="edo_name2" class="control-label mb-1">edo_name2 </label>
-                                                <input type="text" name="edo_name2" class="form-control" value="<?= $row['edo_name2']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="edo_name3" class="control-label mb-1">edo_name3 </label>
-                                                <input type="text" name="edo_name3" class="form-control" value="<?= $row['edo_name3']; ?>">
+                                                <label for="edo_description" class="control-label mb-1">ชื่อโครงการ แสดงในใบเสร็จ </label>
+                                                <input type="text" name="edo_description" class="form-control" value="<?= $row['edo_description']; ?>">
                                             </div>
                                         </div>
 
-                                        <div class="col-6">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="edo_name4" class="control-label mb-1">edo_name4 </label>
-                                                <input type="text" name="edo_name4" class="form-control" value="<?= $row['edo_name4']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="edo_name5" class="control-label mb-1">edo_name5 </label>
-                                                <input type="text" name="edo_name5" class="form-control" value="<?= $row['edo_name5']; ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label for="edo_objective" class="control-label mb-1">edo_objective </label>
+                                                <label for="edo_objective" class="control-label mb-1">ชื่อโครงการ แสดงในใบอนุโมทนาบัตร </label>
                                                 <input type="text" name="edo_objective" class="form-control" value="<?= $row['edo_objective']; ?>">
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="img_file" class="control-label mb-1">img_file </label>
-                                                <input type="text" name="img_file" class="form-control" value="<?= $row['img_file']; ?>">
+                                                <label for="edo_details_objective1" class="control-label mb-1">วัตถุประสงค์ ข้อที่ 1 </label>
+                                                <input type="text" name="edo_details_objective1" class="form-control" value="<?= $row['edo_details_objective1']; ?>">
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="img_banner" class="control-label mb-1">img_banner </label>
-                                                <input type="text" name="img_banner" class="form-control" value="<?= $row['img_banner']; ?>">
+                                                <label for="edo_details_objective2" class="control-label mb-1">วัตถุประสงค์ ข้อที่ 2 </label>
+                                                <input type="text" name="edo_details_objective2" class="form-control" value="<?= $row['edo_details_objective2']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="edo_details_objective3" class="control-label mb-1">วัตถุประสงค์ ข้อที่ 3 </label>
+                                                <input type="text" name="edo_details_objective3" class="form-control" value="<?= $row['edo_details_objective3']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="edo_details_objective4" class="control-label mb-1">วัตถุประสงค์ ข้อที่ 4 </label>
+                                                <input type="text" name="edo_details_objective4" class="form-control" value="<?= $row['edo_details_objective4']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label for="textarea-input" class=" form-control-label">รายละเอียดโครงการ</label>
+                                            <textarea name="edo_details" id="edo_details" rows="9" class="form-control"><?= $row['edo_details']; ?></textarea>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="img_file" class="form-control-label">รูปภาพโครงการ </label>
+                                                <input type="file" id="img_file" name="img_file" class="form-control-file">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="img_banner" class="form-control-label">รูปภาพการลดหย่อนภาษี </label>
+                                                <input type="file" id="img_banner" name="img_banner" class="form-control-file">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="img_file" class="control-label mb-1">ตัวอย่าง รูปภาพโครงการ</label>
+                                                <img src="../images/causes/<?= $row['img_file']; ?>" alt="รูปภาพโครงการ" class="img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-2">
+                                            <div class="form-group">
+                                                <label for="img_banner" class="control-label mb-1">ตัวอย่าง รูปภาพการลดหย่อนภาษี </label>
+                                                <img src="../images/causes/<?= $row['img_banner']; ?>" alt="รูปภาพโครงการ" class="img-thumbnail">
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="dateCreate" value="<?= date('Y-m-d H:i:s'); ?>">
                                     <hr>
                                     <div class="btn-group col-12">
-                                        <button type="submit" class="btn btn-success btn-block">ยืนยัน</button>
+                                        <button type="submit" class="btn btn-primary btn-block">ยืนยัน</button>
                                     </div>
                                 </form>
+                                <?php
+                                require_once 'updata_data_db.php';
+                                // echo '<pre>';
+                                // print_r($_POST);
+                                // echo '</pre>';
+                                ?>
                             </div>
                         </div>
                     </div>
@@ -131,17 +151,17 @@ require_once 'head.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="assets/js/init/datatables-init.js"></script>
+    <script src="../edo_admin/assets/js/main.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="../edo_admin/assets/js/init/datatables-init.js"></script>
 </body>
 
 </html>
