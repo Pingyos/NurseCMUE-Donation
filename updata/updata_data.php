@@ -27,6 +27,7 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
                             </div>
                             <div class="card-body">
+                                <a href="donate_details.php?id=<?= $edoId; ?>" class="custom-btn btn">บริจาค</a>
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>

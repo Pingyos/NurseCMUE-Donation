@@ -101,16 +101,20 @@ require_once 'head.php'; ?>
                                         </div>
                                         <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="img_file" class="form-control-label">รูปภาพโครงการ </label>
+                                                <label for="img_file" class="form-control-label">รูปภาพโครงการ</label>
                                                 <input type="file" id="img_file" name="img_file" class="form-control-file">
+                                                <p><?= $row['img_file']; ?></p>
                                             </div>
                                         </div>
+
                                         <div class="col-6 mb-2">
                                             <div class="form-group">
-                                                <label for="img_banner" class="form-control-label">รูปภาพการลดหย่อนภาษี </label>
+                                                <label for="img_banner" class="form-control-label">รูปภาพการลดหย่อนภาษี</label>
                                                 <input type="file" id="img_banner" name="img_banner" class="form-control-file">
+                                                <p><?= $row['img_banner']; ?></p>
                                             </div>
                                         </div>
+
                                         <div class="col-6 mb-2">
                                             <div class="form-group">
                                                 <label for="img_file" class="control-label mb-1">ตัวอย่าง รูปภาพโครงการ</label>
@@ -131,10 +135,10 @@ require_once 'head.php'; ?>
                                     </div>
                                 </form>
                                 <?php
-                                require_once 'updata_data_db.php';
-                                // echo '<pre>';
-                                // print_r($_POST);
-                                // echo '</pre>';
+                                // require_once 'updata_data_db.php';
+                                echo '<pre>';
+                                print_r($_POST);
+                                echo '</pre>';
                                 ?>
                             </div>
                         </div>
