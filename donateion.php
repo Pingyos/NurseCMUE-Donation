@@ -210,24 +210,6 @@
                         <input type="text" name="resDesc" hidden>
                         <input type="text" name="comment" hidden>
                         <input type="text" name="pdflink" hidden>
-                        <?php
-                        require_once 'connection.php';
-                        $sql = "SELECT MAX(id) AS max_id, edo_pro_id FROM receipt_offline";
-
-                        $stmt = $conn->query($sql);
-
-                        if ($stmt->rowCount() > 0) {
-                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $maxId = $row["max_id"] + 1;
-                            $edo_pro_id = $row["edo_pro_id"];
-
-                            if ($maxId !== null && $edo_pro_id !== null) {
-                                $id_receipt = date('Y') + 543 . '-' . $edo_pro_id . '-E' . str_pad($maxId, 4, '0', STR_PAD_LEFT);
-                            }
-                        } else {
-                            echo "ไม่พบข้อมูลในตาราง";
-                        }
-                        ?>
                         <input type="text" name="id_receipt" value="<?= $id_receipt; ?>" hidden>
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>

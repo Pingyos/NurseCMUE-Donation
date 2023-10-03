@@ -26,7 +26,7 @@
                                 <tbody>
                                     <?php
                                     require_once 'connection.php';
-                                    $stmt = $conn->prepare("SELECT * FROM receipt_offline WHERE status_donat = 'online' AND status_receipt = 'yes' AND resDesc = 'success'");
+                                    $stmt = $conn->prepare("SELECT * FROM receipt WHERE status_donat = 'online' AND status_receipt = 'yes' AND resDesc = 'success'");
                                     $stmt->execute();
                                     $result = $stmt->fetchAll();
                                     $result = array_reverse($result);

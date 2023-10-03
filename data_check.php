@@ -26,13 +26,29 @@ if ($data !== null) {
         $updateResult = $updateStmt->execute();
 
         if ($updateResult) {
-            $response = [
-                'message' => 'success',
-                'id' => $id,
-                'amount' => $amount,
-                'rec_date_out' => $rec_date_out,
-                'id_receipt' => $id_receipt
-            ];
+            // เพิ่มข้อมูลใหม่ในตาราง receipt จาก receipt_offline
+            $insertSql = "INSERT INTO receipt (id, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate)
+                          SELECT id, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate
+                          FROM receipt_offline WHERE id = :id AND resDesc = 'success'
+                          ORDER BY dateCreate DESC
+                          LIMIT 1";
+            $insertStmt = $pdo->prepare($insertSql);
+            $insertStmt->bindParam(':id', $id);
+            $insertResult = $insertStmt->execute();
+
+            if ($insertResult) {
+                $response = [
+                    'message' => 'success',
+                    'id' => $id,
+                    'amount' => $amount,
+                    'rec_date_out' => $rec_date_out,
+                    'id_receipt' => $id_receipt
+                ];
+            } else {
+                $response = [
+                    'message' => 'ไม่สามารถบันทึกข้อมูลในตาราง receipt ได้'
+                ];
+            }
         } else {
             $response = [
                 'message' => 'ไม่สามารถอัปเดตข้อมูลในฐานข้อมูลได้'

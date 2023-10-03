@@ -113,8 +113,6 @@
                                         $checkSum = CRC16HexDigest($qrcode);
 
                                         $qrcodeFull = $qrcode . $checkSum;
-
-                                        // แสดงผลทางหน้าจอ
                                         require_once 'phpqrcode/qrlib.php';
 
                                         $codeContents = $qrcodeFull;
@@ -158,14 +156,11 @@
                         </div>
                         <br>
                         <script>
-                            var iterationCount = 0; // Initialize the counter
-
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
                                 var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
                                 var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
-
                                 if (amount !== '' && rec_date_out !== '' && id_receipt !== '' && id !== '') {
                                     var data = {
                                         id: id,
@@ -195,21 +190,13 @@
                                         }
                                     };
                                     xhr.send(JSON.stringify(data));
-
-                                    iterationCount++; // Increment the counter
-                                    if (iterationCount >= 20) {
-                                        clearInterval(interval); // Clear the interval after 100 iterations
-                                    }
                                 } else {
                                     console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                 }
                             }
-
                             fetchData();
-
-                            var interval = setInterval(fetchData, 5000);
+                            setInterval(fetchData, 5000);
                         </script>
-
                     </form>
                 </div>
             </div>

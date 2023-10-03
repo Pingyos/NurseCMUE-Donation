@@ -121,15 +121,15 @@ if (
     $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
     $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
     $result = $stmt->execute();
-
     if ($result) {
       $lastInsertedId = $conn->lastInsertId();
       $id_year = date('Y') + 543;
+      $last_two_digits = substr($id_year, -2);
       $id_suffix = $_POST['edo_pro_id'] . 'E' . str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
 
       $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
 
-      $updateSql = "UPDATE receipt_offline SET id_receipt = '{$id_year}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
+      $updateSql = "UPDATE receipt_offline SET id_receipt = '{$last_two_digits}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
       $updateStmt = $conn->prepare($updateSql);
       $updateStmt->bindParam(':lastInsertedId', $lastInsertedId, PDO::PARAM_INT);
       $updateStmt->bindParam(':pdf_url', $pdf_url, PDO::PARAM_STR);
