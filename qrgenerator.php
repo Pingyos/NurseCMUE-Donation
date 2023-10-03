@@ -47,8 +47,8 @@
 
                         <div class="row">
                             <div class="col-lg-6 col-12 mt-2">
-                                <label class="control-label">เลขที่ใบเสร็จ</label>
-                                <input type="text" name="id_receipt" value="<?= $row['id_receipt']; ?>" class="form-control" readonly>
+                                <label class="control-label">หมายเลขอ้างอิงโครงการ</label>
+                                <input type="text" name="ref1" value="<?= $row['ref1']; ?>" class="form-control" readonly>
                             </div>
                             <div class="col-lg-6 col-12 mt-2">
                                 <label class="control-label">จำนวนเงิน</label>
@@ -80,7 +80,7 @@
                                     die("Connection failed: " . mysqli_connect_error());
                                 }
 
-                                $sql = "SELECT amount, rec_date_out, edo_pro_id, id FROM receipt_offline WHERE id = :id";
+                                $sql = "SELECT amount, rec_date_out, edo_pro_id,id FROM receipt_offline WHERE id = :id";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -94,13 +94,15 @@
                                         $edo_pro_id = $row["edo_pro_id"];
                                         $id = $row["id"];
                                         $rec_date_out_year = (int)date('Y', strtotime($rec_date_out)) + 543;
+                                        $lastTwoDigits = substr($rec_date_out_year, -2);
+
                                         $amountFormatted = number_format($amount, 2, '.', '');
                                         $amountWithPadding = str_pad($amountFormatted, 10, '0', STR_PAD_LEFT);
                                         $qrcode00 = '000201';
                                         $qrcode01 = '010212';
                                         $qrcode3000 = '30630016A000000677010112';
                                         $qrcode3001 = '0115099400258783792';
-                                        $qrcode3002 = '0215' . $rec_date_out_year . $edo_pro_id . 'E' . str_pad($id, 4, '0', STR_PAD_LEFT);
+                                        $qrcode3002 = '0215' . $lastTwoDigits . $edo_pro_id . str_pad($id, 7, '0', STR_PAD_LEFT);
                                         $qrcode3003 = '03010';
                                         $qrcode30 = $qrcode3000 . $qrcode3001 . $qrcode3002 . $qrcode3003;
 
@@ -160,13 +162,13 @@
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
                                 var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
-                                var id_receipt = "<?php echo isset($_GET['id_receipt']) ? $_GET['id_receipt'] : ''; ?>";
-                                if (amount !== '' && rec_date_out !== '' && id_receipt !== '' && id !== '') {
+                                var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
+                                if (amount !== '' && rec_date_out !== '' && ref1 !== '' && id !== '') {
                                     var data = {
                                         id: id,
                                         amount: amount,
                                         rec_date_out: rec_date_out,
-                                        id_receipt: id_receipt
+                                        ref1: ref1
                                     };
                                     var xhr = new XMLHttpRequest();
                                     xhr.open("POST", "data_check.php", true);

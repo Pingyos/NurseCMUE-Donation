@@ -25,7 +25,7 @@
             }
             ?>
             <div class="col-lg-8 col-12 mx-auto">
-                <form class="custom-form contact-form" action="#" method="post" role="form">
+                <form class="custom-form contact-form" onsubmit="return validateForm()" method="post">
                     <h5 class="mb-4"><?= $row['edo_name']; ?>
                         <p><?= $row['edo_tex']; ?></p>
                     </h5>
@@ -34,34 +34,53 @@
                             <input type="text" name="rec_name" value="ไม่ประสงค์ออกนาม" class="form-control" readonly>
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="text" id="amountInput" name="amount" class="form-control" placeholder="จำนวนเงินบริจาค *" required>
-                        </div>
+                            <input type="number" id="amount" name="amount" class="form-control" placeholder="จำนวนเงิน *" required step="0.01">
+                            <script>
+                                function validateForm() {
+                                    var amountInput = document.getElementById("amount");
+                                    var amountValue = parseFloat(amountInput.value);
+                                    amountValue = amountValue.toFixed(2);
 
-                        <script>
-                            const amountInput = document.getElementById('amountInput');
-
-                            amountInput.addEventListener('input', () => {
-                                let value = amountInput.value;
-                                if (value.charAt(0).match(/[^0-9]/)) {
-                                    value = value.substring(1); // ลบอักขระพิเศษที่อยู่ที่ตำแหน่งแรก
-                                }
-                                const cleanedValue = value.replace(/[^0-9.]/g, ''); // ลบทุกอักขระที่ไม่ใช่ตัวเลขหรือจุดทศนิยม
-
-                                const parts = cleanedValue.split('.');
-                                if (parts[0].length > 7) {
-                                    parts[0] = parts[0].substring(0, 7);
-                                }
-
-                                if (parts.length > 1) {
-                                    // มีทศนิยม
-                                    if (parts[1].length > 2) {
-                                        parts[1] = parts[1].substring(0, 2);
+                                    // เงื่อนไข 1: มีจุดทศนิยมได้ไม่เกิน 2 ตำแหน่ง
+                                    if (!(/^\d+(\.\d{1,2})?$/.test(amountValue))) {
+                                        alert("กรุณากรอกจำนวนเงินที่มีจุดทศนิยมไม่เกิน 2 ตำแหน่ง");
+                                        amountInput.focus();
+                                        return false;
                                     }
-                                }
 
-                                amountInput.value = parts.join('.');
-                            });
-                        </script>
+                                    // เงื่อนไข 2: ค่าไม่สามารถเป็นติดลบได้
+                                    if (amountValue < 0) {
+                                        alert("กรุณากรอกจำนวนเงินที่ไม่เป็นติดลบ");
+                                        amountInput.focus();
+                                        return false;
+                                    }
+
+                                    // เงื่อนไข 3: ไม่สามารถใช้ตัวอักษรในจำนวนเงินได้
+                                    if (isNaN(amountValue)) {
+                                        alert("กรุณากรอกจำนวนเงินที่เป็นตัวเลข");
+                                        amountInput.focus();
+                                        return false;
+                                    }
+
+                                    // เงื่อนไข 4: ไม่สามารถใส่จำนวนเงินเกิน 100,000 บาทได้
+                                    if (amountValue > 100000) {
+                                        alert("กรุณากรอกจำนวนเงินที่ไม่เกิน 100,000 บาท");
+                                        amountInput.focus();
+                                        return false;
+                                    }
+
+                                    // เงื่อนไข 5: จำนวนเงินต้องเริ่มที่ 1 บาทขึ้นไป
+                                    if (amountValue < 1) {
+                                        alert("กรุณากรอกจำนวนเงินที่เริ่มต้นที่ 1 บาทขึ้นไป");
+                                        amountInput.focus();
+                                        return false;
+                                    }
+
+                                    // ถ้าผ่านทุกเงื่อนไข
+                                    return true;
+                                }
+                            </script>
+                        </div>
                     </div>
                     <div class="row">
                         <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" hidden>
@@ -72,13 +91,14 @@
                         <input type="text" name="status_user" value="person" hidden>
                         <input type="text" name="status_receipt" value="no" hidden>
                         <input type="text" name="other_description" hidden>
+                        <input type="text" name="rec_date_s" value="<?php echo date('Y-m-d'); ?>" hidden>
                         <input type="text" name="rec_date_out" value="<?php echo date('Y-m-d'); ?>" hidden>
+                        <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_date_s" hidden>
                         <input type="text" name="name_title" hidden>
-                        <input type="text" name="payby" value="QR CODE" hidden>
                         <input type="text" name="rec_surname" hidden>
-                        <input type="text" name="rec_tel" value="-" hidden>
-                        <input type="text" name="rec_idname" value="-" hidden>
+                        <input type="text" name="rec_tel" hidden>
+                        <input type="text" name="rec_idname" hidden>
                         <input type="text" name="rec_email" hidden>
                         <input type="text" name="address" hidden>
                         <input type="text" name="road" hidden>
@@ -89,23 +109,22 @@
                         <input type="text" name="comment" hidden>
                         <input type="text" name="resDesc" hidden>
                         <input type="text" name="pdflink" hidden>
+                        <input type="text" name="ref1" value="0" hidden>
                         <input type="text" name="id_receipt" value="0" hidden>
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php
                     require_once('donateion_no_db.php');
-                    // echo '<pre>';
-                    // print_r($_POST);
-                    // echo '</pre>';
+                    echo '<pre>';
+                    print_r($_POST);
+                    echo '</pre>';
                     ?>
-
                 </form>
             </div>
         </section>
     </main>
     <?php require_once('footer.php'); ?>
     <script src="js/main.js"></script>
-
 </body>
 
 </html>

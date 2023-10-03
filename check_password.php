@@ -3,18 +3,18 @@ require_once 'connection.php';
 
 $data = json_decode(file_get_contents("php://input"));
 
-if ($data && isset($data->password) && isset($data->id)) {
+if ($data && isset($data->password) && isset($data->receipt_id)) {
     $userPassword = $data->password;
-    $id = $data->id;
+    $receipt_id = $data->receipt_id;
 
-    $sql = "SELECT rec_idname FROM receipt WHERE rec_idname = '$userPassword' AND id = $id";
+    $sql = "SELECT rec_idname FROM receipt WHERE rec_idname = '$userPassword' AND receipt_id = $receipt_id";
     $result = $conn->query($sql);
 
     if ($result->rowCount() > 0) {
 
         $response = array('success' => true, 'message' => 'กรุณากรอกมหายเลขบัตรที่ถูกต้อง');
 
-        $pdfUrl = "pdf_maker.php?id=$id&ACTION=VIEW";
+        $pdfUrl = "pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW";
 
         $response['pdfUrl'] = $pdfUrl;
     } else {

@@ -246,15 +246,15 @@ function generateReceiptNumber($numid)
     $receipt_number = str_pad($numid, 4, '0', STR_PAD_LEFT);
     return $receipt_number;
 }
-$numid = $inv_mst_data_row['id'];
+$numid = $inv_mst_data_row['receipt_id'];
 $receipt_number = generateReceiptNumber($numid);
 
 
 
 
-$id = $_GET['id'];
+$receipt_id = $_GET['receipt_id'];
 
-$inv_mst_query = "SELECT T1.id, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts, T1.rec_idname, T1.address, T1.road, T1.amphures, T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.amount, T1.payby, T1.edo_name, T1.edo_pro_id, T1.edo_description, T1.edo_objective, T1.comment, T1.status_donat, T1.status_user FROM receipt T1 WHERE T1.id='" . $id . "'";
+$inv_mst_query = "SELECT T1.receipt_id, T1.id_receipt, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts, T1.rec_idname, T1.address, T1.road, T1.amphures, T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.amount, T1.payby, T1.edo_name, T1.edo_pro_id, T1.edo_description, T1.edo_objective, T1.comment, T1.status_donat, T1.status_user FROM receipt T1 WHERE T1.receipt_id='" . $receipt_id . "'";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
 if ($count > 0) {
@@ -416,7 +416,7 @@ if ($count > 0) {
 <br>
 		<tr>
 			<td><b>ชื่อ/Name : </b>' . $inv_mst_data_row['name_title'] . ' ' . $inv_mst_data_row['rec_name'] . ' ' . $inv_mst_data_row['rec_surname'] . ' </td>
-			<td align="right"><b>เลขที่ใบเสร็จ/Receipt No. </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+			<td align="right"><b>เลขที่ใบเสร็จ/Receipt No. </b>' . $inv_mst_data_row['id_receipt'] . '</td>
 		</tr>
 
 		<tr>
@@ -499,8 +499,8 @@ if ($count > 0) {
 			<td colspan="2" style="text-align: center;"><b>(ผู้ช่วยศาสตราจารย์ ดร.ธานี แก้วธรรมานุกูล)<br>คณบดีคณะพยาบาลศาสตร์</b></td>
 		</tr>
 		<tr>
-		<td><b>เลขที่ใบเสร็จ : </b>' . $datetime_be . '-' . $inv_mst_data_row['edo_pro_id'] . '-E' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
-		<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['id']) . '</td>
+		<td><b>เลขที่ใบเสร็จ : </b>' . $inv_mst_data_row['id_receipt'] . '</td>
+		<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['receipt_id']) . '</td>
 	</tr>
 </table>
 
@@ -518,7 +518,7 @@ if ($count > 0) {
 
     $datetime = date('Y');
     $datetime_be = str_replace(date('Y'), $year, $datetime);
-    $file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . "-" . $inv_mst_data_row['id'] . ".pdf";
+    $file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . "-" . $inv_mst_data_row['receipt_id'] . ".pdf";
     ob_end_clean();
 
     if ($_GET['ACTION'] == 'VIEW') {

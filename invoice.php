@@ -39,11 +39,11 @@
                                                 <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
                                                 <br>
                                                 <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
-                                                <span style="color: orange;">E<?= str_pad($t1['id'], 4, '0', STR_PAD_LEFT); ?></span>
+                                                <span style="color: orange;">E<?= str_pad($t1['receipt_id'], 4, '0', STR_PAD_LEFT); ?></span>
                                             </td>
                                             <td><?= $t1['edo_name']; ?></td>
                                             <td>
-                                                <a class="btn btn-sm btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="javascript:void(0);" onclick="confirmPassword('<?= $t1['id']; ?>')">
+                                                <a class="btn btn-sm btn-icon btn-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" href="javascript:void(0);" onclick="confirmPassword('<?= $t1['receipt_id']; ?>')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
                                                         <path fill="currentColor" d="M3.5 8H3V7h.5a.5.5 0 0 1 0 1ZM7 10V7h.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H7Z" />
                                                         <path fill="currentColor" fill-rule="evenodd" d="M1 1.5A1.5 1.5 0 0 1 2.5 0h8.207L14 3.293V13.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 13.5v-12ZM3.5 6H2v5h1V9h.5a1.5 1.5 0 1 0 0-3Zm4 0H6v5h1.5A1.5 1.5 0 0 0 9 9.5v-2A1.5 1.5 0 0 0 7.5 6Zm2.5 5V6h3v1h-2v1h1v1h-1v2h-1Z" clip-rule="evenodd" />
@@ -52,7 +52,7 @@
                                                 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
                                                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                 <script>
-                                                    async function confirmPassword(id) {
+                                                    async function confirmPassword(receipt_id) {
                                                         const {
                                                             value: password
                                                         } = await Swal.fire({
@@ -77,7 +77,7 @@
 
                                                         const data = {
                                                             password,
-                                                            id,
+                                                            receipt_id,
                                                         };
 
                                                         fetch('check_password.php', {
