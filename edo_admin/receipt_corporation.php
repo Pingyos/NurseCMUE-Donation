@@ -35,7 +35,10 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_user" value="corporation">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         <input type="hidden" name="resDesc" value="success" class="form-control">
+                                        <input type="hidden" name="ref1" value="0" class="form-control">
+                                        <input type="hidden" name="id_receipt" value="0" class="form-control">
                                         <input type="hidden" name="pdflink" value="https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=id&ACTION=VIEW">
+                                        <input type="hidden" name="receipt_cc" value="confirm">
                                         <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;"></span></label>

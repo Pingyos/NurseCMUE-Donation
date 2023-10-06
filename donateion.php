@@ -233,13 +233,14 @@
                         <input type="text" name="pdflink" hidden>
                         <input type="text" name="id_receipt" value="0" hidden>
                         <input type="text" name="ref1" value="0" hidden>
+                        <input type="hidden" name="receipt_cc" value="confirm">
                     </div>
                     <button type="submit" class="form-control">ยืนยัน</button>
                     <?php
                     require_once('donateion_db.php');
-                    echo '<pre>';
-                    print_r($_POST);
-                    echo '</pre>';
+                    // echo '<pre>';
+                    // print_r($_POST);
+                    // echo '</pre>';
                     ?>
 
                 </form>

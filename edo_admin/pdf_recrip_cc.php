@@ -329,6 +329,21 @@ if ($count > 0) {
     $pdf->Image($img, $x, $y, $imageWidth, 150, '', '', '', false, 300, '', false, false, 0, false, false, false);
     // 
 
+    // ยกเลิก
+    $img = '../TCPDF/pdf_recrip_cc.png';
+    $cellWidth = 220;  // กำหนดความกว้างของเซลล์
+    $cellHeight = 255;  // กำหนดความสูงของเซลล์ (เลือกความสูงตามที่คุณต้องการ)
+
+    // คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
+    $x = $pdf->GetX() + ($cellWidth - $cellHeight) / 2;
+    // คำนวณตำแหน่ง Y ให้รูปภาพอยู่ตรงกลางของเซลล์
+    $y = $pdf->GetY() + ($cellHeight - $cellHeight) / 2;
+
+    $pdf->Image($img, $x, $y, $cellWidth, $cellHeight, '', '', '', false, 300, '', false, false, $angle, false, false, false);
+
+
+    // 
+
     // logo
     $img = '../TCPDF/cmulogo.png';
     $cellWidth = 194;  // กำหนดความกว้างของเซลล์

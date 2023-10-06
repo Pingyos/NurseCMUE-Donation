@@ -27,12 +27,14 @@ if (
   && isset($_POST['status_receipt'])
   && isset($_POST['resDesc'])
   && isset($_POST['pdflink'])
+  && isset($_POST['ref1'])
+  && isset($_POST['id_receipt'])
+  && isset($_POST['receipt_cc'])
 ) {
 
-  //ไฟล์เชื่อมต่อฐานข้อมูล
   require_once 'connection.php';
   //sql update
-  $stmt = $conn->prepare("UPDATE receipt_offline SET
+  $stmt = $conn->prepare("UPDATE receipt SET
     name_title = :name_title,
     rec_name = :rec_name,
     rec_surname = :rec_surname,
@@ -59,6 +61,9 @@ if (
     status_receipt = :status_receipt,
     resDesc = :resDesc,
     pdflink=:pdflink,
+    ref1=:ref1,
+    id_receipt=:id_receipt,
+    receipt_cc=:receipt_cc,
     comment = :comment
     WHERE id = :id");
 
@@ -91,6 +96,9 @@ if (
   $stmt->bindParam(':resDesc', $_POST['resDesc'], PDO::PARAM_STR);
   $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);
   $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
+  $stmt->bindParam(':ref1', $_POST['ref1'], PDO::PARAM_STR);
+  $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
+  $stmt->bindParam(':receipt_cc', $_POST['receipt_cc'], PDO::PARAM_STR);
 
   $result = $stmt->execute();
 

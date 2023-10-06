@@ -29,6 +29,7 @@ if (
   && isset($_POST['ref1'])
   && isset($_POST['resDesc'])
   && isset($_POST['pdflink'])
+  && isset($_POST['receipt_cc'])
 ) {
   try {
     // Include the file to connect to the database
@@ -64,6 +65,7 @@ if (
     comment,
     pdflink,
     id_receipt,
+    receipt_cc,
     ref1)
     VALUES
     (:name_title,
@@ -94,6 +96,7 @@ if (
     :comment,
     :pdflink,
     :id_receipt,
+    :receipt_cc,
     :ref1)");
 
     $stmt->bindParam(':name_title', $_POST['name_title'], PDO::PARAM_STR);
@@ -125,6 +128,7 @@ if (
     $stmt->bindParam(':id_receipt', $_POST['id_receipt'], PDO::PARAM_STR);
     $stmt->bindParam(':ref1', $_POST['ref1'], PDO::PARAM_STR);
     $stmt->bindParam(':pdflink', $_POST['pdflink'], PDO::PARAM_STR);
+    $stmt->bindParam(':receipt_cc', $_POST['receipt_cc'], PDO::PARAM_STR);
     $result = $stmt->execute();
 
     if ($result) {

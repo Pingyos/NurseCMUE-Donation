@@ -39,8 +39,8 @@ if ($data !== null) {
                     // ไม่มีข้อมูลซ้ำกัน สามารถเพิ่มรายการใหม่ลงในตาราง receipt ได้
 
                     // คัดลอกข้อมูลจาก receipt_offline ไปยัง receipt
-                    $insertSql = "INSERT INTO receipt (id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate)
-                                  SELECT id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate
+                    $insertSql = "INSERT INTO receipt (id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate)
+                                  SELECT id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate
                                   FROM receipt_offline WHERE id = :id AND resDesc = 'success'
                                   ORDER BY dateCreate DESC
                                   LIMIT 1";
@@ -49,7 +49,6 @@ if ($data !== null) {
                     $insertResult = $insertStmt->execute();
 
                     if ($insertResult) {
-                        // ค้นหา edo_pro_id และ receipt_id จากตาราง receipt
                         $selectProIdSql = "SELECT edo_pro_id, receipt_id FROM receipt WHERE id = :id";
                         $selectProIdStmt = $pdo->prepare($selectProIdSql);
                         $selectProIdStmt->bindParam(':id', $id);
@@ -58,7 +57,7 @@ if ($data !== null) {
 
                         if ($row !== false) {
                             $edo_pro_id = $row['edo_pro_id'];
-                            $receipt_id = $row['receipt_id']; // รับค่า receipt_id จากตาราง receipt
+                            $receipt_id = $row['receipt_id'];
 
                             // สร้าง id_receipt ใหม่
                             $id_year = date('Y') + 543;
@@ -82,6 +81,8 @@ if ($data !== null) {
                                     'rec_date_out' => $rec_date_out,
                                     'ref1' => $ref1
                                 ];
+                                // require_once('send_line_notify.php');
+                                // sendLineNotification('ข้อความที่คุณต้องการส่ง', $rec_date_out, $ref1, $amount);
                             } else {
                                 $response = [
                                     'message' => 'ไม่สามารถอัปเดตค่า id_receipt ได้'

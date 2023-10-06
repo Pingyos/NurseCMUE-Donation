@@ -26,7 +26,7 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">รายงานสรุป</strong>
                             </div>
                             <div class="card-body">
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" enctype="multipart/form-data" id="your_form_id">
                                     <div class="row">
                                         <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
@@ -48,7 +48,7 @@ require_once 'head.php'; ?>
                                                     <?php
                                                     require_once 'connection.php';
 
-                                                    $sql = "SELECT DISTINCT status_user FROM receipt_offline";
+                                                    $sql = "SELECT DISTINCT status_user FROM receipt";
                                                     $stmt = $conn->prepare($sql);
                                                     $stmt->execute();
                                                     $checkings = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -72,40 +72,79 @@ require_once 'head.php'; ?>
                                                     <?php
                                                     require_once 'connection.php';
 
-                                                    $sql = "SELECT DISTINCT status_receipt FROM receipt_offline";
+                                                    $sql = "SELECT DISTINCT status_receipt FROM receipt";
                                                     $stmt = $conn->prepare($sql);
                                                     $stmt->execute();
                                                     $checkings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     foreach ($checkings as $checking) {
                                                         $status_receipt = $checking['status_receipt'];
                                                         $selected = isset($_POST['status_receipt']) && $_POST['status_receipt'] === $status_receipt ? 'selected' : '';
-
-                                                        // แปลงค่า status_receipt เป็นข้อความที่เหมาะสม
                                                         $status_receipt_text = ($status_receipt === 'no') ? 'ไม่ประสงค์ออกนาม' : 'บริจาคเพื่อรับใบเสร็จ';
-
                                                         echo "<option value='$status_receipt' $selected>$status_receipt_text</option>";
                                                     }
                                                     ?>
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group col-lg-12 col-md-3 col-6">
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
                                             <div class="form-group">
-                                                <label for="edo_description" class="control-label mb-1">โครงการ</label>
-                                                <select class="form-control" name="edo_description" id="edo_description">
-                                                    <option value="" disabled <?php echo empty($_POST['edo_description']) ? 'selected' : ''; ?>>แสดงทั้งหมด</option>
+                                                <label for="edo_pro_id" class="control-label mb-1">โครงการ</label>
+                                                <select class="form-control" name="edo_pro_id" id="edo_pro_id">
+                                                    <option value="" disabled <?php echo empty($_POST['edo_pro_id']) ? 'selected' : ''; ?>>แสดงทั้งหมด</option>
                                                     <?php
                                                     require_once 'connection.php';
 
-                                                    $sql = "SELECT DISTINCT edo_description FROM receipt_offline";
+                                                    $sql = "SELECT DISTINCT edo_pro_id FROM receipt ORDER BY edo_pro_id ASC";
                                                     $stmt = $conn->prepare($sql);
                                                     $stmt->execute();
                                                     $checkings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     foreach ($checkings as $checking) {
-                                                        $edo_description = $checking['edo_description'];
-                                                        $selected = isset($_POST['edo_description']) && $_POST['edo_description'] === $edo_description ? 'selected' : '';
-                                                        echo "<option value='$edo_description' $selected>$edo_description</option>";
+                                                        $edo_pro_id = $checking['edo_pro_id'];
+                                                        $selected = isset($_POST['edo_pro_id']) && $_POST['edo_pro_id'] === $edo_pro_id ? 'selected' : '';
+                                                        $additional_info = '';
+
+                                                        // เพิ่มข้อมูลเพิ่มเติมตาม edo_pro_id ที่คุณต้องการ
+                                                        switch ($edo_pro_id) {
+                                                            case '121205':
+                                                                $additional_info = 'บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษานักศึกษาพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่';
+                                                                break;
+                                                            case '121206':
+                                                                $additional_info = 'บริจาคเพื่อระดมพลัง เร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่';
+                                                                break;
+                                                            case '121207':
+                                                                $additional_info = 'บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ';
+                                                                break;
+                                                            case '121208':
+                                                                $additional_info = 'โครงการบริจาคเพิ่มเติม';
+                                                                break;
+                                                        }
+
+                                                        echo "<option value='$edo_pro_id' $selected>$edo_pro_id - $additional_info</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                            <div class="form-group">
+                                                <label for="receipt_cc" class="control-label mb-1">สถานะใบเสร็จรับเงิน</label>
+                                                <select class="form-control" name="receipt_cc" id="receipt_cc">
+                                                    <option value="" disabled <?php echo empty($_POST['receipt_cc']) ? 'selected' : ''; ?>>แสดงทั้งหมด</option>
+                                                    <?php
+                                                    require_once 'connection.php';
+
+                                                    $sql = "SELECT DISTINCT receipt_cc FROM receipt";
+                                                    $stmt = $conn->prepare($sql);
+                                                    $stmt->execute();
+                                                    $checkings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                    foreach ($checkings as $checking) {
+                                                        $receipt_cc = $checking['receipt_cc'];
+                                                        $selected = isset($_POST['receipt_cc']) && $_POST['receipt_cc'] === $receipt_cc ? 'selected' : '';
+
+                                                        $status_receipt_cc_text = ($receipt_cc === 'cancel') ? 'ใบเสร็จที่ยกเลิก' : 'ปกติ';
+
+                                                        echo "<option value='$receipt_cc' $selected>$status_receipt_cc_text</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -114,17 +153,39 @@ require_once 'head.php'; ?>
                                     </div>
                                     &nbsp;
                                     <hr>
-                                    <div class="btn-group col-12">
+                                    <div class="btn-group col-3">
                                         <button type="submit" name="display_data" class="btn btn-primary">ค้นหา</button>
-                                        <button type="button" id="export_data" class="btn btn-success">Export</button>
+                                        &nbsp;
+                                        <button type="button" id="export_data" class="btn btn-success">ออกรายงาน</button>
+                                        &nbsp;
+                                        <button type="button" id="clear_data" class="btn btn-danger">ล้างค่า</button>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function() {
+                                            var clearButton = document.getElementById("clear_data");
+                                            clearButton.addEventListener("click", function() {
+                                                // รองรับทุกชนิดของฟิลด์อินพุต เช่น text, textarea, select
+                                                var form = document.getElementById("your_form_id");
+                                                var elements = form.elements;
+
+                                                for (var i = 0; i < elements.length; i++) {
+                                                    if (elements[i].type === "text" || elements[i].type === "textarea" || elements[i].type === "select-one") {
+                                                        elements[i].value = ""; // ล้างค่าข้อมูลในฟิลด์
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
                                     <script>
                                         document.getElementById("export_data").addEventListener("click", function() {
                                             var start_date = document.getElementById("start_date").value;
                                             var end_date = document.getElementById("end_date").value;
                                             var status_user = document.getElementById("status_user").value;
                                             var status_receipt = document.getElementById("status_receipt").value;
-                                            var edo_description = document.getElementById("edo_description").value;
+                                            var edo_pro_id = document.getElementById("edo_pro_id").value;
+                                            var receipt_cc = document.getElementById("receipt_cc").value;
                                             var url = "report_db.php?";
                                             if (start_date) {
                                                 url += "start_date=" + encodeURIComponent(start_date) + "&";
@@ -138,8 +199,11 @@ require_once 'head.php'; ?>
                                             if (status_receipt) {
                                                 url += "status_receipt=" + encodeURIComponent(status_receipt) + "&";
                                             }
-                                            if (edo_description) {
-                                                url += "edo_description=" + encodeURIComponent(edo_description);
+                                            if (edo_pro_id) {
+                                                url += "edo_pro_id=" + encodeURIComponent(edo_pro_id) + "&";
+                                            }
+                                            if (receipt_cc) {
+                                                url += "receipt_cc=" + encodeURIComponent(receipt_cc);
                                             }
                                             window.location.href = url;
                                         });
@@ -152,7 +216,7 @@ require_once 'head.php'; ?>
                                             if (isset($_POST['display_data'])) {
                                                 require_once 'connection.php';
 
-                                                $sql = "SELECT * FROM receipt_offline WHERE 1=1";
+                                                $sql = "SELECT * FROM receipt WHERE 1=1";
 
                                                 if (isset($_POST['start_date']) && !empty($_POST['start_date']) && isset($_POST['end_date']) && !empty($_POST['end_date'])) {
                                                     $start_date = $_POST['start_date'];
@@ -170,12 +234,17 @@ require_once 'head.php'; ?>
                                                     $sql .= " AND status_receipt = :status_receipt";
                                                 }
 
-                                                if (isset($_POST['edo_description']) && !empty($_POST['edo_description'])) {
-                                                    $selected_edo_description = $_POST['edo_description'];
-                                                    $sql .= " AND edo_description = :edo_description";
+                                                if (isset($_POST['edo_pro_id']) && !empty($_POST['edo_pro_id'])) {
+                                                    $selected_edo_pro_id = $_POST['edo_pro_id'];
+                                                    $sql .= " AND edo_pro_id = :edo_pro_id";
                                                 }
 
-                                                $sql .= " ORDER BY id DESC"; // เพิ่มการเรียงลำดับล่าสุดที่นี่
+                                                if (isset($_POST['receipt_cc']) && !empty($_POST['receipt_cc'])) {
+                                                    $selected_receipt_cc = $_POST['receipt_cc'];
+                                                    $sql .= " AND receipt_cc = :receipt_cc";
+                                                }
+
+                                                $sql .= " ORDER BY receipt_id DESC"; // เพิ่มการเรียงลำดับล่าสุดที่นี่
 
                                                 $stmt = $conn->prepare($sql);
 
@@ -192,8 +261,11 @@ require_once 'head.php'; ?>
                                                     $stmt->bindParam(':status_receipt', $selected_status_receipt);
                                                 }
 
-                                                if (isset($selected_edo_description)) {
-                                                    $stmt->bindParam(':edo_description', $selected_edo_description);
+                                                if (isset($selected_edo_pro_id)) {
+                                                    $stmt->bindParam(':edo_pro_id', $selected_edo_pro_id);
+                                                }
+                                                if (isset($selected_receipt_cc)) {
+                                                    $stmt->bindParam(':receipt_cc', $selected_receipt_cc);
                                                 }
 
                                                 $stmt->execute();
@@ -203,13 +275,13 @@ require_once 'head.php'; ?>
                                                     <thead>
                                                         <tr>
                                                             <th>ลำดับ</th>
-                                                            <th>เลขที่ใบเสร็จ</th>
-                                                            <th>เลขประจำตัวผู้เสียภาษี</th>
+                                                            <th style="width: 150px;">เลขที่ใบเสร็จ</th>
                                                             <th>ชื่อ-สกุล</th>
                                                             <th>ที่อยู่</th>
                                                             <th>วันที่บริจาค</th>
                                                             <th>ชำระโดย</th>
                                                             <th>จำนวนเงิน</th>
+                                                            <th>รายละเอียด</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -218,14 +290,71 @@ require_once 'head.php'; ?>
                                                         <?php foreach ($results as $row) : ?>
                                                             <tr>
                                                                 <td><?php echo $i++; ?></td>
-                                                                <td><?php echo $row['id_receipt']; ?></td>
-
-                                                                <td><?php echo $row['rec_idname']; ?></td>
-                                                                <td><?php echo $row['name_title']; ?> <?php echo $row['rec_name']; ?> <?php echo $row['rec_surname']; ?></td>
-                                                                <td><?php echo $row['address']; ?> <?php echo $row['road']; ?> <?php echo $row['districts']; ?> <?php echo $row['amphures']; ?> <?php echo $row['provinces']; ?></td>
-                                                                <td><?php echo $row['rec_date_out']; ?></td>
-                                                                <td><?php echo $row['payby']; ?></td>
-                                                                <td><?php echo $row['amount']; ?></td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['id_receipt']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['name_title']; ?> <?php echo $row['rec_name']; ?> <?php echo $row['rec_surname']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['address']; ?> <?php echo $row['road']; ?> <?php echo $row['districts']; ?> <?php echo $row['amphures']; ?> <?php echo $row['provinces']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['rec_date_out']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['payby']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        <span style="text-decoration: line-through;">
+                                                                        <?php endif; ?>
+                                                                        <?php echo $row['amount']; ?>
+                                                                        <?php if ($row['receipt_cc'] === 'cancel') : ?>
+                                                                        </span>
+                                                                    <?php endif; ?>
+                                                                </td>
+                                                                <td>
+                                                                    <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="View" href="<?= ($row['receipt_cc'] == 'cancel') ? 'pdf_recrip_cc.php?receipt_id=' . $row['receipt_id'] : 'pdf_maker_offline.php?receipt_id=' . $row['receipt_id'] ?>&ACTION=VIEW" target="_blank"> <span class="btn-inner">
+                                                                            <svg width="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                                <path d="M15.7161 16.2234H8.49609" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                                                <path d="M15.7161 12.0369H8.49609" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                                                <path d="M11.2521 7.86011H8.49707" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.909 2.74976C15.909 2.74976 8.23198 2.75376 8.21998 2.75376C5.45998 2.77076 3.75098 4.58676 3.75098 7.35676V16.5528C3.75098 19.3368 5.47298 21.1598 8.25698 21.1598C8.25698 21.1598 15.933 21.1568 15.946 21.1568C18.706 21.1398 20.416 19.3228 20.416 16.5528V7.35676C20.416 4.57276 18.693 2.74976 15.909 2.74976Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                                            </svg>
+                                                                        </span>
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         <?php endforeach; ?>
                                                     </tbody>

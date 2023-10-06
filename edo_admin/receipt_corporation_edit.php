@@ -26,10 +26,10 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">แก้ไขเสร็จนิติบุคคล</strong>
                             </div>
                             <?php
-                            if (isset($_GET['id'])) {
+                            if (isset($_GET['receipt_id'])) {
                                 require_once 'connection.php';
-                                $stmt = $conn->prepare("SELECT* FROM receipt_offline WHERE id=?");
-                                $stmt->execute([$_GET['id']]);
+                                $stmt = $conn->prepare("SELECT* FROM receipt WHERE receipt_id=?");
+                                $stmt->execute([$_GET['receipt_id']]);
                                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                                 //ถ้าคิวรี่ผิดพลาดให้กลับไปหน้า index
                                 if ($stmt->rowCount() < 1) {
@@ -41,15 +41,6 @@ require_once 'head.php'; ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <input type="hidden" name="name_title">
-                                        <input type="hidden" name="rec_surname">
-                                        <input type="hidden" name="rec_email">
-                                        <input type="hidden" name="resDesc" value="success">
-                                        <input type="hidden" name="status_donat" value="offline">
-                                        <input type="hidden" name="status_user" value="corporation">
-                                        <input type="hidden" name="status_receipt" value="yes" class="form-control">
-                                        <input type="hidden" name="pdflink">
-                                        <input type="text" name="id" value="<?= $row['id']; ?>" hidden>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท </label>
@@ -125,13 +116,13 @@ require_once 'head.php'; ?>
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 <label for="amount" class="control-label mb-1">จำนวนเงินที่บริจาค </label>
                                                 <input type="text" name="amount" class="form-control" value="<?= $row['amount']; ?>">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 <label for="payby" class="control-label mb-1">ชำระโดย </label>
                                                 <input type="text" name="payby" class="form-control" list="pay" value="<?= $row['payby']; ?>">
@@ -147,95 +138,54 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
+                                                <label for="edo_description" class="control-label mb-1">โครงการ</label>
+                                                <input type="text" name="edo_description" class="form-control" value="<?= $row['edo_description']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="edo_pro_id" class="control-label mb-1">หมายเลขโครงการ</label>
+                                                <input type="text" name="edo_pro_id" class="form-control" value="<?= $row['edo_pro_id']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
                                                 <label for="comment" class="control-label mb-1">หมายเหตุ</label>
                                                 <input type="text" name="comment" class="form-control" value="<?= $row['comment']; ?>">
                                             </div>
                                         </div>
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
-                                            <div class="form-group">
-                                                <label for="edo_name" class="control-label mb-1">โครงการ <span style="color:red;">*</span></label>
-                                                <select name="edo_name" id="edo_name" class="form-control" required>
-                                                    <option value="">เลือกโครงการ</option>
-                                                    <?php
-                                                    require_once 'connection.php';
-
-                                                    try {
-                                                        $query = "SELECT edo_name, edo_pro_id, edo_description, edo_objective FROM pro_offline";
-                                                        $result = $conn->query($query);
-
-                                                        // สร้างตัวเลือก
-                                                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                                                            echo "<option value='" . $row['edo_name'] . "' data-pro-id='" . $row['edo_pro_id'] . "' data-description='" . $row['edo_description'] . "' data-objective='" . $row['edo_objective'] . "'>" . $row['edo_name'] . "</option>";
-                                                        }
-                                                    } catch (PDOException $e) {
-                                                        echo "Query failed: " . $e->getMessage();
-                                                    }
-                                                    ?>
-                                                    <option value="">อื่นๆ</option>
-                                                </select>
-                                            </div>
-                                            &nbsp;
-                                            <div class="form-group" id="otherFields" style="display: none;">
-                                                <label for="other_description" class="control-label mb-1">โครงการอื่นๆ <span style="color:red;">*</span></label>
-                                                <input type="text" name="other_description" class="form-control" placeholder="โปรดระบุชื่อโครงการ">
-                                            </div>
-                                            <input type="hidden" name="edo_pro_id" id="edo_pro_id">
-                                            <input type="hidden" name="edo_description" id="edo_description">
-                                            <input type="hidden" name="edo_objective" id="edo_objective">
-                                        </div>
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var edoNameSelect = document.getElementById('edo_name');
-                                                var edoProIdInput = document.getElementsByName('edo_pro_id')[0];
-                                                var descriptionInput = document.getElementById('edo_description');
-                                                var objectiveInput = document.getElementById('edo_objective');
-                                                var otherDescriptionInput = document.getElementsByName('other_description')[0];
-                                                var otherFieldsDiv = document.getElementById('otherFields');
-
-                                                edoNameSelect.addEventListener('change', function() {
-                                                    var selectedOption = edoNameSelect.options[edoNameSelect.selectedIndex];
-
-                                                    descriptionInput.value = selectedOption.getAttribute('data-description');
-
-                                                    if (selectedOption.value === '') {
-                                                        otherFieldsDiv.style.display = 'block';
-                                                        edoProIdInput.value = '121208';
-                                                        objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
-                                                    } else {
-                                                        otherFieldsDiv.style.display = 'none';
-                                                        edoProIdInput.value = selectedOption.getAttribute('data-pro-id');
-                                                        objectiveInput.value = selectedOption.getAttribute('data-objective');
-                                                    }
-                                                });
-
-                                                otherDescriptionInput.addEventListener('input', function() {
-                                                    descriptionInput.value = otherDescriptionInput.value;
-                                                    objectiveInput.value = otherDescriptionInput.value; // รับค่าจาก otherDescriptionInput
-                                                });
-                                            });
-                                        </script>
-
-                                        <script>
-                                            document.getElementById('edo_name').addEventListener('change', function() {
-                                                var selectedOption = this.options[this.selectedIndex];
-                                                document.getElementById('edo_pro_id').value = selectedOption.getAttribute('data-pro-id');
-                                                document.getElementById('edo_description').value = selectedOption.getAttribute('data-description');
-                                                document.getElementById('edo_objective').value = selectedOption.getAttribute('data-objective');
-                                            });
-                                        </script>
-
                                     </div>
+
+                                    <input type="hidden" name="name_title" value="<?= $row['name_title']; ?>">
+                                    <input type="hidden" name="rec_surname" value="<?= $row['rec_surname']; ?>">
+                                    <input type="hidden" name="rec_email" value="<?= $row['rec_email']; ?>">
+                                    <input type="hidden" name="resDesc" value="success">
+                                    <input type="hidden" name="status_donat" value="offline">
+                                    <input type="hidden" name="status_user" value="corporation">
+                                    <input type="hidden" name="status_receipt" value="yes" class="form-control">
+                                    <input type="hidden" name="pdflink" value="<?= $row['pdflink']; ?>">
+                                    <input type="hidden" name="ref1" value="<?= $row['ref1']; ?>">
+                                    <input type="hidden" name="id_receipt" value="<?= $row['id_receipt']; ?>">
+                                    <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                                    <input type="hidden" name="edo_objective" value="<?= $row['edo_objective']; ?>">
+                                    <input type="hidden" name="edo_name" value="<?= $row['edo_name']; ?>">
+                                    <input type="hidden" name="other_description" value="<?= $row['other_description']; ?>">
+                                    <input type="hidden" name="receipt_cc" value="<?= $row['receipt_cc']; ?>">
                                     <hr>
                                     <div class="btn-group col-12">
                                         <button type="submit" class="btn btn-primary btn-block">ยืนยันการออกใบเสร็จ(นิติบุคคล)</button>
                                     </div>
                                 </form>
-                                <?php require_once 'recript_edit.php'; ?>
-                                <!-- <?php
-                                        echo '<pre>';
-                                        print_r($_POST);
-                                        echo '</pre>';
-                                        ?> -->
+                                <?php
+                                require_once 'recript_edit.php';
+                                // echo '<pre>';
+                                // print_r($_POST);
+                                // echo '</pre>';
+                                ?>
+
                             </div>
                         </div>
                     </div>

@@ -74,233 +74,155 @@ require_once 'head.php'; ?>
         <?php require_once 'header.php'; ?>
         <div class="content">
             <div class="animated fadeIn">
+                <!-- แสดงโครงการ -->
                 <div class="row">
                     <?php
                     require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS total_records05, SUM(amount) AS total_amount05 FROM receipt_offline WHERE edo_pro_id = 121205");
-                    $stmt->execute();
-                    $result = $stmt->fetch();
+                    $stmt05 = $conn->prepare("SELECT COUNT(*) AS total_records05, SUM(amount) AS total_amount05 FROM receipt WHERE edo_pro_id = 121205 AND receipt_cc = 'confirm'");
+                    $stmt05->execute();
+                    $result05 = $stmt05->fetch();
 
-                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
-                    $total_records05 = $result['total_records05'];
-                    $total_amount05 = $result['total_amount05'];
+                    $stmt06 = $conn->prepare("SELECT COUNT(*) AS total_records06, SUM(amount) AS total_amount06 FROM receipt WHERE edo_pro_id = 121206 AND receipt_cc = 'confirm'");
+                    $stmt06->execute();
+                    $result06 = $stmt06->fetch();
+
+                    $stmt07 = $conn->prepare("SELECT COUNT(*) AS total_records07, SUM(amount) AS total_amount07 FROM receipt WHERE edo_pro_id = 121207 AND receipt_cc = 'confirm'");
+                    $stmt07->execute();
+                    $result07 = $stmt07->fetch();
+
+                    $stmt08 = $conn->prepare("SELECT COUNT(*) AS total_records08, SUM(amount) AS total_amount08 FROM receipt WHERE edo_pro_id = 121208 AND receipt_cc = 'confirm'");
+                    $stmt08->execute();
+                    $result08 = $stmt08->fetch();
+
                     ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="height: 150px;">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-1">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษา</div>
-                                            <div class="stat-text">฿ <?php echo number_format($total_amount05, 2); ?></div>
-                                            <div class="stat-heading"><?php echo $total_records05; ?> ราย</div>
-                                        </div>
-                                    </div>
+                                    <div class="stat-heading">บริจาคเพื่อการศึกษา เพื่อเป็นทุนการศึกษา</div>
+                                    <div class="stat-text">฿ <?php echo number_format($result05['total_amount05'], 2); ?> บาท</div>
+                                    <div class="stat-heading"><?php echo $result05['total_records05']; ?> ราย</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    <?php
-                    require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS total_records06, SUM(amount) AS total_amount06 FROM receipt_offline WHERE edo_pro_id = 121206");
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-
-                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
-                    $total_records06 = $result['total_records06'];
-                    $total_amount06 = $result['total_amount06'];
-                    ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="height: 150px;">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-2">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">บริจาคเพื่อระดมพลัง เร่งรัดปรับปรุงคุณภาพ</div>
-                                            <div class="stat-text">฿ <?php echo number_format($total_amount06, 2); ?></div>
-                                            <div class="stat-heading"><?php echo $total_records06; ?> ราย</div>
-                                        </div>
-                                    </div>
+                                    <div class="stat-heading">บริจาคเพื่อระดมพลัง เร่งรัดปรับปรุงคุณภาพ คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</div>
+                                    <div class="stat-text">฿ <?php echo number_format($result06['total_amount06'], 2); ?> บาท</div>
+                                    <div class="stat-heading"><?php echo $result06['total_records06']; ?> ราย</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <?php
-                    require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS total_records07, SUM(amount) AS total_amount07 FROM receipt_offline WHERE edo_pro_id = 121207");
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
-                    $total_records07 = $result['total_records07'];
-                    $total_amount07 = $result['total_amount07'];
-                    ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="height: 150px;">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-3">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ</div>
-                                            <div class="stat-text">฿ <?php echo number_format($total_amount07, 2); ?></div>
-                                            <div class="stat-heading"><?php echo $total_records07; ?> ราย</div>
-                                        </div>
-                                    </div>
+                                    <div class="stat-heading">บริจาคเพื่อสาธารณะประโยชน์และการกุศลอื่น ๆ</div>
+                                    <div class="stat-text"><?php echo number_format($result07['total_amount07'], 2); ?> บาท</div>
+                                    <div class="stat-heading"><?php echo $result07['total_records07']; ?> ราย</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php
-                    require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT COUNT(*) AS total_records08, SUM(amount) AS total_amount08 FROM receipt_offline WHERE edo_pro_id = 121208");
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-                    // แสดงผลจำนวน records และผลรวมเงินทั้งหมด
-                    $total_records08 = $result['total_records08'];
-                    $total_amount08 = $result['total_amount08'];
-                    ?>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="height: 150px;">
                                 <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-7">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">โครงการอื่น ๆ</div>
-                                            <div class="stat-text">฿ <?php echo number_format($total_amount08, 2); ?></div>
-                                            <div class="stat-heading"><?php echo $total_records08; ?> ราย</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    require_once 'connection.php';
-
-                    // สร้างคำสั่ง SQL สำหรับดึงจำนวนข้อมูลที่มี status_donat = offline
-                    $sql = "SELECT COUNT(*) AS total_recordsoffline FROM receipt_offline WHERE status_donat = 'offline'";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-
-                    // แสดงผลจำนวนข้อมูล
-                    $total_recordsoffline = $result['total_recordsoffline'];
-                    ?>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
-                                        <i class="pe-7s-users"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">จำนวนผู้บริจาค (Offline)</div>
-                                            <div class="stat-text"><?php echo $total_recordsoffline; ?> คน</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <?php
-                    require_once 'connection.php';
-
-                    // สร้างคำสั่ง SQL สำหรับดึงจำนวนข้อมูลที่มี status_donat = offline
-                    $sql = "SELECT COUNT(*) AS total_recordsonline FROM receipt_offline WHERE status_donat = 'online'";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-
-                    // แสดงผลจำนวนข้อมูล
-                    $total_recordsonline = $result['total_recordsonline'];
-                    ?>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
-                                        <i class="pe-7s-users"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">จำนวนผู้บริจาค (Online)</div>
-                                            <div class="stat-text"><?php echo $total_recordsonline; ?> คน</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    require_once 'connection.php';
-                    // สร้างคำสั่ง SQL สำหรับดึงจำนวนข้อมูล
-                    $sql = "SELECT COUNT(*) AS total_records FROM receipt_offline";
-                    $stmt = $conn->prepare($sql);
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-                    // แสดงผลจำนวนข้อมูล
-                    $total_records = $result['total_records'];
-                    ?>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-5">
-                                        <i class="ti-user text-primary border-primary"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">จำนวนผู้บริจาค</div>
-                                            <div class="stat-text"><?php echo $total_records; ?> คน</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
-                    require_once 'connection.php';
-                    $stmt = $conn->prepare("SELECT SUM(amount) AS total_amountsum FROM receipt_offline");
-                    $stmt->execute();
-                    $result = $stmt->fetch();
-                    $total_amountsum = $result['total_amountsum'];
-                    ?>
-                    <div class="col-lg-8 col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="stat-widget-five">
-                                    <div class="stat-icon dib flat-color-4">
-                                        <i class="pe-7s-cash"></i>
-                                    </div>
-                                    <div class="stat-content">
-                                        <div class="text-left dib">
-                                            <div class="stat-heading">ยอดเงินรวม</div>
-                                            <div class="stat-text">฿ <?php echo number_format($total_amountsum, 2); ?></div>
-                                        </div>
-                                    </div>
+                                    <div class="stat-heading">โครงการบริจาคเพิ่มเติม</div>
+                                    <div class="stat-text">฿ <?php echo number_format($result08['total_amount08'], 2); ?> บาท</div>
+                                    <div class="stat-heading"><?php echo $result08['total_records08']; ?> ราย</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- แสดงโครงการ -->
+
+                <!-- แสดงโครงการ -->
+                <div class="row">
+                    <?php
+                    require_once 'connection.php';
+
+                    $sqlRecordsoffline = "SELECT COUNT(*) AS total_records_offline FROM receipt WHERE status_donat = 'offline' AND receipt_cc = 'confirm'";
+                    $stmtRecordsoffline = $conn->prepare($sqlRecordsoffline);
+                    $stmtRecordsoffline->execute();
+                    $resultRecordsoffline = $stmtRecordsoffline->fetch();
+
+                    $sqlRecordsonline = "SELECT COUNT(*) AS total_records_online FROM receipt WHERE status_donat = 'online' AND receipt_cc = 'confirm'";
+                    $stmtRecordsonline = $conn->prepare($sqlRecordsonline);
+                    $stmtRecordsonline->execute();
+                    $resultRecordsonline = $stmtRecordsonline->fetch();
+
+                    $sqltotal_records = "SELECT COUNT(*) AS total_records FROM receipt WHERE receipt_cc = 'confirm'";
+                    $stmttotal_records = $conn->prepare($sqltotal_records);
+                    $stmttotal_records->execute();
+                    $resulttotal_records = $stmttotal_records->fetch();
+
+                    $sqltotal_amountsum = "SELECT SUM(amount) AS total_amountsum FROM receipt WHERE receipt_cc = 'confirm'";
+                    $stmttotal_amountsum = $conn->prepare($sqltotal_amountsum);
+                    $stmttotal_amountsum->execute();
+                    $resulttotal_amountsum = $stmttotal_amountsum->fetch();
+                    ?>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body" style="height: 150px;">
+                                <div class="stat-widget-five">
+                                    <div class="stat-heading">บริจากผ่านช่องทางบุคลากร</div>
+                                    <div class="stat-text"><?php echo $resultRecordsoffline['total_records_offline']; ?> ราย</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body" style="height: 150px;">
+                                <div class="stat-widget-five">
+                                    <div class="stat-heading">บริจากผ่านช่องทาง QE-Code</div>
+                                    <div class="stat-text"><?php echo $resultRecordsonline['total_records_online']; ?> ราย</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="card-body" style="height: 150px;">
+                                <div class="stat-widget-five">
+                                    <div class="stat-heading">รวมผู้บริจาคทั้งหมด</div>
+                                    <div class="stat-text"><?php echo $resulttotal_records['total_records']; ?> ราย</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card" style="background-color: #ffc08c;">
+                            <div class="card-body" style="height: 150px;">
+                                <div class="stat-widget-five">
+                                    <div class="stat-text">รวมยอดเงินทั้งหมด</div>
+                                    <div class="stat-text"><?php echo number_format($resulttotal_amountsum['total_amountsum'], 2); ?> บาท</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p><?php
+                        require_once 'connection.php';
+
+                        $sql = "SELECT MAX(dateCreate) AS latest_dateCreate FROM receipt";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->fetch();
+
+                        $latest_dateCreate = $result['latest_dateCreate'];
+                        echo "ข้อมูลเมื่อ: " . $latest_dateCreate;
+                        ?></p>
+                </div>
+                <!-- แสดงโครงการ -->
+
             </div>
         </div>
     </div>

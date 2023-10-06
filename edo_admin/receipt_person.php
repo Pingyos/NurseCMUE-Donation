@@ -69,7 +69,7 @@ require_once 'head.php'; ?>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_idname" id="rec_idname" class="form-control" minlength="13" />
+                                                <input type="text" name="rec_idname" id="rec_idname" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
@@ -249,7 +249,10 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="status_user" value="person" class="form-control">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
                                         <input type="hidden" name="resDesc" value="success" class="form-control">
+                                        <input type="hidden" name="ref1" value="0" class="form-control">
+                                        <input type="hidden" name="id_receipt" value="0" class="form-control">
                                         <input type="hidden" name="pdflink" value="https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=id&ACTION=VIEW">
+                                        <input type="hidden" name="receipt_cc" value="confirm">
                                         <hr>
                                         <div class="btn-group col-12">
                                             <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
