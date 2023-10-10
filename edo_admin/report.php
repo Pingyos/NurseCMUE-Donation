@@ -347,11 +347,12 @@ require_once 'head.php'; ?>
                                                                     <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         <span style="text-decoration: line-through;">
                                                                         <?php endif; ?>
-                                                                        <?php echo $row['amount']; ?>
+                                                                        <?php echo number_format($row['amount'], 2, '.', ','); ?>
                                                                         <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         </span>
                                                                     <?php endif; ?>
                                                                 </td>
+
                                                                 <td>
                                                                     <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="View" href="<?= ($row['receipt_cc'] == 'cancel') ? 'pdf_recrip_cc.php?receipt_id=' . $row['receipt_id'] : 'pdf_maker_offline.php?receipt_id=' . $row['receipt_id'] ?>&ACTION=VIEW" target="_blank"> <span class="btn-inner">
                                                                             <svg width="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

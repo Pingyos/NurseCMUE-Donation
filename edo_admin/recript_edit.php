@@ -108,24 +108,46 @@ if (
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
 
   if ($result) {
-    echo '<script>
+    // สำเร็จ
+    echo '
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    <script>
       swal({
-          title: "อัปเดตข้อมูลบริจาคสำเร็จ", 
-          text: "กรุณารอสักครู่",
-          type: "success", 
-          timer: 2000, 
-          showConfirmButton: false 
-        }, function(){
-          window.location.href = "showdata_offline.php"; 
-          });
+        title: "อัปเดตข้อมูลบริจาคสำเร็จ", 
+        text: "กรุณารอสักครู่",
+        type: "success", 
+        timer: 2000, 
+        showConfirmButton: false 
+      }, function(){
+        // เพิ่มเงื่อนไขการเปลี่ยนเส้นทางการนำทางตามค่า status_donat
+        var status_donat = "' . $_POST['status_donat'] . '";
+        if (status_donat === "online") {
+          window.location.href = "showdata_online.php"; 
+        } else {
+          window.location.href = "showdata_offline.php";
+        }
+      });
     </script>';
   } else {
-    echo '<script>
+    // ไม่สำเร็จ
+    echo '
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+    <script>
       swal({
         title: "เกิดข้อผิดพลาดในการอัปเดตข้อมูล",
         type: "error"
       }, function() {
-        window.location = "donate_no_receipt.php";
+        // เพิ่มเงื่อนไขการเปลี่ยนเส้นทางการนำทางตามค่า status_donat
+        var status_donat = "' . $_POST['status_donat'] . '";
+        if (status_donat === "online") {
+          window.location.href = "showdata_online.php"; 
+        } else {
+          window.location.href = "showdata_offline.php";
+        }
       });
     </script>';
   }

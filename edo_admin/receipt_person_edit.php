@@ -181,9 +181,9 @@ require_once 'head.php'; ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="text" name="status_donat" value="offline" hidden>
+                                    <input type="text" name="status_donat" value="<?= $row['status_donat']; ?>" hidden>
                                     <input type="text" name="status_user" value="person" hidden>
-                                    <input type="hidden" name="status_receipt" value="yes">
+                                    <input type="hidden" name="status_receipt" value="<?= $row['status_receipt']; ?>">
                                     <input type="hidden" name="resDesc" value="success">
                                     <input type="hidden" name="pdflink" value="<?= $row['pdflink']; ?>">
                                     <input type="hidden" name="ref1" value="<?= $row['ref1']; ?>">
