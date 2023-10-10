@@ -321,7 +321,15 @@ require_once 'head.php'; ?>
                                                                     <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         <span style="text-decoration: line-through;">
                                                                         <?php endif; ?>
-                                                                        <?php echo $row['rec_date_out']; ?>
+                                                                        <?php $originalDate = $row['rec_date_out'];
+                                                                        $newDate = date('d/m/Y', strtotime($originalDate));
+                                                                        $newDateParts = explode('/', $newDate);
+                                                                        if (count($newDateParts) === 3) {
+                                                                            $newDateParts[2] = intval($newDateParts[2]) + 543;
+                                                                            $newDate = implode('/', $newDateParts);
+                                                                        }
+                                                                        echo $newDate;
+                                                                        ?>
                                                                         <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         </span>
                                                                     <?php endif; ?>

@@ -101,7 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $col++;
             $sheet->setCellValue($col . $row, $result['rec_email']);
             $col++;
-            $sheet->setCellValue($col . $row, $result['rec_date_out']);
+            $originalDate = $result['rec_date_out'];
+            $newDate = date('d/m/Y', strtotime($originalDate));
+            $newDateParts = explode('/', $newDate);
+            if (count($newDateParts) === 3) {
+                $newDateParts[2] = intval($newDateParts[2]) + 543;
+                $newDate = implode('/', $newDateParts);
+            }
+            $sheet->setCellValue($col . $row, $newDate);
             $col++;
             $sheet->setCellValue($col . $row, $result['rec_time']);
             $col++;
