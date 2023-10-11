@@ -1,17 +1,3 @@
-<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-<script>
-    $(document).ready(function() {
-        swal({
-            title: "คำเตือน",
-            text: "เพื่อประโยชน์ในการลดหย่อนภาษี กรุณาใช้ บัญชีอิเล็กทรอนิกส์ ของตัวท่านเอง",
-            type: "warning",
-            showConfirmButton: true,
-            confirmButtonText: "ตกลง"
-        });
-    });
-</script>
 <!doctype html>
 <html lang="en">
 <?php require_once('head.php'); ?>
@@ -65,11 +51,13 @@
                                 <h5 class="mb-3">สแกนเพื่อชำระเงิน</h5>
                             </div>
                         </center>
+
                         <div class="container">
                             <div class="row">
                                 <?php
                                 require_once 'lib-crc16.inc.php';
                                 require_once 'connection.php';
+
                                 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                                 if ($id <= 0) {
                                     echo "Invalid ID.";
@@ -80,7 +68,7 @@
                                     die("Connection failed: " . mysqli_connect_error());
                                 }
 
-                                $sql = "SELECT amount, rec_date_out, edo_pro_id,id FROM receipt_offline WHERE id = :id";
+                                $sql = "SELECT amount, rec_date_out, edo_pro_id, id, rec_time FROM receipt_offline WHERE id = :id";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -93,6 +81,8 @@
                                         $rec_date_out = $row["rec_date_out"];
                                         $edo_pro_id = $row["edo_pro_id"];
                                         $id = $row["id"];
+                                        $rec_time = $row["rec_time"];
+
                                         $rec_date_out_year = (int)date('Y', strtotime($rec_date_out)) + 543;
                                         $lastTwoDigits = substr($rec_date_out_year, -2);
 
@@ -144,25 +134,46 @@
                                     $amount = 0;
                                 }
                                 ?>
-                                <div class="col-lg-12 col-12 mt-2 text-center">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="text-center" style="position: relative;">
-                                            <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
-                                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
-                                                <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                <div class="col-lg-12 col-12 mt-1 text-center">
+                                    <?php
+                                    if (!empty($rec_time)) {
+                                        $originalTime = strtotime($rec_time);
+                                        $newTime = $originalTime + 5 * 60;
+                                        $newTimeFormatted = date("H:i:s", $newTime);
+                                        $currentTime = time();
+                                        if (strtotime($newTimeFormatted) <= $currentTime) {
+                                            echo '<div style="color: red;">หมดเวลาการชำระเงิน กรุณากรอกข้อมูลการบริจาคครั้งใหม่</div>';
+                                        } else {
+                                            echo '<div style="color: red;">กรุณาชำระเงินก่อน เวลา: ' . $newTimeFormatted . '</div>';
+                                    ?>
+                                            &nbsp;
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center" style="position: relative;">
+                                                    <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
+                                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
+                                                        <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "ไม่มีข้อมูลเวลา.";
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <script>
+                            var loopCount = 0;
+
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
                                 var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
                                 var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
+
                                 if (amount !== '' && rec_date_out !== '' && ref1 !== '' && id !== '') {
                                     var data = {
                                         id: id,
@@ -195,11 +206,31 @@
                                 } else {
                                     console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                 }
+
+                                loopCount++;
+                                if (loopCount >= 5) {
+                                    clearInterval(intervalId); // Stop the loop after 20 iterations
+                                }
                             }
-                            fetchData();
-                            setInterval(fetchData, 5000);
+
+                            var intervalId = setInterval(fetchData, 5000);
                         </script>
+
                     </form>
+                    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+                    <script>
+                        $(document).ready(function() {
+                            swal({
+                                title: "คำเตือน",
+                                text: "เพื่อประโยชน์ในการลดหย่อนภาษี กรุณาใช้ บัญชีอิเล็กทรอนิกส์ ของตัวท่านเอง",
+                                type: "warning",
+                                showConfirmButton: true,
+                                confirmButtonText: "ตกลง"
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>

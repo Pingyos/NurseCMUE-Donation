@@ -74,6 +74,7 @@
                                 <?php
                                 require_once 'lib-crc16.inc.php';
                                 require_once 'connection.php';
+
                                 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
                                 if ($id <= 0) {
                                     echo "Invalid ID.";
@@ -84,7 +85,7 @@
                                     die("Connection failed: " . mysqli_connect_error());
                                 }
 
-                                $sql = "SELECT amount, rec_date_out, edo_pro_id,id FROM receipt_offline WHERE id = :id";
+                                $sql = "SELECT amount, rec_date_out, edo_pro_id, id, rec_time FROM receipt_offline WHERE id = :id";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -97,6 +98,8 @@
                                         $rec_date_out = $row["rec_date_out"];
                                         $edo_pro_id = $row["edo_pro_id"];
                                         $id = $row["id"];
+                                        $rec_time = $row["rec_time"];
+
                                         $rec_date_out_year = (int)date('Y', strtotime($rec_date_out)) + 543;
                                         $lastTwoDigits = substr($rec_date_out_year, -2);
 
@@ -148,60 +151,91 @@
                                     $amount = 0;
                                 }
                                 ?>
-                                <div class="col-lg-12 col-12 mt-2 text-center">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="text-center" style="position: relative;">
-                                            <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
-                                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
-                                                <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                <div class="col-lg-12 col-12 mt-1 text-center">
+                                    <?php
+                                    if (!empty($rec_time)) {
+                                        $originalTime = strtotime($rec_time);
+                                        $newTime = $originalTime + 5 * 60;
+                                        $newTimeFormatted = date("H:i:s", $newTime);
+                                        $currentTime = time();
+                                        if (strtotime($newTimeFormatted) <= $currentTime) {
+                                            echo '<div style="color: red;">หมดเวลาการชำระเงิน กรุณากรอกข้อมูลการบริจาคครั้งใหม่</div>';
+                                        } else {
+                                            echo '<div style="color: red;">กรุณาชำระเงินก่อน เวลา: ' . $newTimeFormatted . '</div>';
+                                    ?>
+                                            &nbsp;
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <div class="text-center" style="position: relative;">
+                                                    <img src="images/Thai_QR_Payment_Logo.png" alt="Thai QR Payment Logo" width="400" height="550">
+                                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%);">
+                                                        <img src="<?php echo $urlRelativeFilePath; ?>" width="<?php echo $qrCodeSize; ?>" height="<?php echo $qrCodeSize; ?>">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "ไม่มีข้อมูลเวลา.";
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <br>
                         <script>
+                            var loopCount = 0;
+                            var intervalId; // ประกาศตัวแปรเพื่อเก็บ ID ของ setInterval
+
                             function fetchData() {
-                                var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
-                                var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
-                                var rec_idname = "<?php echo isset($_GET['rec_idname']) ? $_GET['rec_idname'] : ''; ?>";
-                                var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
-                                if (amount !== '' && rec_idname !== '' && ref1 !== '' && id !== '') {
-                                    var data = {
-                                        id: id,
-                                        amount: amount,
-                                        rec_idname: rec_idname,
-                                        ref1: ref1
-                                    };
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "data_check_receipt.php", true);
-                                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-                                    xhr.onreadystatechange = function() {
-                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                            var response = JSON.parse(xhr.responseText);
-                                            console.log(response);
-                                            if (response.message === 'success') {
-                                                swal({
-                                                    title: "ชำระเงินเสร็จสิ้น",
-                                                    text: "ระบบกำลังเปิดใบเสร็จ",
-                                                    type: "success",
-                                                    timer: 6000,
-                                                    showConfirmButton: false
-                                                });
-                                                setTimeout(function() {
-                                                    window.location.href = "invoice.php";
-                                                }, 6000);
+                                if (loopCount < 5) {
+                                    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+                                    var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
+                                    var rec_idname = "<?php echo isset($_GET['rec_idname']) ? $_GET['rec_idname'] : ''; ?>";
+                                    var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
+                                    if (amount !== '' && rec_idname !== '' && ref1 !== '' && id !== '') {
+                                        var data = {
+                                            id: id,
+                                            amount: amount,
+                                            rec_idname: rec_idname,
+                                            ref1: ref1
+                                        };
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "data_check_receipt.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                var response = JSON.parse(xhr.responseText);
+                                                console.log(response);
+                                                if (response.message === 'success') {
+                                                    swal({
+                                                        title: "ชำระเงินเสร็จสิ้น",
+                                                        text: "ระบบกำลังเปิดใบเสร็จ",
+                                                        type: "success",
+                                                        timer: 6000,
+                                                        showConfirmButton: false
+                                                    });
+                                                    setTimeout(function() {
+                                                        window.location.href = "invoice.php";
+                                                    }, 6000);
+                                                }
                                             }
-                                        }
-                                    };
-                                    xhr.send(JSON.stringify(data));
+                                        };
+                                        xhr.send(JSON.stringify(data));
+                                        loopCount++;
+                                    } else {
+                                        console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
+                                    }
+
+                                    if (loopCount >= 5) {
+                                        clearInterval(intervalId); // หยุดการวนลูปหลังจาก 5 ครั้ง
+                                    }
                                 } else {
-                                    console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
+                                    console.log('เสร็จสิ้นการวนลูป 5 ครั้ง');
                                 }
                             }
+
                             fetchData();
-                            setInterval(fetchData, 5000);
+                            intervalId = setInterval(fetchData, 5000); // เก็บ ID ของ setInterval
                         </script>
                     </form>
                 </div>
