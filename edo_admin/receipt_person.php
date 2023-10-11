@@ -28,6 +28,59 @@ require_once 'head.php'; ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
+                                        <?php
+                                        require_once 'connection.php'; // เชื่อมต่อฐานข้อมูล
+
+                                        $sql = "SELECT receipt_id, rec_name FROM receipt";
+                                        $stmt = $conn->prepare($sql);
+                                        $stmt->execute();
+                                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        ?>
+
+                                        <div class="form-group">
+                                            <label for="your_dropdown">เลือกข้อมูล:</label>
+                                            <select name="your_dropdown" id="your_dropdown" class="form-control">
+                                                <option value="">กรุณาเลือก</option>
+                                                <?php foreach ($result as $row) : ?>
+                                                    <option value="<?php echo $row['receipt_id']; ?>"><?php echo $row['rec_name']; ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <script>
+                                            var dropdown = document.getElementById('your_dropdown');
+                                            var nameTitleInput = document.getElementById('name_title');
+                                            var recNameInput = document.getElementById('rec_name');
+                                            var recSurnameInput = document.getElementById('rec_surname');
+                                            // เพิ่มอีเวนต์เมื่อมีการเลือกตัวเลือกใน Dropdown
+                                            dropdown.addEventListener('change', function() {
+                                                var selectedValue = this.value;
+                                                // ทำคำร้องขอ HTTP เพื่อดึงข้อมูลของรายการที่ถูกเลือกจากตาราง receipt
+                                                if (selectedValue !== '') {
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.onreadystatechange = function() {
+                                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                                            var data = JSON.parse(xhr.responseText);
+                                                            // กำหนดค่าข้อมูลในฟิลด์ต่างๆ ในฟอร์ม
+                                                            nameTitleInput.value = data.name_title;
+                                                            recNameInput.value = data.rec_name;
+                                                            recSurnameInput.value = data.rec_surname;
+                                                        }
+                                                    };
+                                                    xhr.open('GET', 'get_receipt_data.php?receipt_id=' + selectedValue, true);
+                                                    xhr.send();
+                                                } else {
+                                                    // ล้างค่าในฟิลด์เมื่อไม่มีการเลือก
+                                                    nameTitleInput.value = '';
+                                                    recNameInput.value = '';
+                                                    recSurnameInput.value = '';
+                                                }
+                                            });
+                                        </script>
+
+                                    </div>
+
+                                    <br>
+                                    <div class="row">
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ <span style="color:red;"></span></label>
