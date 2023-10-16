@@ -101,7 +101,8 @@ if (
 
         if ($moveDataResult) {
           $receipt_id = $conn->lastInsertId();
-          $year = (date('Y') + 543);
+          // เปลี่ยนทุกปี
+          $year = "2567";
           $suffix = $_POST['edo_pro_id'] . '-E' . str_pad($receipt_id, 4, '0', STR_PAD_LEFT);
           $receipt = $year . '-' . $suffix;
 

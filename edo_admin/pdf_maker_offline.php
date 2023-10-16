@@ -500,7 +500,7 @@ if ($count > 0) {
 		</tr>
 		<tr>
 		<td><b>เลขที่ใบเสร็จ : </b>' . $inv_mst_data_row['id_receipt'] . '</td>
-		<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['receipt_id']) . '</td>
+		<td align="right"><b>ลำดับเอกสาร : </b> 67' . generateReceiptNumber($inv_mst_data_row['receipt_id']) . '</td>
 	</tr>
 </table>
 
