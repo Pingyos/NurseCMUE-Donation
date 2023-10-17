@@ -167,7 +167,6 @@
                         <br>
                         <script>
                             var loopCount = 0;
-
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
@@ -209,13 +208,12 @@
 
                                 loopCount++;
                                 if (loopCount >= 50) {
-                                    clearInterval(intervalId); // Stop the loop after 20 iterations
+                                    clearInterval(intervalId);
                                 }
                             }
 
                             var intervalId = setInterval(fetchData, 5000);
                         </script>
-
                     </form>
                     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

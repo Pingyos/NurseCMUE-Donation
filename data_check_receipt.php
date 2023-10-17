@@ -50,7 +50,7 @@ if ($data !== null) {
 
                     if ($insertResult) {
                         // ค้นหา edo_pro_id และ receipt_id จากตาราง receipt
-                        $selectProIdSql = "SELECT edo_pro_id, receipt_id FROM receipt WHERE id = :id";
+                        $selectProIdSql = "SELECT edo_pro_id, receipt_id, rec_email FROM receipt WHERE id = :id";
                         $selectProIdStmt = $pdo->prepare($selectProIdSql);
                         $selectProIdStmt->bindParam(':id', $id);
                         $selectProIdStmt->execute();
@@ -59,6 +59,7 @@ if ($data !== null) {
                         if ($row !== false) {
                             $edo_pro_id = $row['edo_pro_id'];
                             $receipt_id = $row['receipt_id']; // รับค่า receipt_id จากตาราง receipt
+                            $email_receiver = $row['rec_email'];
 
                             // สร้าง id_receipt ใหม่
                             $id_year = "2567";
@@ -75,13 +76,74 @@ if ($data !== null) {
                             $updateIdResult = $updateIdStmt->execute();
 
                             if ($updateIdResult) {
-                                $response = [
-                                    'message' => 'success',
-                                    'id' => $id,
-                                    'amount' => $amount,
-                                    'rec_idname' => $rec_idname,
-                                    'ref1' => $ref1
-                                ];
+                                require_once "phpmailer/PHPMailerAutoload.php";
+                                $mail = new PHPMailer;
+                                $mail->CharSet = "utf-8";
+                                $mail->isSMTP();
+                                $mail->Host = 'smtp.gmail.com';
+                                $mail->Port = 587;
+                                $mail->SMTPSecure = 'tls';
+                                $mail->SMTPAuth = true;
+
+                                $gmail_username = "60143219@g.cmru.ac.th"; // Replace with your Gmail
+                                $gmail_password = "pingyos150070"; // Replace with your Gmail password
+
+                                $sender = "NurseCMUE-Donation Support"; // Sender's name
+                                $email_sender = "noreply@ibsone.com"; // Sender's email
+                                $email_receiver = $email_receiver; // Recipient's email
+
+                                $subject = "Your Subject Here"; // Email subject
+
+                                $mail->Username = $gmail_username;
+                                $mail->Password = $gmail_password;
+                                $mail->setFrom($email_sender, $sender);
+                                $mail->addAddress($email_receiver);
+                                $mail->Subject = $subject;
+
+                                $email_content = "
+                                <!DOCTYPE html>
+                                <html>
+                                    <head>
+                                        <meta charset=utf-8'/>
+                                        <title>ทดสอบการส่ง Email</title>
+                                    </head>
+                                    <body>
+                                        <h1
+                                            style='background: #3b434c;padding: 10px 0 20px 10px;margin-bottom:10px;font-size:30px;color:white;'>
+                                            <p> NurseCMUE-Donation</p>
+                                        </h1>
+                                        <div style='padding:20px;'>
+                                            <div style='text-align:center;margin-bottom:50px;'>
+                                                <img
+                                                    src='https://app.nurse.cmu.ac.th/edonation/TCPDF/banner.jpg'
+                                                    style='width:60%' />
+                                            </div>
+                                            <div style='margin-top:50px;'>
+                                                <hr>
+                                                <address>
+                                                    <h4>ติดต่อสอบถาม</h4>
+                                                    <p>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน
+                                                        การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
+                                                </address>
+                                            </div>
+                                        </div>
+                                        <div style='background: #3b434c;color: #a2abb7;padding:30px;'>
+                                            <div style='text-align:center'>
+                                                2023 © NurseCMUE-Donation
+                                            </div>
+                                        </div>
+                                    </body>
+                                </html>
+                            ";
+
+                                $mail->msgHTML($email_content);
+
+                                if (!$mail->send()) {
+                                    echo "Email sending failed: " . $mail->ErrorInfo;
+                                } else {
+                                    echo "Email sent successfully.";
+                                    exit;
+                                }
                             } else {
                                 $response = [
                                     'message' => 'ไม่สามารถอัปเดตค่า id_receipt ได้'
@@ -99,7 +161,7 @@ if ($data !== null) {
                     }
                 } else {
                     $response = [
-                        'message' => 'ข้อมูลซ้ำกันในตาราง receipt'
+                        'message' => 'success'
                     ];
                 }
             } else {
@@ -112,9 +174,9 @@ if ($data !== null) {
                 'message' => 'ไม่พบข้อมูลที่ตรงกันในฐานข้อมูล'
             ];
         }
-
         header('Content-Type: application/json');
         echo json_encode($response);
+        exit;
     } catch (PDOException $e) {
         echo 'เกิดข้อผิดพลาดในการเชื่อมต่อฐานข้อมูล: ' . $e->getMessage();
     }
