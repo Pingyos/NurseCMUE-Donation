@@ -1,28 +1,53 @@
-<?php 
-if ($updateResult) {
-  $insertSql = "INSERT IGNORE INTO receipt (id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate)
-                SELECT id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate
-                FROM receipt_offline WHERE id = :id AND resDesc = 'success'
-                ORDER BY dateCreate DESC
-                LIMIT 1";
-  $insertStmt = $pdo->prepare($insertSql);
-  $insertStmt->bindParam(':id', $id);
-  $insertResult = $insertStmt->execute();
+<script>
+                            var loopCount = 0;
+                            var intervalId; // ประกาศตัวแปรเพื่อเก็บ ID ของ setInterval
 
-  if ($insertResult) {
-      // ตรวจสอบว่าข้อมูลถูกเพิ่มหรือไม่
-      if ($insertStmt->rowCount() > 0) {
-          // รายการถูกเพิ่มเข้าไป
-          // ดำเนินการเพิ่ม id_receipt และอื่นๆ ตามที่คุณต้องการ
-      } else {
-          // ไม่มีการเพิ่มรายการใหม่เนื่องจากมีข้อมูลซ้ำกัน
-          $response = [
-              'message' => 'ข้อมูลซ้ำกัน'
-          ];
-      }
-  } else {
-      $response = [
-          'message' => 'ไม่สามารถบันทึกข้อมูลในตาราง receipt ได้'
-      ];
-  }
-}
+                            function fetchData() {
+                                if (loopCount < 50) {
+                                    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+                                    var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
+                                    var rec_idname = "<?php echo isset($_GET['rec_idname']) ? $_GET['rec_idname'] : ''; ?>";
+                                    var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
+                                    if (amount !== '' && rec_idname !== '' && ref1 !== '' && id !== '') {
+                                        var data = {
+                                            id: id,
+                                            amount: amount,
+                                            rec_idname: rec_idname,
+                                            ref1: ref1
+                                        };
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "data_check_receipt.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                var response = JSON.parse(xhr.responseText);
+                                                console.log(response);
+                                                if (response.message === 'success') {
+                                                    swal({
+                                                        title: "ชำระเงินเสร็จสิ้น",
+                                                        text: "ระบบกำลังเปิดใบเสร็จ",
+                                                        type: "success",
+                                                        timer: 6000,
+                                                        showConfirmButton: false
+                                                    });
+                                                    setTimeout(function() {
+                                                        window.location.href = "invoice.php";
+                                                    }, 6000);
+                                                }
+                                            }
+                                        };
+                                        xhr.send(JSON.stringify(data));
+                                        loopCount++;
+                                    } else {
+                                        console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
+                                    }
+
+                                    if (loopCount >= 50) {
+                                        clearInterval(intervalId); // หยุดการวนลูปหลังจาก 5 ครั้ง
+                                    }
+                                }
+                            }
+
+                            fetchData();
+                            intervalId = setInterval(fetchData, 5000); // เก็บ ID ของ setInterval
+                        </script>
