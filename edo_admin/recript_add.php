@@ -100,13 +100,12 @@ if (
         $moveDataResult = $moveDataStmt->execute();
 
         if ($moveDataResult) {
+
           $receipt_id = $conn->lastInsertId();
-          // เปลี่ยนทุกปี
           $year = "2567";
           $suffix = $_POST['edo_pro_id'] . '-E' . str_pad($receipt_id, 4, '0', STR_PAD_LEFT);
           $receipt = $year . '-' . $suffix;
-
-          $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
+          $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker_offline.php?receipt_id={$receipt_id}&ACTION=VIEW";
 
           $updateReceiptSql = "UPDATE receipt SET id_receipt = :receipt, pdflink = :pdf_url WHERE id = :id";
           $updateReceiptStmt = $conn->prepare($updateReceiptSql);
