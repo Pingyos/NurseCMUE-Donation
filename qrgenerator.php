@@ -208,7 +208,7 @@
                                 }
 
                                 loopCount++;
-                                if (loopCount >= 5) {
+                                if (loopCount >= 50) {
                                     clearInterval(intervalId); // Stop the loop after 20 iterations
                                 }
                             }

@@ -226,11 +226,9 @@
                                         console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                     }
 
-                                    if (loopCount >= 5) {
-                                        clearInterval(intervalId); // หยุดการวนลูปหลังจาก 5 ครั้ง
+                                    if (loopCount >= 50) {
+                                        clearInterval(intervalId);
                                     }
-                                } else {
-                                    console.log('เสร็จสิ้นการวนลูป 5 ครั้ง');
                                 }
                             }
 

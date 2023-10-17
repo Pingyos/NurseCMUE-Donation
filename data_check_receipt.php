@@ -61,7 +61,7 @@ if ($data !== null) {
                             $receipt_id = $row['receipt_id']; // รับค่า receipt_id จากตาราง receipt
 
                             // สร้าง id_receipt ใหม่
-                            $id_year = date('Y') + 543;
+                            $id_year = "2567";
                             $id_suffix = $edo_pro_id . '-E' . str_pad($receipt_id, 4, '0', STR_PAD_LEFT);
                             $receipt = $id_year . '-' . $id_suffix;
 
