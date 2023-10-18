@@ -85,14 +85,14 @@ if ($data !== null) {
                                 $mail->SMTPSecure = 'tls';
                                 $mail->SMTPAuth = true;
 
-                                $gmail_username = "60143219@g.cmru.ac.th"; // Replace with your Gmail
-                                $gmail_password = "pingyos150070"; // Replace with your Gmail password
+                                $gmail_username = "nursecmu.edonation@gmail.com"; // Replace with your Gmail
+                                $gmail_password = "hhhp ynrg cqpb utzi"; // Replace with your Gmail password
 
-                                $sender = "NurseCMUE-Donation Support"; // Sender's name
-                                $email_sender = "noreply@ibsone.com"; // Sender's email
+                                $sender = "noreply@NurseCMUE-Donation"; // Sender's name
+                                $email_sender = "nursecmu.edonation@gmail.com"; // Sender's email
                                 $email_receiver = $email_receiver; // Recipient's email
 
-                                $subject = "Your Subject Here"; // Email subject
+                                $subject = "ระบบการแจ้งเตือน การบริจาคเงิน อัตโนมัติ "; // Email subject
 
                                 $mail->Username = $gmail_username;
                                 $mail->Password = $gmail_password;
@@ -104,37 +104,48 @@ if ($data !== null) {
                                 <!DOCTYPE html>
                                 <html>
                                     <head>
-                                        <meta charset=utf-8'/>
-                                        <title>ทดสอบการส่ง Email</title>
+                                        <meta charset='utf-8'>
                                     </head>
                                     <body>
                                         <h1
-                                            style='background: #3b434c;padding: 10px 0 20px 10px;margin-bottom:10px;font-size:30px;color:white;'>
-                                            <p> NurseCMUE-Donation</p>
+                                            style='background: #FF6A00; padding: 10px 0 20px 10px; margin-bottom: 10px; font-size: 25px; color: white;'>
+                                            <p>NurseCMUE-Donation</p>
                                         </h1>
-                                        <div style='padding:20px;'>
-                                            <div style='text-align:center;margin-bottom:50px;'>
+                                        <div style='padding: 20px;'>
+                                            <div style='text-align: center; margin-bottom: 50px;'>
                                                 <img
                                                     src='https://app.nurse.cmu.ac.th/edonation/TCPDF/banner.jpg'
-                                                    style='width:60%' />
+                                                    style='width: 55%;' />
                                             </div>
-                                            <div style='margin-top:50px;'>
+                                            <div style='margin-top: 10px;'>
+                                                <hr>
+                                                <a
+                                                    href='http://localhost/git/NurseCMUE-Donation/pdf_maker.php?receipt_id=" . $receipt_id . "&ACTION=VIEW'
+                                                    download target='_blank'
+                                                    style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ
+                                                    (PDF)</a>
+                                            </div>
+                                            <div style='margin-top: 10px;'>
                                                 <hr>
                                                 <address>
                                                     <h4>ติดต่อสอบถาม</h4>
                                                     <p>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน
                                                         การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
+                                                    <h4>ที่อยู่ติดต่อ</h4>
+                                                    <p>110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส
+                                                        ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
                                                 </address>
                                             </div>
                                         </div>
-                                        <div style='background: #3b434c;color: #a2abb7;padding:30px;'>
-                                            <div style='text-align:center'>
+                                        <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
+                                            <div style='text-align: center'>
                                                 2023 © NurseCMUE-Donation
                                             </div>
                                         </div>
                                     </body>
                                 </html>
-                            ";
+                                    ";
+
 
                                 $mail->msgHTML($email_content);
 

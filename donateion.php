@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="col-lg-4 col-md-6 col-12">
-                            <input type="text" name="rec_email" class="form-control" placeholder="อีเมล์">
+                            <input type="email" name="rec_email" class="form-control" placeholder="อีเมล์ (ใช้สำหรับการส่งใบเสร็จผ่าน อีเมล์)">
                         </div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="text" name="address" class="form-control" placeholder="ที่อยู่ *" required>
