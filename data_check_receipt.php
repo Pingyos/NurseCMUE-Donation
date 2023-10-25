@@ -50,7 +50,7 @@ if ($data !== null) {
 
                     if ($insertResult) {
                         // ค้นหา edo_pro_id และ receipt_id จากตาราง receipt
-                        $selectProIdSql = "SELECT edo_pro_id, receipt_id, rec_email FROM receipt WHERE id = :id";
+                        $selectProIdSql = "SELECT id_receipt, edo_pro_id, edo_description, payby, receipt_id, rec_email, name_title, rec_name, rec_surname, rec_date_out, rec_time, status_donat FROM receipt WHERE id = :id";
                         $selectProIdStmt = $pdo->prepare($selectProIdSql);
                         $selectProIdStmt->bindParam(':id', $id);
                         $selectProIdStmt->execute();
@@ -60,6 +60,16 @@ if ($data !== null) {
                             $edo_pro_id = $row['edo_pro_id'];
                             $receipt_id = $row['receipt_id']; // รับค่า receipt_id จากตาราง receipt
                             $email_receiver = $row['rec_email'];
+                            $name_title = $row['name_title'];
+                            $rec_name = $row['rec_name'];
+                            $rec_surname = $row['rec_surname'];
+                            $rec_date_out = $row['rec_date_out'];
+                            $rec_time = $row['rec_time'];
+                            $status_donat = $row['status_donat'];
+                            $edo_description = $row['edo_description'];
+                            $payby = $row['payby'];
+                            $id_receipt = $row['id_receipt'];
+
 
                             // สร้าง id_receipt ใหม่
                             $id_year = "2567";
@@ -88,7 +98,7 @@ if ($data !== null) {
                                 $gmail_username = "nursecmu.edonation@gmail.com"; // Replace with your Gmail
                                 $gmail_password = "hhhp ynrg cqpb utzi"; // Replace with your Gmail password
 
-                                $sender = "noreply@NurseCMUE-Donation"; // Sender's name
+                                $sender = "noreply@NurseCMU E-Donation"; // Sender's name
                                 $email_sender = "nursecmu.edonation@gmail.com"; // Sender's email
                                 $email_receiver = $email_receiver; // Recipient's email
 
@@ -102,58 +112,99 @@ if ($data !== null) {
 
                                 $email_content = "
                                 <!DOCTYPE html>
-                                <html>
-                                    <head>
-                                        <meta charset='utf-8'>
-                                    </head>
-                                    <body>
-                                        <h1
-                                            style='background: #FF6A00; padding: 10px 0 20px 10px; margin-bottom: 10px; font-size: 25px; color: white;'>
-                                            <p>NurseCMUE-Donation</p>
-                                        </h1>
-                                        <div style='padding: 20px;'>
-                                            <div style='text-align: center; margin-bottom: 50px;'>
-                                                <img
-                                                    src='https://app.nurse.cmu.ac.th/edonation/TCPDF/banner.jpg'
-                                                    style='width: 55%;' />
-                                            </div>
-                                            <div style='margin-top: 10px;'>
-                                                <hr>
-                                                <a
-                                                    href='http://localhost/git/NurseCMUE-Donation/pdf_maker.php?receipt_id=" . $receipt_id . "&ACTION=VIEW'
-                                                    download target='_blank'
-                                                    style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ
-                                                    (PDF)</a>
-                                            </div>
-                                            <div style='margin-top: 10px;'>
-                                                <hr>
-                                                <address>
+                                    <html>
+                                        <head>
+                                            <meta charset='utf-8'>
+                                        </head>
+                                        <body>
+                                            <h1
+                                                style='background: #FF6A00; padding: 10px 0 10px 10px; margin-bottom: 10px; font-size: 20px; color: white;'>
+                                                <p>NurseCMUE-Donation</p>
+                                            </h1>
+                                            <div style='padding: 20px;'>
+                                                <div style='margin-top: 10px;'>
+                                                    <h3>บริการอัตโนมัติ : ยืนยันการชำระเงิน ผ่าน NurseCMUE-Donation</h3>
+                                                    <h4>รายละอียด</h4>
+                                                    <a>โครงการ : $edo_description</a>
+                                                    <h5></h5>
+                                                    <a>เลขที่ใบเสร็จ : $receipt</a>
+                                                    <h5></h5>
+                                                    <a>ผู้บริจาค : $name_title $rec_name $rec_surname</a>
+                                                    <h5></h5>
+                                                    <a>จำนวนเงิน : $amount</a>
+                                                    <h5></h5>
+                                                    <a>วันที่ : $rec_date_out  $rec_time </a>
+                                                </div>
+                                                <div style='margin-top: 10px;'>
+                                                    <hr>
+                                                    <a
+                                                        href='http://localhost/git/NurseCMUE-Donation/pdf_maker.php?receipt_id=" . $receipt_id . "&ACTION=VIEW'
+                                                        download target='_blank'
+                                                        style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ
+                                                        (PDF)</a>
+                                                </div>
+                                                <div style='margin-top: 2px;'>
+                                                    <hr>
                                                     <h4>ติดต่อสอบถาม</h4>
-                                                    <p>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน
-                                                        การคลังและพัสดุ คณะพยาบาลศาสตร์</p>
+                                                    <a>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน
+                                                        การคลังและพัสดุ คณะพยาบาลศาสตร์</a>
                                                     <h4>ที่อยู่ติดต่อ</h4>
-                                                    <p>110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส
-                                                        ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</p>
-                                                </address>
+                                                    <a>110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส
+                                                        ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
-                                            <div style='text-align: center'>
-                                                2023 © NurseCMUE-Donation
+                                            <div style='text-align:center;margin-bottom:50px;'>
+                                                <img
+                                                    src='http://localhost/git/NurseCMUE-Donation/TCPDF/ban285.jpg'
+                                                    style='width:100%' />
                                             </div>
-                                        </div>
-                                    </body>
-                                </html>
+                                            <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
+                                                <div style='text-align: center'>
+                                                    2023 © NurseCMUE-Donation
+                                                </div>
+                                            </div>
+                                        </body>
+                                    </html>  
                                     ";
-
-
                                 $mail->msgHTML($email_content);
 
                                 if (!$mail->send()) {
                                     echo "Email sending failed: " . $mail->ErrorInfo;
                                 } else {
                                     echo "Email sent successfully.";
-                                    exit;
+                                }
+                                function notify_message($sMessage, $Token)
+                                {
+                                    $chOne = curl_init();
+                                    curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+                                    curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
+                                    curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
+                                    curl_setopt($chOne, CURLOPT_POST, 1);
+                                    curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=" . $sMessage);
+                                    $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $Token . '',);
+                                    curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
+                                    curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
+                                    $result = curl_exec($chOne);
+                                    if (curl_error($chOne)) {
+                                        echo 'error:' . curl_error($chOne);
+                                    }
+                                    curl_close($chOne);
+                                }
+
+                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
+                                $sMessage .= "โครงการ: " . $edo_description . "\n";
+                                $sMessage .= "\n";
+                                $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
+                                $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
+                                $sMessage .= "เลข ปชช: " . $rec_idname . "\n";
+                                $sMessage .= "\n";
+                                $sMessage .= "จำนวน: " . $amount . " บาท\n";
+                                $sMessage .= "วันที่โอน: " . $rec_date_out . " " . $rec_time . "\n";
+                                $sMessage .= "ชำระโดย: " . $payby . "\n";
+
+                                // เรียกใช้งานฟังก์ชัน notify_message สำหรับทุก Token
+                                foreach ($sToken as $Token) {
+                                    notify_message($sMessage, $Token);
                                 }
                             } else {
                                 $response = [

@@ -1,55 +1,66 @@
 <?php
-$json = file_get_contents('php://input');
-$data = json_decode($json);
+// เรียกใช้ callback URL ที่ SCB จะใช้ส่งข้อมูลไป
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // รับข้อมูล JSON จาก SCB API
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
 
-if ($data !== null) {
-    require_once 'connection.php';
-    $stmt = $conn->prepare("INSERT INTO json_confirm 
-    (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
-    payerAccountNumber, payerAccountName, payerName, sendingBankCode, 
-    receivingBankCode, amount, transactionId, transactionDateandTime, 
-    billPaymentRef1, billPaymentRef2, currencyCode, channelCode, 
-    transactionType)
-    VALUES
-    (:payeeProxyId, :payeeProxyType, :payeeAccountNumber, :payeeName, 
-    :payerAccountNumber, :payerAccountName, :payerName, :sendingBankCode, 
-    :receivingBankCode, :amount, :transactionId, :transactionDateandTime, 
-    :billPaymentRef1, :billPaymentRef2, :currencyCode, :channelCode, 
-    :transactionType)");
-    $stmt->bindParam(':payeeProxyId', $data->payeeProxyId, PDO::PARAM_STR);
-    $stmt->bindParam(':payeeProxyType', $data->payeeProxyType, PDO::PARAM_STR);
-    $stmt->bindParam(':payeeAccountNumber', $data->payeeAccountNumber, PDO::PARAM_STR);
-    $stmt->bindParam(':payeeName', $data->payeeName, PDO::PARAM_STR);
-    $stmt->bindParam(':payerAccountNumber', $data->payerAccountNumber, PDO::PARAM_STR);
-    $stmt->bindParam(':payerAccountName', $data->payerAccountName, PDO::PARAM_STR);
-    $stmt->bindParam(':payerName', $data->payerName, PDO::PARAM_STR);
-    $stmt->bindParam(':sendingBankCode', $data->sendingBankCode, PDO::PARAM_STR);
-    $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
-    $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
-    $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
-    $stmt->bindParam(':transactionDateandTime', $transactionDateandTime, PDO::PARAM_STR);
-    $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
-    $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
-    $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
-    $stmt->bindParam(':channelCode', $data->channelCode, PDO::PARAM_STR);
-    $stmt->bindParam(':transactionType', $data->transactionType, PDO::PARAM_STR);
-    $result = $stmt->execute();
+    if ($data !== null) {
+        // บันทึกข้อมูลลงในฐานข้อมูล
+        require_once 'connection.php';
+        $stmt = $conn->prepare("INSERT INTO json_confirm 
+            (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
+            payerAccountNumber, payerAccountName, payerName, sendingBankCode, 
+            receivingBankCode, amount, transactionId, transactionDateandTime, 
+            billPaymentRef1, billPaymentRef2, currencyCode, channelCode, 
+            transactionType)
+            VALUES
+            (:payeeProxyId, :payeeProxyType, :payeeAccountNumber, :payeeName, 
+            :payerAccountNumber, :payerAccountName, :payerName, :sendingBankCode, 
+            :receivingBankCode, :amount, :transactionId, :transactionDateandTime, 
+            :billPaymentRef1, :billPaymentRef2, :currencyCode, :channelCode, 
+            :transactionType)");
 
-    if ($result) {
-        $response = array(
-            "resCode" => "00",
-            "resDesc" => "success",
-            "transactionId" => $data->transactionId,
-            "confirmId" => $conn->lastInsertId()
-        );
-        echo json_encode($response);
+        $stmt->bindParam(':payeeProxyId', $data->payeeProxyId, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeProxyType', $data->payeeProxyType, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeAccountNumber', $data->payeeAccountNumber, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeName', $data->payeeName, PDO::PARAM_STR);
+        $stmt->bindParam(':payerAccountNumber', $data->payerAccountNumber, PDO::PARAM_STR);
+        $stmt->bindParam(':payerAccountName', $data->payerAccountName, PDO::PARAM_STR);
+        $stmt->bindParam(':payerName', $data->payerName, PDO::PARAM_STR);
+        $stmt->bindParam(':sendingBankCode', $data->sendingBankCode, PDO::PARAM_STR);
+        $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
+        $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionDateandTime', $data->transactionDateandTime, PDO::PARAM_STR);
+        $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
+        $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
+        $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
+        $stmt->bindParam(':channelCode', $data->channelCode, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionType', $data->transactionType, PDO::PARAM_STR);
+
+        $result = $stmt->execute();
+
+        if ($result) {
+            $response = array(
+                "resCode" => "00",
+                "resDesc" => "success",
+                "transactionId" => $data->transactionId,
+                "confirmId" => $conn->lastInsertId()
+            );
+            echo json_encode($response);
+        } else {
+            // บันทึกข้อมูลล้มเหลว
+            http_response_code(500); // ค่า HTTP status code 500 (Internal Server Error)
+            echo "Failed to save data to the database.";
+        }
     } else {
-        $response = array(
-            "resCode" => "99",
-            "resDesc" => "เกิดข้อผิดพลาดในการบันทึกข้อมูล"
-        );
-        echo json_encode($response);
+        // การแปลง JSON ล้มเหลว
+        http_response_code(400); // ค่า HTTP status code 400 (Bad Request)
+        echo "Invalid JSON data received.";
     }
 } else {
-    echo "ข้อผิดพลาดในการแปลง JSON หรือไม่มี JSON ที่ส่งมา";
+    // ไม่ใช่ HTTP POST request
+    http_response_code(405); // ค่า HTTP status code 405 (Method Not Allowed)
+    echo "Invalid request method.";
 }

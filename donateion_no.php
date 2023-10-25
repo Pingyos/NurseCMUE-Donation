@@ -34,7 +34,7 @@
                             <input type="text" name="rec_name" value="ไม่ประสงค์ออกนาม" class="form-control" readonly>
                         </div>
                         <div class="col-lg-12 col-md-6 col-12">
-                            <input type="number" id="amount" name="amount" class="form-control" placeholder="จำนวนเงิน *" required step="0.01">
+                            <input type="number" id="amount" name="amount" class="form-control" placeholder="ขำระผ่าน QR Code ได้ครั้งละไม่เกิน 1 แสน บาท *" required step="0.01">
                             <script>
                                 function validateForm() {
                                     var amountInput = document.getElementById("amount");
@@ -81,6 +81,7 @@
                                 }
                             </script>
                         </div>
+
                     </div>
                     <div class="row">
                         <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" hidden>
