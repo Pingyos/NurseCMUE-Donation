@@ -110,7 +110,7 @@ if ($data !== null) {
                                 }
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
-                                $sToken = ["VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf"]; // เพิ่ม Token ของคุณที่นี่
+                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
                                 $sMessage .= "โครงการ: " . $edo_description . "\n";
                                 $sMessage .= "\n";
                                 $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";

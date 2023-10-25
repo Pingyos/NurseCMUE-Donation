@@ -135,8 +135,7 @@ if ($data !== null) {
                                                 <a>วันที่: $rec_date_out  $rec_time </a>
                                             </div>
                                             <div style='margin-top: 10px;'>
-                                                <hr>
-                                                <a href='https://app.nurse.cmu.ac.th/edonation/pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW' download target='_blank' style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ (PDF)</a>
+                                            <a href='https://app.nurse.cmu.ac.th/edonation/pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW' download target='_blank' style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ (PDF)</a>
                                             </div>
                                             <div style='margin-top: 2px;'>
                                                 <hr>
@@ -184,7 +183,7 @@ if ($data !== null) {
                                 }
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
-                                $sToken = ["VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf"]; // เพิ่ม Token ของคุณที่นี่
+                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
                                 $sMessage .= "โครงการ: " . $edo_description . "\n";
                                 $sMessage .= "\n";
                                 $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
