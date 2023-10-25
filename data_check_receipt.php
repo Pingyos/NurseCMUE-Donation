@@ -8,7 +8,7 @@ if ($data !== null) {
     $rec_idname = $data['rec_idname'];
     $ref1 = $data['ref1'];
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=edonation', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=edonation;charset=utf8', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // ตรวจสอบว่ามีข้อมูลที่ตรงกันในตาราง json_confirm
@@ -88,21 +88,21 @@ if ($data !== null) {
                             if ($updateIdResult) {
                                 require_once "phpmailer/PHPMailerAutoload.php";
                                 $mail = new PHPMailer;
-                                $mail->CharSet = "utf-8";
+                                $mail->CharSet = "UTF-8";
                                 $mail->isSMTP();
                                 $mail->Host = 'smtp.gmail.com';
                                 $mail->Port = 587;
                                 $mail->SMTPSecure = 'tls';
                                 $mail->SMTPAuth = true;
 
-                                $gmail_username = "nursecmu.edonation@gmail.com"; // Replace with your Gmail
-                                $gmail_password = "hhhp ynrg cqpb utzi"; // Replace with your Gmail password
+                                $gmail_username = "nursecmu.edonation@gmail.com";
+                                $gmail_password = "hhhp ynrg cqpb utzi";
 
-                                $sender = "noreply@NurseCMU E-Donation"; // Sender's name
-                                $email_sender = "nursecmu.edonation@gmail.com"; // Sender's email
-                                $email_receiver = $email_receiver; // Recipient's email
+                                $sender = "noreply@NurseCMU E-Donation";
+                                $email_sender = "nursecmu.edonation@gmail.com";
+                                $email_receiver = $email_receiver;
 
-                                $subject = "ระบบการแจ้งเตือน การบริจาคเงิน อัตโนมัติ "; // Email subject
+                                $subject = "ระบบการแจ้งเตือน การบริจาคเงิน อัตโนมัติ ";
 
                                 $mail->Username = $gmail_username;
                                 $mail->Password = $gmail_password;
@@ -111,61 +111,53 @@ if ($data !== null) {
                                 $mail->Subject = $subject;
 
                                 $email_content = "
-                                <!DOCTYPE html>
+                                    <!DOCTYPE html>
                                     <html>
-                                        <head>
-                                            <meta charset='utf-8'>
-                                        </head>
-                                        <body>
-                                            <h1
-                                                style='background: #FF6A00; padding: 10px 0 10px 10px; margin-bottom: 10px; font-size: 20px; color: white;'>
-                                                <p>NurseCMUE-Donation</p>
-                                            </h1>
-                                            <div style='padding: 20px;'>
-                                                <div style='margin-top: 10px;'>
-                                                    <h3>บริการอัตโนมัติ : ยืนยันการชำระเงิน ผ่าน NurseCMUE-Donation</h3>
-                                                    <h4>รายละอียด</h4>
-                                                    <a>โครงการ : $edo_description</a>
-                                                    <h5></h5>
-                                                    <a>เลขที่ใบเสร็จ : $receipt</a>
-                                                    <h5></h5>
-                                                    <a>ผู้บริจาค : $name_title $rec_name $rec_surname</a>
-                                                    <h5></h5>
-                                                    <a>จำนวนเงิน : $amount</a>
-                                                    <h5></h5>
-                                                    <a>วันที่ : $rec_date_out  $rec_time </a>
-                                                </div>
-                                                <div style='margin-top: 10px;'>
-                                                    <hr>
-                                                    <a
-                                                        href='http://localhost/git/NurseCMUE-Donation/pdf_maker.php?receipt_id=" . $receipt_id . "&ACTION=VIEW'
-                                                        download target='_blank'
-                                                        style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ
-                                                        (PDF)</a>
-                                                </div>
-                                                <div style='margin-top: 2px;'>
-                                                    <hr>
-                                                    <h4>ติดต่อสอบถาม</h4>
-                                                    <a>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน
-                                                        การคลังและพัสดุ คณะพยาบาลศาสตร์</a>
-                                                    <h4>ที่อยู่ติดต่อ</h4>
-                                                    <a>110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส
-                                                        ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</a>
-                                                </div>
+                                    <head>
+                                        <meta charset='utf-8'>
+                                    </head>
+                                    <body>
+                                        <h1 style='background: #FF6A00; padding: 10px 0 10px 10px; margin-bottom: 10px; font-size: 20px; color: white;'>
+                                            <p>NurseCMUE-Donation</p>
+                                        </h1>
+                                        <div style='padding: 20px;'>
+                                            <div style='margin-top: 10px;'>
+                                                <h3>บริการอัตโนมัติ : ยืนยันการชำระเงิน ผ่าน NurseCMUE-Donation</h3>
+                                                <h4>รายละเอียด</h4>
+                                                <a>โครงการ: $edo_description</a>
+                                                <h5></h5>
+                                                <a>เลขที่ใบเสร็จ: $receipt</a>
+                                                <h5></h5>
+                                                <a>ผู้บริจาค: $name_title $rec_name $rec_surname</a>
+                                                <h5></h5>
+                                                <a>จำนวนเงิน: $amount บาท</a>
+                                                <h5></h5>
+                                                <a>วันที่: $rec_date_out  $rec_time </a>
                                             </div>
-                                            <div style='text-align:center;margin-bottom:50px;'>
-                                                <img
-                                                    src='http://localhost/git/NurseCMUE-Donation/TCPDF/ban285.jpg'
-                                                    style='width:100%' />
+                                            <div style='margin-top: 10px;'>
+                                                <hr>
+                                                <a href='https://app.nurse.cmu.ac.th/edonation/pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW' download target='_blank' style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ (PDF)</a>
                                             </div>
-                                            <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
-                                                <div style='text-align: center'>
-                                                    2023 © NurseCMUE-Donation
-                                                </div>
+                                            <div style='margin-top: 2px;'>
+                                                <hr>
+                                                <h4>ติดต่อสอบถาม</h4>
+                                                <a>053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์</a>
+                                                <h4>ที่อยู่ติดตอ</h4>
+                                                <a>110/406 คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่ ถนนอินทวโรรส ตำบลสุเทพ อำเภอเมือง จังหวัดเชียงใหม่ 50200</a>
                                             </div>
-                                        </body>
+                                        </div>
+                                        <div style='text-align:center;margin-bottom:50px;'>
+                                            <img src='https://app.nurse.cmu.ac.th/edonation/TCPDF/bannernav.jpg' style='width:100%' />
+                                        </div>
+                                        <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
+                                            <div style='text-align: center'>
+                                                2023 © NurseCMUE-Donation
+                                            </div>
+                                        </div>
+                                    </body>
                                     </html>  
                                     ";
+
                                 $mail->msgHTML($email_content);
 
                                 if (!$mail->send()) {

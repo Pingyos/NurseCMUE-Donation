@@ -8,7 +8,7 @@ if ($data !== null) {
     $rec_date_out = $data['rec_date_out'];
     $ref1 = $data['ref1'];
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=edonation', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=edonation;charset=utf8', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // ตรวจสอบว่ามีข้อมูลที่ตรงกันในตาราง json_confirm
@@ -49,7 +49,7 @@ if ($data !== null) {
                     $insertResult = $insertStmt->execute();
 
                     if ($insertResult) {
-                        $selectProIdSql = "SELECT edo_pro_id, receipt_id FROM receipt WHERE id = :id";
+                        $selectProIdSql = "SELECT id_receipt, edo_pro_id, edo_description, payby, receipt_id, rec_email, name_title, rec_name, rec_surname, rec_date_out, rec_time, status_donat FROM receipt WHERE id = :id";
                         $selectProIdStmt = $pdo->prepare($selectProIdSql);
                         $selectProIdStmt->bindParam(':id', $id);
                         $selectProIdStmt->execute();
@@ -57,7 +57,17 @@ if ($data !== null) {
 
                         if ($row !== false) {
                             $edo_pro_id = $row['edo_pro_id'];
-                            $receipt_id = $row['receipt_id'];
+                            $receipt_id = $row['receipt_id']; // รับค่า receipt_id จากตาราง receipt
+                            $email_receiver = $row['rec_email'];
+                            $name_title = $row['name_title'];
+                            $rec_name = $row['rec_name'];
+                            $rec_surname = $row['rec_surname'];
+                            $rec_date_out = $row['rec_date_out'];
+                            $rec_time = $row['rec_time'];
+                            $status_donat = $row['status_donat'];
+                            $edo_description = $row['edo_description'];
+                            $payby = $row['payby'];
+                            $id_receipt = $row['id_receipt'];
 
                             // สร้าง id_receipt ใหม่
                             $id_year = "2567";
@@ -81,8 +91,38 @@ if ($data !== null) {
                                     'rec_date_out' => $rec_date_out,
                                     'ref1' => $ref1
                                 ];
-                                // require_once('send_line_notify.php');
-                                // sendLineNotification('ข้อความที่คุณต้องการส่ง', $rec_date_out, $ref1, $amount);
+                                function notify_message($sMessage, $Token)
+                                {
+                                    $chOne = curl_init();
+                                    curl_setopt($chOne, CURLOPT_URL, "https://notify-api.line.me/api/notify");
+                                    curl_setopt($chOne, CURLOPT_SSL_VERIFYHOST, 0);
+                                    curl_setopt($chOne, CURLOPT_SSL_VERIFYPEER, 0);
+                                    curl_setopt($chOne, CURLOPT_POST, 1);
+                                    curl_setopt($chOne, CURLOPT_POSTFIELDS, "message=" . $sMessage);
+                                    $headers = array('Content-type: application/x-www-form-urlencoded', 'Authorization: Bearer ' . $Token . '',);
+                                    curl_setopt($chOne, CURLOPT_HTTPHEADER, $headers);
+                                    curl_setopt($chOne, CURLOPT_RETURNTRANSFER, 1);
+                                    $result = curl_exec($chOne);
+                                    if (curl_error($chOne)) {
+                                        echo 'error:' . curl_error($chOne);
+                                    }
+                                    curl_close($chOne);
+                                }
+
+                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
+                                $sMessage .= "โครงการ: " . $edo_description . "\n";
+                                $sMessage .= "\n";
+                                $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
+                                $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
+                                $sMessage .= "\n";
+                                $sMessage .= "จำนวน: " . $amount . " บาท\n";
+                                $sMessage .= "วันที่โอน: " . $rec_date_out . " " . $rec_time . "\n";
+                                $sMessage .= "ชำระโดย: " . $payby . "\n";
+
+                                // เรียกใช้งานฟังก์ชัน notify_message สำหรับทุก Token
+                                foreach ($sToken as $Token) {
+                                    notify_message($sMessage, $Token);
+                                }
                             } else {
                                 $response = [
                                     'message' => 'ไม่สามารถอัปเดตค่า id_receipt ได้'
