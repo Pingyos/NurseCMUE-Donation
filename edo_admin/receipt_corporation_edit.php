@@ -41,7 +41,7 @@ require_once 'head.php'; ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท </label>
                                                 <input type="text" name="rec_name" class="form-control" value="<?= $row['rec_name']; ?>">
@@ -57,6 +57,12 @@ require_once 'head.php'; ?>
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
                                                 <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*" value="<?= $row['rec_tel']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-3 ">
+                                            <div class="form-group">
+                                                <label for="rec_email" class="control-label mb-1">อีเมล์</label>
+                                                <input type="text" name="rec_email" value="<?= $row['rec_email']; ?>" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +167,6 @@ require_once 'head.php'; ?>
 
                                     <input type="hidden" name="name_title" value="<?= $row['name_title']; ?>">
                                     <input type="hidden" name="rec_surname" value="<?= $row['rec_surname']; ?>">
-                                    <input type="hidden" name="rec_email" value="<?= $row['rec_email']; ?>">
                                     <input type="hidden" name="resDesc" value="success">
                                     <input type="hidden" name="status_donat" value="offline">
                                     <input type="hidden" name="status_user" value="corporation">

@@ -30,7 +30,6 @@ require_once 'head.php'; ?>
                                     <div class="row">
                                         <input type="hidden" name="name_title">
                                         <input type="hidden" name="rec_surname">
-                                        <input type="hidden" name="rec_email">
                                         <input type="hidden" name="status_donat" value="offline">
                                         <input type="hidden" name="status_user" value="corporation">
                                         <input type="hidden" name="status_receipt" value="yes" class="form-control">
@@ -39,7 +38,7 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="id_receipt" value="0" class="form-control">
                                         <input type="hidden" name="pdflink" value="https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker_offline.php?id=id&ACTION=VIEW">
                                         <input type="hidden" name="receipt_cc" value="confirm">
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">นิติบุคลล/บริษัท <span style="color:red;"></span></label>
                                                 <input type="text" name="rec_name" class="form-control">
@@ -55,6 +54,12 @@ require_once 'head.php'; ?>
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
                                                 <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
+                                            <div class="form-group">
+                                                <label for="rec_email" class="control-label mb-1">อีเมล์</label>
+                                                <input type="text" name="rec_email" class="form-control">
                                             </div>
                                         </div>
                                     </div>
