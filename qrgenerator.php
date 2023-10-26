@@ -167,6 +167,7 @@
                         <br>
                         <script>
                             var loopCount = 0;
+
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
@@ -207,7 +208,7 @@
                                 }
 
                                 loopCount++;
-                                if (loopCount >= 50) {
+                                if (loopCount >= 100) {
                                     clearInterval(intervalId);
                                 }
                             }
