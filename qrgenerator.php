@@ -144,7 +144,7 @@
                                         if (strtotime($newTimeFormatted) <= $currentTime) {
                                             echo '<div style="color: red;">หมดเวลาการชำระเงิน กรุณากรอกข้อมูลการบริจาคครั้งใหม่</div>';
                                         } else {
-                                            echo '<div style="color: red;">กรุณาชำระเงินก่อน เวลา: ' . $newTimeFormatted . '</div>';
+                                            echo '<div id="countdown" style="color: red;">กรุณาชำระเงินก่อน เวลา: ' . $newTimeFormatted . '</div>';
                                     ?>
                                             &nbsp;
                                             <div class="d-flex align-items-center justify-content-center">
@@ -162,6 +162,31 @@
                                     }
                                     ?>
                                 </div>
+
+                                <script>
+                                    // JavaScript countdown timer
+                                    var countdownElement = document.getElementById("countdown");
+                                    var endTime = new Date("<?php echo date('M d, Y H:i:s', $newTime); ?>").getTime();
+
+                                    var x = setInterval(function() {
+                                        var now = new Date().getTime();
+                                        var distance = endTime - now;
+
+                                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                        countdownElement.innerHTML = "กรุณาชำระเงินก่อน เวลา: " + minutes + " นาที " + seconds + " วินาที";
+
+                                        if (distance < 0) {
+                                            clearInterval(x);
+                                            countdownElement.innerHTML = "หมดเวลาการชำระเงิน กรุณากรอกข้อมูลการบริจาคครั้งใหม่";
+                                            // รีโหลดหน้าเมื่อหมดเวลา
+                                            setTimeout(function() {
+                                                window.location.reload();
+                                            }, 2000); // รีโหลดหน้าหลังจาก 2 วินาที
+                                        }
+                                    }, 1000);
+                                </script>
                             </div>
                         </div>
                         <br>
