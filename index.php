@@ -88,9 +88,7 @@
                 </center>
             </div>
         </section>
-        <!-- Button trigger modal -->
-
-
+        
     </main>
     <?php require_once('footer.php'); ?>
     <script src="js/main.js"></script>

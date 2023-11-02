@@ -25,7 +25,6 @@ if (
     $edo_details_objective4 = $_POST['edo_details_objective4'];
     $edo_details = $_POST['edo_details'];
     $dateCreate = $_POST['dateCreate'];
-    $id = $_POST['id'];
 
     $stmt = $conn->prepare(
         "UPDATE pro_offline SET
@@ -39,7 +38,9 @@ if (
         edo_details_objective3 = :edo_details_objective3,
         edo_details_objective4 = :edo_details_objective4,
         edo_details = :edo_details,
-        dateCreate = :dateCreate
+        dateCreate = :dateCreate,
+        img_file = :img_file,
+        img_banner = :img_banner
         WHERE id = :id"
     );
 
@@ -55,6 +56,68 @@ if (
     $stmt->bindParam(':edo_details', $edo_details, PDO::PARAM_STR);
     $stmt->bindParam(':dateCreate', $dateCreate, PDO::PARAM_STR);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':img_file', $img_file_path, PDO::PARAM_STR);
+    $stmt->bindParam(':img_banner', $img_banner_path, PDO::PARAM_STR);
+
+    if (isset($_FILES['img_file']) && isset($_FILES['img_banner'])) {
+        $img_file = $_FILES['img_file'];
+        $img_banner = $_FILES['img_banner'];
+
+        if ($img_file['error'] === UPLOAD_ERR_OK && $img_banner['error'] === UPLOAD_ERR_OK) {
+            $allowed_image_types = ['image/jpeg', 'image/png', 'image/gif'];
+
+            if (in_array($img_file['type'], $allowed_image_types) && in_array($img_banner['type'], $allowed_image_types)) {
+                $img_file_path = '../images/causes/' . $img_file['name'];
+                $img_banner_path = '../images/causes/' . $img_banner['name'];
+
+                if (move_uploaded_file($img_file['tmp_name'], $img_file_path) && move_uploaded_file($img_banner['tmp_name'], $img_banner_path)) {
+                    $stmt->bindParam(':img_file', $img_file_path, PDO::PARAM_STR);
+                    $stmt->bindParam(':img_banner', $img_banner_path, PDO::PARAM_STR);
+                } else {
+                    // แจ้งเตือนเมื่อเกิดข้อผิดพลาดในการอัปโหลดรูปภาพ
+                    echo '
+                    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> 
+                    <script>
+                        swal({
+                            title: "เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ",
+                            text: "โปรดแนบรูปภาพที่ถูกต้อง",
+                            type: "error"
+                        });
+                    </script>';
+                    exit();
+                }
+            } else {
+                // แจ้งเตือนเมื่อประเภทของไฟล์ไม่ถูกต้อง
+                echo '
+                <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> 
+                <script>
+                    swal({
+                        title: "เกิดข้อผิดพลาดในการอัปโหลดรูปภาพ",
+                        text: "โปรดแนบรูปภาพในรูปแบบ JPEG, PNG หรือ GIF เท่านั้น",
+                        type: "error"
+                    });
+                </script>';
+                exit();
+            }
+        } else {
+            echo '
+            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css"> 
+            <script>
+                swal({
+                    title: "เกิดข้อผิดพลาดในการอัปโหลดไฟล์",
+                    text: "โปรดตรวจสอบไฟล์และลองใหม่อีกครั้ง",
+                    type: "error"
+                });
+            </script>';
+            exit();
+        }
+    }
 
     $result = $stmt->execute();
 

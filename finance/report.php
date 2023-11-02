@@ -1,18 +1,6 @@
 <?php
-// session_start();
-
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
-// if (isset($_SESSION['login_info'])) {
-//     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
-//     $login_info = $_SESSION['login_info'];
-// } else {
-//     // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
-//     header("Location: login.php");
-//     exit;
-// }
-// // ตรวจสอบการlogin
+// require_once 'session.php';
 require_once 'head.php'; ?>
-
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -351,8 +339,7 @@ require_once 'head.php'; ?>
                                                                         <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         </span>
                                                                     <?php endif; ?>
-                                                                </td>
-
+                                                                </td>   
                                                                 <td>
                                                                     <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="View" href="<?= ($row['receipt_cc'] == 'cancel') ? 'pdf_recrip_cc.php?receipt_id=' . $row['receipt_id'] : 'pdf_maker_offline.php?receipt_id=' . $row['receipt_id'] ?>&ACTION=VIEW" target="_blank"> <span class="btn-inner">
                                                                             <svg width="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

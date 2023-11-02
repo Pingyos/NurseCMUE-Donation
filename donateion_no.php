@@ -81,7 +81,6 @@
                                 }
                             </script>
                         </div>
-
                     </div>
                     <div class="row">
                         <input type="text" name="edo_name" value="<?= $row['edo_name']; ?>" hidden>

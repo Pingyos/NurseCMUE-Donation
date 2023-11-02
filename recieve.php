@@ -1,13 +1,12 @@
 <?php
-// เรียกใช้ callback URL ที่ SCB จะใช้ส่งข้อมูลไป
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // รับข้อมูล JSON จาก SCB API
     $json = file_get_contents('php://input');
     $data = json_decode($json);
 
     if ($data !== null) {
-        // บันทึกข้อมูลลงในฐานข้อมูล
         require_once 'connection.php';
+        $transactionDateandTime = date('Y-m-d H:i:s', strtotime($data->transactionDateandTime));
+
         $stmt = $conn->prepare("INSERT INTO json_confirm 
             (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
             payerAccountNumber, payerAccountName, payerName, sendingBankCode, 
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
         $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
         $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
-        $stmt->bindParam(':transactionDateandTime', $data->transactionDateandTime, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionDateandTime', $transactionDateandTime, PDO::PARAM_STR);
         $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
         $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
         $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
@@ -50,17 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             echo json_encode($response);
         } else {
-            // บันทึกข้อมูลล้มเหลว
-            http_response_code(500); // ค่า HTTP status code 500 (Internal Server Error)
+            http_response_code(500);
             echo "Failed to save data to the database.";
         }
     } else {
-        // การแปลง JSON ล้มเหลว
-        http_response_code(400); // ค่า HTTP status code 400 (Bad Request)
+        http_response_code(400);
         echo "Invalid JSON data received.";
     }
 } else {
-    // ไม่ใช่ HTTP POST request
-    http_response_code(405); // ค่า HTTP status code 405 (Method Not Allowed)
+    http_response_code(405);
     echo "Invalid request method.";
 }

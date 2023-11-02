@@ -234,12 +234,13 @@
 
                                 loopCount++;
                                 if (loopCount >= 100) {
-                                    clearInterval(intervalId);
+                                    clearInterval(intervalId); // Stop the loop after 20 iterations
                                 }
                             }
 
                             var intervalId = setInterval(fetchData, 5000);
                         </script>
+
                     </form>
                     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

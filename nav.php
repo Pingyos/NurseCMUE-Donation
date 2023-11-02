@@ -43,7 +43,7 @@
                     <a class="nav-link click-scroll" href="invoice.php">รายนามผู้บริจาค</a>
                 </li>
 
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link " href="service.php">สิทธิประโยชน์</a>
                 </li>
 
@@ -56,28 +56,28 @@
     </div>
 </nav>
 <style>
-    #staticBackdrop .modal-body img {
-        max-width: 200%;
-        max-height: 200%;
-        display: block;
-        margin: 0 auto;
-    }
+            #staticBackdrop .modal-body img {
+                max-width: 200%;
+                max-height: 200%;
+                display: block;
+                margin: 0 auto;
+            }
 
-    #staticBackdrop .modal-body img {
-        width: 100%;
-        height: 100%;
-    }
-</style>
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <img src="images/causes/bannerstep.jpg">
+            #staticBackdrop .modal-body img {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="images/causes/bannerstep.jpg">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>

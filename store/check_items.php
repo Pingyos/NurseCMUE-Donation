@@ -1,6 +1,6 @@
 <?php
+// require_once 'session.php';
 require_once 'head.php'; ?>
-
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">

@@ -1,18 +1,6 @@
 <?php
-// session_start();
-
-// // ตรวจสอบสถานะการเข้าสู่ระบบ
-// if (isset($_SESSION['login_info'])) {
-//     // ผู้ใช้ล็อกอินแล้ว แสดงข้อมูลผู้ใช้
-//     $login_info = $_SESSION['login_info'];
-// } else {
-//     // ผู้ใช้ยังไม่ได้ล็อกอิน นำกลับไปยังหน้า login
-//     header("Location: login.php");
-//     exit;
-// }
-// // ตรวจสอบการlogin
+// require_once 'session.php';
 require_once 'head.php'; ?>
-
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -27,8 +15,6 @@ require_once 'head.php'; ?>
                             </div>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
-
-                                    <br>
                                     <div class="row">
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">

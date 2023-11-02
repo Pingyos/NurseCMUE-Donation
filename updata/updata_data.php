@@ -27,9 +27,7 @@ require_once 'head.php'; ?>
                                 <strong class="card-title">รายชื่อบริจาคผ่านบุคลากร</strong>
                             </div>
                             <div class="card-body">
-                                <div class="btn-group">
-                                    <a href="add_pro.php" class="btn btn-success btn-block">เพิ่มโครงการ</a>
-                                </div>
+                                <a href="donate_details.php?id=<?= $edoId; ?>" class="custom-btn btn">บริจาค</a>
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
@@ -80,17 +78,17 @@ require_once 'head.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../finance/assets/js/main.js"></script>
-    <script src="../finance/assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="../finance/assets/js/init/datatables-init.js"></script>
+    <script src="../edo_admin/assets/js/main.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="../edo_admin/assets/js/init/datatables-init.js"></script>
 
 
 </body>

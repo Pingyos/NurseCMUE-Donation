@@ -99,15 +99,15 @@ require_once 'head.php'; ?>
                                             <label for="textarea-input" class=" form-control-label">รายละเอียดโครงการ</label>
                                             <textarea name="edo_details" id="edo_details" rows="9" class="form-control"><?= $row['edo_details']; ?></textarea>
                                         </div>
-                                        <!-- <div class="col-6 mb-2">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
                                                 <label for="img_file" class="form-control-label">รูปภาพโครงการ</label>
                                                 <input type="file" id="img_file" name="img_file" class="form-control-file">
                                                 <p><?= $row['img_file']; ?></p>
                                             </div>
-                                        </div> -->
+                                        </div>
 
-                                        <!-- <div class="col-6 mb-2">
+                                        <div class="col-6 mb-2">
                                             <div class="form-group">
                                                 <label for="img_banner" class="form-control-label">รูปภาพการลดหย่อนภาษี</label>
                                                 <input type="file" id="img_banner" name="img_banner" class="form-control-file">
@@ -126,17 +126,16 @@ require_once 'head.php'; ?>
                                                 <label for="img_banner" class="control-label mb-1">ตัวอย่าง รูปภาพการลดหย่อนภาษี </label>
                                                 <img src="../images/causes/<?= $row['img_banner']; ?>" alt="รูปภาพโครงการ" class="img-thumbnail">
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <input type="hidden" name="dateCreate" value="<?= date('Y-m-d H:i:s'); ?>">
-                                    <input type="hidden" name="id" value="<?= $row['id']; ?>">
                                     <hr>
                                     <div class="btn-group col-12">
                                         <button type="submit" class="btn btn-primary btn-block">ยืนยัน</button>
                                     </div>
                                 </form>
                                 <?php
-                                require_once 'updata_data_db.php';
+                                // require_once 'updata_data_db.php';
                                 echo '<pre>';
                                 print_r($_POST);
                                 echo '</pre>';
@@ -156,17 +155,17 @@ require_once 'head.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
-    <script src="../finance/assets/js/main.js"></script>
-    <script src="../finance/assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="../finance/assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="../finance/assets/js/init/datatables-init.js"></script>
+    <script src="../edo_admin/assets/js/main.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/jszip.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+    <script src="../edo_admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+    <script src="../edo_admin/assets/js/init/datatables-init.js"></script>
 </body>
 
 </html>
