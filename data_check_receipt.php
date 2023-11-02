@@ -204,11 +204,9 @@ if ($data !== null) {
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
                                 $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
-                                $sMessage .= "โครงการ: " . $edo_description . "\n";
                                 $sMessage .= "\n";
                                 $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
                                 $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
-                                $sMessage .= "เลข ปชช: " . $rec_idname . "\n";
                                 $sMessage .= "\n";
                                 $sMessage .= "จำนวน: " . $amount . " บาท\n";
                                 $sMessage .= "วันที่โอน: " . $rec_date_out . " " . $rec_time . "\n";

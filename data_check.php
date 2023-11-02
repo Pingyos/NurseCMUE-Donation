@@ -111,7 +111,6 @@ if ($data !== null) {
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
                                 $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
-                                $sMessage .= "โครงการ: " . $edo_description . "\n";
                                 $sMessage .= "\n";
                                 $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
                                 $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";

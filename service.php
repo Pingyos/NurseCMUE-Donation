@@ -94,9 +94,9 @@
                                 <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0 mb-md-4">
                                     <div class="featured-block d-flex justify-content-center align-items-center">
                                         <a class="d-block">
-                                            <img src="images/service/right9.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set A จานรองแก้วเซรามิค</h5>
-
+                                            <img src="images/service/setA.jpg" class="featured-block-image img-fluid" alt="">
+                                            <h5 class="featured-block-text">Set A Griptok</h5>
+                                            <p>บริจาค 1,000 บาทขั้นไป</p>
                                         </a>
                                     </div>
                                 </div>
@@ -104,8 +104,9 @@
                                 <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0 mb-md-4">
                                     <div class="featured-block d-flex justify-content-center align-items-center">
                                         <a class="d-block">
-                                            <img src="images/service/right10.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set C Griptok</h5>
+                                            <img src="images/service/setB.jpg" class="featured-block-image img-fluid" alt="">
+                                            <h5 class="featured-block-text">Set B จานรองแก้วเซรามิค</h5>
+                                            <p>บริจาค 3,000 บาทขั้นไป</p>
                                         </a>
                                     </div>
                                 </div>
@@ -113,8 +114,9 @@
                                 <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
                                     <div class="featured-block d-flex justify-content-center align-items-center">
                                         <a class="d-block">
-                                            <img src="images/service/right11.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set D ชุดเข็มกลัด</h5>
+                                            <img src="images/service/setC.jpg" class="featured-block-image img-fluid" alt="">
+                                            <h5 class="featured-block-text">Set C ชุดเข็มกลัด</h5>
+                                            <p>บริจาค 100,000 บาทขั้นไป</p>
                                         </a>
                                     </div>
                                 </div>

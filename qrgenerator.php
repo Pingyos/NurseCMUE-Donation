@@ -138,7 +138,7 @@
                                     <?php
                                     if (!empty($rec_time)) {
                                         $originalTime = strtotime($rec_time);
-                                        $newTime = $originalTime + 5 * 60;
+                                        $newTime = $originalTime + 10 * 60;
                                         $newTimeFormatted = date("H:i:s", $newTime);
                                         $currentTime = time();
                                         if (strtotime($newTimeFormatted) <= $currentTime) {
