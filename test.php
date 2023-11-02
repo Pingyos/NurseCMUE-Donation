@@ -66,7 +66,7 @@ if ($data !== null) {
                             $receipt = $id_year . '-' . $id_suffix;
 
                             // อัปเดตค่า id_receipt
-                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
+                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/finance/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
                             $updateIdSql = "UPDATE receipt SET id_receipt = :receipt, pdflink = :pdf_url WHERE id = :id";
                             $updateIdStmt = $pdo->prepare($updateIdSql);
                             $updateIdStmt->bindParam(':receipt', $receipt);

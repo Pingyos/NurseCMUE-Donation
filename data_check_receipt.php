@@ -1,7 +1,8 @@
 <?php
 $json_data = file_get_contents('php://input');
 $data = json_decode($json_data, true);
-
+$sMessage = '';
+$response = [];
 if ($data !== null) {
     $amount = $data['amount'];
     $id = $data['id'];
@@ -77,13 +78,27 @@ if ($data !== null) {
                             $receipt = $id_year . '-' . $id_suffix;
 
                             // อัปเดตค่า id_receipt
-                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
+                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/finance/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
                             $updateIdSql = "UPDATE receipt SET id_receipt = :receipt, pdflink = :pdf_url WHERE id = :id";
                             $updateIdStmt = $pdo->prepare($updateIdSql);
                             $updateIdStmt->bindParam(':receipt', $receipt);
                             $updateIdStmt->bindParam(':pdf_url', $pdf_url);
                             $updateIdStmt->bindParam(':id', $id);
                             $updateIdResult = $updateIdStmt->execute();
+
+                            $copyDataSql = "INSERT INTO store (id, ref1, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate, items, items_set)
+                            SELECT id, ref1, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate,1,
+                            CASE
+                                WHEN amount BETWEEN 1000.00 AND 2999.99 THEN 'A'
+                                WHEN amount BETWEEN 3000.00 AND 99999.99 THEN 'B'
+                                WHEN amount >= 100000.00 THEN 'C'
+                                ELSE 'D'
+                            END AS items_set
+                            FROM receipt
+                            WHERE id = :id";
+                            $copyDataStmt = $pdo->prepare($copyDataSql);
+                            $copyDataStmt->bindParam(':id', $id);
+                            $copyDataResult = $copyDataStmt->execute();
 
                             if ($updateIdResult) {
                                 require_once "phpmailer/PHPMailerAutoload.php";
@@ -111,57 +126,57 @@ if ($data !== null) {
                                 $mail->Subject = $subject;
 
                                 $email_content = "
-                                        <!DOCTYPE html>
-                                        <html>
-                                        <head>
-                                            <meta charset='utf-8'>
-                                        </head>
-                                        <body>
-                                            <h1 style='background: #FF6A00; padding: 10px 0 10px 10px; margin-bottom: 10px; font-size: 20px; color: white;'>
-                                                <p>NurseCMUE-Donation</p>
-                                            </h1>
-                                            <style>
-                                                .bold-text {
-                                                    font-weight: bold;
-                                                }
-                                            </style>
-                                            <div style='padding: 20px;'>
-                                                <div style='margin-top: 10px;'>
-                                                    <h3 style='font-size: 18px;'>ข้อความอัตโนมัติ : ยืนยันการชำระเงิน ผ่าน NurseCMUE-Donation</h3>
-                                                    <h4 style='font-size: 16px; margin-top: 10px;'>รายละเอียด</h4>
-                                                    <a class='bold-text'>โครงการ :</a> $edo_description<br>
-                                                    <a class='bold-text'>เลขที่ใบเสร็จ :</a> $receipt<br>
-                                                    <a class='bold-text'>ผู้บริจาค :</a> $name_title $rec_name $rec_surname<br>
-                                                    <a class='bold-text'>จำนวนเงิน :</a> $amount บาท<br>
-                                                    <a class='bold-text'>วันที่ :</a> $rec_date_out $rec_time<br>
-                                                </div>
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta charset='utf-8'>
+                        </head>
+                        <body>
+                            <h1 style='background: #FF6A00; padding: 10px 0 10px 10px; margin-bottom: 10px; font-size: 20px; color: white;'>
+                                <p>NurseCMUE-Donation</p>
+                            </h1>
+                            <style>
+                                .bold-text {
+                                    font-weight: bold;
+                                }
+                            </style>
+                            <div style='padding: 20px;'>
+                                <div style='margin-top: 10px;'>
+                                    <h3 style='font-size: 18px;'>ข้อความอัตโนมัติ : ยืนยันการชำระเงิน ผ่าน NurseCMUE-Donation</h3>
+                                    <h4 style='font-size: 16px; margin-top: 10px;'>รายละเอียด</h4>
+                                    <a class='bold-text'>โครงการ :</a> $edo_description<br>
+                                    <a class='bold-text'>เลขที่ใบเสร็จ :</a> $receipt<br>
+                                    <a class='bold-text'>ผู้บริจาค :</a> $name_title $rec_name $rec_surname<br>
+                                    <a class='bold-text'>จำนวนเงิน :</a> $amount บาท<br>
+                                    <a class='bold-text'>วันที่ :</a> $rec_date_out<br>
+                                </div>
 
-                                                <div style='margin-top: 10px;'>
-                                                    <a class='bold-text'>
-                                                        <a href='https://app.nurse.cmu.ac.th/edonation/pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW' download target='_blank' style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ (PDF)</a>
-                                                    </a>
-                                                    <h5></h5>
-                                                    <a class='bold-text'>ขอแสดงความนับถือ</a>
-                                                    <br>
-                                                    <a class='bold-text'>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</a>
-                                                </div>
-                                                <div style='margin-top: 2px;'>
-                                                    <hr>
-                                                    <h4 class='bold-text'>หมายเหตุ:</h4>
-                                                    <p class='bold-text'>- ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</p>
-                                                    <p class='bold-text'>- อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ หากต้องการสอบถามรายละเอียดเพิ่มเติม โทร. 053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</p>
-                                                </div>
-                                            </div>
-                                            <div style='text-align:center; margin-bottom: 50px;'>
-                                                <img src='https://app.nurse.cmu.ac.th/edonation/TCPDF/bannernav.jpg' style='width:100%' />
-                                            </div>
-                                            <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
-                                                <div style='text-align: center'>
-                                                    2023 © NurseCMUE-Donation
-                                                </div>
-                                            </div>
-                                        </body>
-                                        </html>";
+                                <div style='margin-top: 10px;'>
+                                    <a class='bold-text'>
+                                        <a href='https://app.nurse.cmu.ac.th/edonation/pdf_maker.php?receipt_id=$receipt_id&ACTION=VIEW' download target='_blank' style='font-size: 20px; text-decoration: none; color: #3c83f9;'>ดาวน์โหลดใบเสร็จ (PDF)</a>
+                                    </a>
+                                    <h5></h5>
+                                    <a class='bold-text'>ขอแสดงความนับถือ</a>
+                                    <br>
+                                    <a class='bold-text'>คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</a>
+                                </div>
+                                <div style='margin-top: 2px;'>
+                                    <hr>
+                                    <h4 class='bold-text'>หมายเหตุ:</h4>
+                                    <p class='bold-text'>- ใบเสร็จรับเงินจะมีผลสมบูรณ์ต่อเมื่อได้รับชำระเงินเรียบร้อยแล้วและมีลายเซ็นของผู้รับเงินครบถ้วน</p>
+                                    <p class='bold-text'>- อีเมลฉบับนี้เป็นการแจ้งข้อมูลโดยอัตโนมัติ กรุณาอย่าตอบกลับ หากต้องการสอบถามรายละเอียดเพิ่มเติม โทร. 053-949075 | นางสาวชนิดา ต้นพิพัฒน์ งานการเงิน การคลังและพัสดุ คณะพยาบาลศาสตร์ มหาวิทยาลัยเชียงใหม่</p>
+                                </div>
+                            </div>
+                            <div style='text-align:center; margin-bottom: 50px;'>
+                                <img src='https://app.nurse.cmu.ac.th/edonation/TCPDF/bannernav.jpg' style='width:100%' />
+                            </div>
+                            <div style='background: #FF6A00; color: #ffffff; padding: 30px;'>
+                                <div style='text-align: center'>
+                                    2023 © NurseCMUE-Donation
+                                </div>
+                            </div>
+                        </body>
+                        </html>";
                                 $mail->msgHTML($email_content);
 
                                 if (!$mail->send()) {

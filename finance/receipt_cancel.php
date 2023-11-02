@@ -1,7 +1,7 @@
 <?php
 require_once 'connection.php';
 $receipt_id = $_GET['receipt_id'];
-$pdflink = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_recrip_cc.php?receipt_id=$receipt_id&ACTION=VIEW";
+$pdflink = "https://app.nurse.cmu.ac.th/edonation/finance/pdf_recrip_cc.php?receipt_id=$receipt_id&ACTION=VIEW";
 $amount = 0;
 $updateSql = "UPDATE receipt SET receipt_cc = 'cancel', amount = :amount, pdflink = :pdflink WHERE receipt_id = :receipt_id";
 $statusSql = "SELECT status_donat FROM receipt WHERE receipt_id = :receipt_id";

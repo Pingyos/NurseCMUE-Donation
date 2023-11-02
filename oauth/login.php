@@ -2,9 +2,9 @@
 
 <?php session_start();
 
-$client_id = 'YxEWYjWb7vrWZYajNb61aKQduEfnzSEyvrNw6tj7';      
-$client_secret = 'm9J9JvN86mq7440pTBBtdHPr02BHmQnv28QabRF9';  
-$redirect_uri = 'https://app.nurse.cmu.ac.th/edonation/edo_admin/login.php';
+$client_id = 'YxEWYjWb7vrWZYajNb61aKQduEfnzSEyvrNw6tj7';
+$client_secret = 'm9J9JvN86mq7440pTBBtdHPr02BHmQnv28QabRF9';
+$redirect_uri = 'https://app.nurse.cmu.ac.th/edonation/finance/login.php';
 
 $oauth_scope = "cmuitaccount.basicinfo"; // Scopes with space-delimited
 $oauth_auth_url = "https://oauth.cmu.ac.th/v1/Authorize.aspx";
