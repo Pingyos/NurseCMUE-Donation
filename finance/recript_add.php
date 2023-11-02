@@ -248,11 +248,9 @@ if (
                         // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
                         $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
                         $sMessage = "";
-                        $sMessage .= "โครงการ: " . $edo_description . "\n";
                         $sMessage .= "\n";
                         $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
                         $sMessage .= "$user_type : " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
-                        $sMessage .= "เลข ปชช: " . $rec_idname . "\n";
                         $sMessage .= "\n";
                         $sMessage .= "จำนวน: " . $amount . " บาท\n";
                         $sMessage .= "วันที่โอน: " . $rec_date_out . "\n";
