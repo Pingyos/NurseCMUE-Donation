@@ -257,6 +257,7 @@ $selected_table = isset($_GET['showall']) ? $_GET['showall'] : 'receipt';
 $inv_mst_query = "SELECT T1.receipt_id, T1.id_receipt, T1.name_title, T1.rec_name, T1.rec_surname, T1.rec_tel, T1.rec_email, T1.provinces, T1.districts, T1.rec_idname, T1.address, T1.road, T1.amphures, T1.zip_code, T1.rec_date_s, T1.rec_date_out, T1.amount, T1.payby, T1.edo_name, T1.edo_pro_id, T1.edo_description, T1.edo_objective, T1.comment, T1.status_donat, T1.status_user FROM $selected_table T1 WHERE T1.receipt_id='" . $receipt_id . "'";
 $inv_mst_results = mysqli_query($con, $inv_mst_query);
 $count = mysqli_num_rows($inv_mst_results);
+
 if ($count > 0) {
     $inv_mst_data_row = mysqli_fetch_array($inv_mst_results, MYSQLI_ASSOC);
 
@@ -327,21 +328,6 @@ if ($count > 0) {
     $y = $pdf->GetY() - 10;
 
     $pdf->Image($img, $x, $y, $imageWidth, 150, '', '', '', false, 300, '', false, false, 0, false, false, false);
-    // 
-
-    // ยกเลิก
-    $img = '../TCPDF/pdf_recrip_cc.png';
-    $cellWidth = 220;  // กำหนดความกว้างของเซลล์
-    $cellHeight = 255;  // กำหนดความสูงของเซลล์ (เลือกความสูงตามที่คุณต้องการ)
-
-    // คำนวณตำแหน่ง X ให้รูปภาพอยู่ตรงกลางของเซลล์
-    $x = $pdf->GetX() + ($cellWidth - $cellHeight) / 2;
-    // คำนวณตำแหน่ง Y ให้รูปภาพอยู่ตรงกลางของเซลล์
-    $y = $pdf->GetY() + ($cellHeight - $cellHeight) / 2;
-
-    $pdf->Image($img, $x, $y, $cellWidth, $cellHeight, '', '', '', false, 300, '', false, false, $angle, false, false, false);
-
-
     // 
 
     // logo
@@ -515,7 +501,7 @@ if ($count > 0) {
 		</tr>
 		<tr>
 		<td><b>เลขที่ใบเสร็จ : </b>' . $inv_mst_data_row['id_receipt'] . '</td>
-		<td align="right"><b>ลำดับเอกสาร : </b> 66' . generateReceiptNumber($inv_mst_data_row['receipt_id']) . '</td>
+		<td align="right"><b>ลำดับเอกสาร : </b> 67' . generateReceiptNumber($inv_mst_data_row['receipt_id']) . '</td>
 	</tr>
 </table>
 
@@ -529,11 +515,7 @@ if ($count > 0) {
     // set timezone to Bangkok
     date_default_timezone_set('Asia/Bangkok');
 
-    $year = date('Y') + 543;
-
-    $datetime = date('Y');
-    $datetime_be = str_replace(date('Y'), $year, $datetime);
-    $file_name = "NurseCMU_" . $datetime_be . "-" . $inv_mst_data_row['edo_pro_id'] . "-" . $inv_mst_data_row['receipt_id'] . ".pdf";
+    $file_name = "NurseCMU_" . "2567" . "-" . $inv_mst_data_row['edo_pro_id'] . "-" . $inv_mst_data_row['receipt_id'] . ".pdf";
     ob_end_clean();
 
     if ($_GET['ACTION'] == 'VIEW') {

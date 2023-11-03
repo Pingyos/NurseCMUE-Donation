@@ -1,6 +1,7 @@
 <?php
 // require_once 'session.php';
 require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -16,19 +17,28 @@ require_once 'head.php'; ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data" id="your_form_id">
                                     <div class="row">
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                        <div class="form-group col-lg-12 col-md-3 col-6">
+                                            <div class="form-group">
+                                                <label for="showall" class="control-label mb-1">ปีงบประมาณ</label>
+                                                <select class="form-control" name="showall" id="showall">
+                                                    <option value="receipt" <?php if (isset($_POST['showall']) && $_POST['showall'] === 'receipt') echo 'selected'; ?>>2567</option>
+                                                    <option value="receipt_2566" <?php if (isset($_POST['showall']) && $_POST['showall'] === 'receipt_2566') echo 'selected'; ?>>2566</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="start_date" class="control-label mb-1">วันที่เริ่ม</label>
                                                 <input type="date" name="start_date" class="form-control" id="start_date" value="<?php echo isset($_POST['start_date']) ? htmlspecialchars($_POST['start_date']) : ''; ?>">
                                             </div>
                                         </div>
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="end_date" class="control-label mb-1">วันที่สิ้นสุด</label>
                                                 <input type="date" name="end_date" class="form-control" id="end_date" value="<?php echo isset($_POST['end_date']) ? htmlspecialchars($_POST['end_date']) : ''; ?>">
                                             </div>
                                         </div>
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="status_user" class="control-label mb-1">ประเภทผู้บริจาค</label>
                                                 <select class="form-control" name="status_user" id="status_user">
@@ -52,7 +62,7 @@ require_once 'head.php'; ?>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-lg-6 col-md-3 col-6">
+                                        <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="status_receipt" class="control-label mb-1">ประเภทการบริจาค</label>
                                                 <select class="form-control" name="status_receipt" id="status_receipt">
@@ -164,8 +174,6 @@ require_once 'head.php'; ?>
                                             });
                                         });
                                     </script>
-
-
                                     <script>
                                         document.getElementById("export_data").addEventListener("click", function() {
                                             var start_date = document.getElementById("start_date").value;
@@ -174,6 +182,8 @@ require_once 'head.php'; ?>
                                             var status_receipt = document.getElementById("status_receipt").value;
                                             var edo_pro_id = document.getElementById("edo_pro_id").value;
                                             var receipt_cc = document.getElementById("receipt_cc").value;
+                                            var showall = document.getElementById("showall").value; // เพิ่มการดึงค่า showall
+
                                             var url = "report_db.php?";
                                             if (start_date) {
                                                 url += "start_date=" + encodeURIComponent(start_date) + "&";
@@ -191,11 +201,15 @@ require_once 'head.php'; ?>
                                                 url += "edo_pro_id=" + encodeURIComponent(edo_pro_id) + "&";
                                             }
                                             if (receipt_cc) {
-                                                url += "receipt_cc=" + encodeURIComponent(receipt_cc);
+                                                url += "receipt_cc=" + encodeURIComponent(receipt_cc) + "&";
+                                            }
+                                            if (showall) {
+                                                url += "showall=" + encodeURIComponent(showall); // เพิ่มค่า showall ใน URL
                                             }
                                             window.location.href = url;
                                         });
                                     </script>
+
                                 </form>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -204,7 +218,16 @@ require_once 'head.php'; ?>
                                             if (isset($_POST['display_data'])) {
                                                 require_once 'connection.php';
 
-                                                $sql = "SELECT * FROM receipt WHERE 1=1";
+                                                $sql = "SELECT * FROM ";
+
+                                                if (isset($_POST['showall']) && !empty($_POST['showall'])) {
+                                                    $selected_table = $_POST['showall'];
+                                                    $sql .= $selected_table;
+                                                } else {
+                                                    $sql .= "receipt"; // หากไม่มีการเลือกตาราง ให้ใช้ "receipt" เป็นค่าเริ่มต้น
+                                                }
+
+                                                $sql .= " WHERE 1=1";
 
                                                 if (isset($_POST['start_date']) && !empty($_POST['start_date']) && isset($_POST['end_date']) && !empty($_POST['end_date'])) {
                                                     $start_date = $_POST['start_date'];
@@ -339,9 +362,9 @@ require_once 'head.php'; ?>
                                                                         <?php if ($row['receipt_cc'] === 'cancel') : ?>
                                                                         </span>
                                                                     <?php endif; ?>
-                                                                </td>   
+                                                                </td>
                                                                 <td>
-                                                                    <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="View" href="<?= ($row['receipt_cc'] == 'cancel') ? 'pdf_recrip_cc.php?receipt_id=' . $row['receipt_id'] : 'pdf_maker_offline.php?receipt_id=' . $row['receipt_id'] ?>&ACTION=VIEW" target="_blank"> <span class="btn-inner">
+                                                                    <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="View" href="<?= ($row['receipt_cc'] == 'cancel') ? 'pdf_recrip_cc.php?receipt_id=' . $row['receipt_id'] . '&showall=' . $_POST['showall'] : 'pdf_maker_report.php?receipt_id=' . $row['receipt_id'] . '&showall=' . $_POST['showall'] ?>&ACTION=VIEW" target="_blank"> <span class="btn-inner">
                                                                             <svg width="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                                 <path d="M15.7161 16.2234H8.49609" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                                                                                 <path d="M15.7161 12.0369H8.49609" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

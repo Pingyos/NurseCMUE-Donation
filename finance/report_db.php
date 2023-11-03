@@ -7,32 +7,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $selected_status_receipt = isset($_GET['status_receipt']) ? $_GET['status_receipt'] : null;
     $selected_edo_pro_id = isset($_GET['edo_pro_id']) ? $_GET['edo_pro_id'] : null;
     $selected_receipt_cc = isset($_GET['receipt_cc']) ? $_GET['receipt_cc'] : null;
-    $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount, rec_email, road, districts, amphures, provinces, zip_code, rec_date_s, edo_name, other_description, edo_pro_id, edo_pro_id, edo_objective, comment, status_donat, status_receipt, resDesc,pdflink, receipt_cc, dateCreate FROM receipt WHERE 1=1 ";
+    $showall = isset($_GET['showall']) ? $_GET['showall'] : 'receipt'; // เริ่มต้นด้วย 'receipt' หากไม่มีค่า showall
+
+    $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount, rec_email, road, districts, amphures, provinces, zip_code, rec_date_s, edo_name, other_description, edo_pro_id, edo_pro_id, edo_objective, comment, status_donat, status_receipt, resDesc,pdflink, receipt_cc, dateCreate FROM ";
+
+    if (isset($showall) && !empty($showall)) {
+        $sql .= $showall;
+    } else {
+        $sql .= "receipt"; // หากไม่มีค่า showall ให้ใช้ "receipt" เป็นค่าเริ่มต้น
+    }
+
+    $sql .= " WHERE 1=1";
 
     if (!empty($start_date)) {
-        $sql .= "AND rec_date_out >= :start_date ";
+        $sql .= " AND rec_date_out >= :start_date ";
     }
 
     if (!empty($end_date)) {
-        $sql .= "AND rec_date_out <= :end_date ";
+        $sql .= " AND rec_date_out <= :end_date ";
     }
 
     if (!empty($selected_status_user)) {
-        $sql .= "AND status_user = :status_user ";
+        $sql .= " AND status_user = :status_user ";
     }
 
     if (!empty($selected_status_receipt)) {
-        $sql .= "AND status_receipt = :status_receipt ";
+        $sql .= " AND status_receipt = :status_receipt ";
     }
 
     if (!empty($selected_edo_pro_id)) {
-        $sql .= "AND edo_pro_id = :edo_pro_id ";
+        $sql .= " AND edo_pro_id = :edo_pro_id ";
     }
     if (!empty($selected_receipt_cc)) {
-        $sql .= "AND receipt_cc = :receipt_cc ";
+        $sql .= " AND receipt_cc = :receipt_cc ";
     }
 
-    // ตัวอย่างการเชื่อมต่อฐานข้อมูลและทำคิวรี
+    $sql .= " ORDER BY id_receipt DESC";
+
     require_once 'connection.php';
 
     $stmt = $conn->prepare($sql);
@@ -65,7 +76,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // เช็คว่ามีข้อมูลหรือไม่ ถ้าไม่มีให้ดึงข้อมูลทั้งหมด
     if (empty($results)) {
-        $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount, rec_email, road, districts, amphures, provinces, zip_code, rec_date_s, edo_name, other_description, edo_pro_id, edo_pro_id, edo_objective, comment, status_donat, status_receipt, resDesc,pdflink, receipt_cc, dateCreate FROM receipt ORDER BY id_receipt DESC";
+        $sql = "SELECT id_receipt, status_user, rec_idname, name_title, rec_name, rec_surname, address, rec_tel, rec_date_out, rec_time, payby, amount, rec_email, road, districts, amphures, provinces, zip_code, rec_date_s, edo_name, other_description, edo_pro_id, edo_pro_id, edo_objective, comment, status_donat, status_receipt, resDesc,pdflink, receipt_cc, dateCreate FROM ";
+
+        if (isset($showall) && !empty($showall)) {
+            $sql .= $showall;
+        } else {
+            $sql .= "receipt"; // หากไม่มีค่า showall ให้ใช้ "receipt" เป็นค่าเริ่มต้น
+        }
+
+        $sql .= " ORDER BY id_receipt DESC";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -77,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $columns = ['เลขที่ใบเสร็จ', 'เลขประจำตัวผู้เสียภาษี', 'ชื่อ-สกุล', 'ที่อยู่', 'เบอร์โทรศัพท์', 'อีเมล์', 'วันที่บริจาค', 'เวลา', 'ชำระโดย', 'จำนวนเงิน', 'ใบเสร็จ'];
+        $columns = ['เลขที่ใบเสร็จ', 'หมายเลขโครงการ', 'เลขประจำตัวผู้เสียภาษี', 'ชื่อ-สกุล', 'ที่อยู่', 'เบอร์โทรศัพท์', 'อีเมล์', 'วันที่บริจาค', 'เวลา', 'ชำระโดย', 'จำนวนเงิน', 'ใบเสร็จ'];
         $col = 'A';
 
         foreach ($columns as $column) {
@@ -91,7 +110,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $col = 'A';
             $sheet->setCellValue($col . $row, $result['id_receipt']);
             $col++;
-            $sheet->setCellValue($col . $row, $result['rec_idname']);
+            $sheet->setCellValue($col . $row, $result['edo_pro_id']);
+            $col++;
+            $recIdName = $result['rec_idname'];
+            $sheet->setCellValueExplicit($col . $row, $recIdName, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
             $col++;
             $sheet->setCellValue($col . $row, $result['name_title'] . ' ' . $result['rec_name'] . ' ' . $result['rec_surname']);
             $col++;
@@ -123,13 +145,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $sheet->setCellValue($col . $row, $result['pdflink']);
             $row++;
         }
+        $highestRow = $sheet->getHighestRow();
+        $highestColumn = $sheet->getHighestColumn();
+        $sheet->setAutoFilter('A1:' . $highestColumn . $highestRow);
 
         // ตำแหน่งที่คุณต้องการแสดงยอดรวม (หลังสุดของข้อมูล)
         $col = 'I';
         $sheet->setCellValue($col . $row, 'ยอดรวม');
         $col = 'J'; // แนะนำตำแหน่งที่ยอดรวมจะแสดง (หลังจากข้อมูล amount)
         $sheet->setCellValue($col . $row, $totalAmount);
-
 
         // ตั้งค่าการส่งออกไฟล์ Excel
         $filename = 'DonationReport_' . date('Y-m-d') . '.xlsx';
