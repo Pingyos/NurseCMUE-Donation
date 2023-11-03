@@ -1,6 +1,7 @@
 <?php
 // require_once 'session.php';
 require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -37,30 +38,29 @@ require_once 'head.php'; ?>
                         $itemsSets = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
                         // Send notifications for items_sets with max items less than or equal to 20
-                        foreach ($itemsSets as $itemsSet) {
-                            if ($itemsSet['max_items'] <= 20) {
-                                // Calculate remaining item count
-                                $remainingItemCount = 20 - $itemsSet['max_items'];
+                        // foreach ($itemsSets as $itemsSet) {
+                        //     if ($itemsSet['max_items'] <= 20) {
+                        //         // Calculate remaining item count
+                        //         $remainingItemCount = 20 - $itemsSet['max_items'];
 
-                                // Fetch the item count from the database for the current items_set
-                                $stmt4 = $conn->prepare('SELECT items FROM storage WHERE items_set = :items_set');
-                                $stmt4->bindParam(':items_set', $itemsSet['items_set'], PDO::PARAM_STR);
-                                $stmt4->execute();
-                                $itemData = $stmt4->fetch(PDO::FETCH_ASSOC);
-                                $itemCount = $itemData['items'];
+                        //         // Fetch the item count from the database for the current items_set
+                        //         $stmt4 = $conn->prepare('SELECT items FROM storage WHERE items_set = :items_set');
+                        //         $stmt4->bindParam(':items_set', $itemsSet['items_set'], PDO::PARAM_STR);
+                        //         $stmt4->execute();
+                        //         $itemData = $stmt4->fetch(PDO::FETCH_ASSOC);
+                        //         $itemCount = $itemData['items'];
 
-                                // Send a notification for this items_set with the correct item count
-                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
-                                $sMessage = "จำนวนของที่ระลึง Set " . $itemsSet['items_set'] . " ใกล้จะหมดแล้ว";
-                                $sMessage .= "\n";
-                                $sMessage .= " จำนวนที่เหลือคือ " . $itemCount . " ชิ้น";
+                        //         // Send a notification for this items_set with the correct item count
+                        //         $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"];
+                        //         $sMessage = "จำนวนของที่ระลึง Set " . $itemsSet['items_set'] . " ใกล้จะหมดแล้ว";
+                        //         $sMessage .= "\n";
+                        //         $sMessage .= " จำนวนที่เหลือคือ " . $itemCount . " ชิ้น";
 
-                                foreach ($sToken as $Token) {
-                                    notify_message($sMessage, $Token);
-                                }
-                            }
-                        }
-
+                        //         foreach ($sToken as $Token) {
+                        //             notify_message($sMessage, $Token);
+                        //         }
+                        //     }
+                        // }
                         echo '
 <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>

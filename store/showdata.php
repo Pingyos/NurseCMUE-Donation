@@ -46,11 +46,11 @@ require_once 'head.php'; ?>
                                             <div class="card-body" style="height: 130px;">
                                                 <div class="row">
                                                     <div class="col-8">
-                                                        <div class="stat-heading">Set A จานรองแก้วเซรามิค</div>
+                                                        <div class="stat-heading">Set A Griptok</div>
                                                         <div class="stat-text"><?= $result['items'] ?> ชิ้น</div>
                                                     </div>
                                                     <div class="col-4">
-                                                        <img src="../images/service/right9.jpg" alt="Image" style="height: 100px; width: 100px;">
+                                                        <img src="../images/service/setA.jpg" alt="Image" style="height: 100px; width: 100px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -63,11 +63,11 @@ require_once 'head.php'; ?>
                                             <div class="card-body" style="height: 130px;">
                                                 <div class="row">
                                                     <div class="col-8">
-                                                        <div class="stat-heading">Set B Griptok</div>
+                                                        <div class="stat-heading">Set B จานรองแก้วเซรามิค</div>
                                                         <div class="stat-text"><?= $setb_result['items'] ?> ชิ้น</div>
                                                     </div>
                                                     <div class="col-4">
-                                                        <img src="../images/service/right10.jpg" alt="Image" style="height: 100px; width: 110px;">
+                                                        <img src="../images/service/setB.jpg" alt="Image" style="height: 100px; width: 110px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@ require_once 'head.php'; ?>
                                                         <div class="stat-text"><?= $setc_result['items'] ?> ชิ้น</div>
                                                     </div>
                                                     <div class="col-4">
-                                                        <img src="../images/service/right11.jpg" alt="Image" style="height: 100px; width: 110px;">
+                                                        <img src="../images/service/setC.jpg" alt="Image" style="height: 100px; width: 110px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,14 +151,16 @@ require_once 'head.php'; ?>
                                                         echo '<span class="badge rounded-pill bg-danger">ยกเลิก</span>';
                                                     }
                                                     ?>
-                                                    |
-                                                    <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="cancel" href="javascript:void(0);" onclick="confirmCheck('<?= $t1['receipt_id']; ?>')">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                                            <path d="M5 12l5 5l10 -10"></path>
-                                                        </svg>
-                                                        </span>
-                                                    </a>
+                                                    <?php if ($t1['items'] != 2) { ?>
+                                                        |
+                                                        <a class="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="cancel" href="javascript:void(0);" onclick="confirmCheck('<?= $t1['receipt_id']; ?>')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                                <path d="M5 12l5 5l10 -10"></path>
+                                                            </svg>
+                                                            </span>
+                                                        </a>
+                                                    <?php } ?>
                                                 </td>
                                                 <td>
                                                     <div class="dropdown">
