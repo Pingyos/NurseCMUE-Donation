@@ -126,7 +126,6 @@ if (
             END AS items_set
             FROM receipt
             WHERE id = :id";
-
                         $insertStoreStmt = $conn->prepare($insertStoreSql);
                         $insertStoreStmt->bindParam(':id', $id, PDO::PARAM_INT);
                         $insertStoreResult = $insertStoreStmt->execute();
@@ -255,8 +254,6 @@ if (
                         $sMessage .= "จำนวน: " . $amount . " บาท\n";
                         $sMessage .= "วันที่โอน: " . $rec_date_out . "\n";
                         $sMessage .= "ชำระโดย: " . $payby . "\n";
-
-                        // เรียกใช้งานฟังก์ชัน notify_message สำหรับทุก Token
                         foreach ($sToken as $Token) {
                             notify_message($sMessage, $Token);
                         }

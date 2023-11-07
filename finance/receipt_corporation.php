@@ -1,6 +1,7 @@
 <?php
 // require_once 'session.php';
 require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -244,8 +245,15 @@ require_once 'head.php'; ?>
                                     </div>
                                     <hr>
                                     <div class="btn-group col-12">
-                                        <button type="submit" class="btn btn-primary btn-block">ยืนยันการออกใบเสร็จ(นิติบุคคล)</button>
+                                        <button type="submit" class="btn btn-primary btn-block" id="confirmationButton" disabled>ยืนยันการออกใบเสร็จ(นิติบุคคล)</button>
                                     </div>
+                                    <script>
+                                        // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
+                                        window.addEventListener("load", function() {
+                                            // เปิดการใช้งานปุ่ม
+                                            document.getElementById("confirmationButton").removeAttribute("disabled");
+                                        });
+                                    </script>
                                 </form>
                                 <?php require_once 'recript_add.php'; ?>
                             </div>

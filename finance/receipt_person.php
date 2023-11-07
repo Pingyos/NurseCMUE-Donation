@@ -1,6 +1,7 @@
 <?php
 // require_once 'session.php';
 require_once 'head.php'; ?>
+
 <body>
     <?php require_once 'aside.php'; ?>
     <div id="right-panel" class="right-panel">
@@ -242,8 +243,8 @@ require_once 'head.php'; ?>
                                         <input type="hidden" name="pdflink" value="https://app.nurse.cmu.ac.th/edonation/finance/pdf_maker_offline.php?id=id&ACTION=VIEW">
                                         <input type="hidden" name="receipt_cc" value="confirm">
                                         <hr>
-                                        <div class="btn-group col-12">
-                                            <button type="submit" class="btn btn-success btn-block">ยืนยันการออกใบเสร็จ(บุคคล)</button>
+                                        <div class="btn-group col-12" id="buttonContainer">
+                                            <button type="submit" class="btn btn-success btn-block gray-button">ยืนยันการออกใบเสร็จ(บุคคล)</button>
                                         </div>
                                 </form>
                                 <?php

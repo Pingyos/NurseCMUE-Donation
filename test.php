@@ -1,28 +1,62 @@
-<?php 
-if ($updateResult) {
-  $insertSql = "INSERT IGNORE INTO receipt (id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate)
-                SELECT id, id_receipt, ref1, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, dateCreate
-                FROM receipt_offline WHERE id = :id AND resDesc = 'success'
-                ORDER BY dateCreate DESC
-                LIMIT 1";
-  $insertStmt = $pdo->prepare($insertSql);
-  $insertStmt->bindParam(':id', $id);
-  $insertResult = $insertStmt->execute();
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
 
-  if ($insertResult) {
-      // ตรวจสอบว่าข้อมูลถูกเพิ่มหรือไม่
-      if ($insertStmt->rowCount() > 0) {
-          // รายการถูกเพิ่มเข้าไป
-          // ดำเนินการเพิ่ม id_receipt และอื่นๆ ตามที่คุณต้องการ
-      } else {
-          // ไม่มีการเพิ่มรายการใหม่เนื่องจากมีข้อมูลซ้ำกัน
-          $response = [
-              'message' => 'ข้อมูลซ้ำกัน'
-          ];
-      }
-  } else {
-      $response = [
-          'message' => 'ไม่สามารถบันทึกข้อมูลในตาราง receipt ได้'
-      ];
-  }
+    if ($data !== null) {
+        require_once 'connection.php';
+        $transactionDateandTime = date('Y-m-d H:i:s', strtotime($data->transactionDateandTime));
+
+        $stmt = $conn->prepare("INSERT INTO json_confirm 
+            (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
+            payerAccountNumber, payerAccountName, payerName, sendingBankCode, 
+            receivingBankCode, amount, transactionId, transactionDateandTime, 
+            billPaymentRef1, billPaymentRef2, currencyCode, channelCode, 
+            transactionType)
+            VALUES
+            (:payeeProxyId, :payeeProxyType, :payeeAccountNumber, :payeeName, 
+            :payerAccountNumber, :payerAccountName, :payerName, :sendingBankCode, 
+            :receivingBankCode, :amount, :transactionId, :transactionDateandTime, 
+            :billPaymentRef1, :billPaymentRef2, :currencyCode, :channelCode, 
+            :transactionType)");
+
+        $stmt->bindParam(':payeeProxyId', $data->payeeProxyId, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeProxyType', $data->payeeProxyType, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeAccountNumber', $data->payeeAccountNumber, PDO::PARAM_STR);
+        $stmt->bindParam(':payeeName', $data->payeeName, PDO::PARAM_STR);
+        $stmt->bindParam(':payerAccountNumber', $data->payerAccountNumber, PDO::PARAM_STR);
+        $stmt->bindParam(':payerAccountName', $data->payerAccountName, PDO::PARAM_STR);
+        $stmt->bindParam(':payerName', $data->payerName, PDO::PARAM_STR);
+        $stmt->bindParam(':sendingBankCode', $data->sendingBankCode, PDO::PARAM_STR);
+        $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
+        $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionDateandTime', $transactionDateandTime, PDO::PARAM_STR);
+        $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
+        $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
+        $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
+        $stmt->bindParam(':channelCode', $data->channelCode, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionType', $data->transactionType, PDO::PARAM_STR);
+
+        $result = $stmt->execute();
+
+        if ($result) {
+            $response = array(
+                "resCode" => "00",
+                "resDesc" => "success",
+                "transactionId" => $data->transactionId,
+                "confirmId" => $conn->lastInsertId()
+            );
+            echo json_encode($response);
+        } else {
+            http_response_code(500);
+            echo "Failed to save data to the database.";
+        }
+    } else {
+        http_response_code(400);
+        echo "Invalid JSON data received.";
+    }
+} else {
+    http_response_code(405);
+    echo "Invalid request method.";
 }
