@@ -1,0 +1,17 @@
+{"payeeProxyId":"099400258783792",
+"payeeProxyType":"BILLERID",
+"payeeAccountNumber":"5663044095"
+,"payeeName":"FACULTY OF NURSING CMU",
+"payerAccountNumber":"5662488652",
+"payerAccountName":"ธานี แก้วธรรมานุกูล",
+"payerName":"ธานี แก้วธรรมานุกูล",
+"sendingBankCode":"014",
+"receivingBankCode":"014",
+"amount":"100.00",
+"transactionId":"53a2d569b8d5418a96c77507393d4b9a",
+"transactionDateandTime":"2023-08-29T09:39:56.597+07:00",
+"billPaymentRef1":"2566121205E0039",
+"billPaymentRef2":"3540400118548",
+"currencyCode":"764",
+"channelCode":"PMH",
+"transactionType":"Domestic Transfers"}

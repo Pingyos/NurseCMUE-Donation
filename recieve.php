@@ -1,11 +1,12 @@
 <?php
+header("Content-Type: application/json");
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
 
     if ($data !== null) {
         require_once 'connection.php';
-        $transactionDateandTime = date('Y-m-d H:i:s', strtotime($data->transactionDateandTime));
 
         $stmt = $conn->prepare("INSERT INTO json_confirm 
             (payeeProxyId, payeeProxyType, payeeAccountNumber, payeeName, 
@@ -31,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindParam(':receivingBankCode', $data->receivingBankCode, PDO::PARAM_STR);
         $stmt->bindParam(':amount', $data->amount, PDO::PARAM_STR);
         $stmt->bindParam(':transactionId', $data->transactionId, PDO::PARAM_STR);
-        $stmt->bindParam(':transactionDateandTime', $transactionDateandTime, PDO::PARAM_STR);
+        $stmt->bindParam(':transactionDateandTime', $data->transactionDateandTime, PDO::PARAM_STR);
         $stmt->bindParam(':billPaymentRef1', $data->billPaymentRef1, PDO::PARAM_STR);
         $stmt->bindParam(':billPaymentRef2', $data->billPaymentRef2, PDO::PARAM_STR);
         $stmt->bindParam(':currencyCode', $data->currencyCode, PDO::PARAM_STR);
