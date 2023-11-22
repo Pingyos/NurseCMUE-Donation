@@ -215,8 +215,8 @@
                                             console.log(response);
                                             if (response.message === 'success') {
                                                 swal({
-                                                    title: "ชำระเงินเสร็จสิ้น",
-                                                    text: "ระบบกำลังเปิดใบเสร็จ",
+                                                    title: "ชำระเงินการบริจาคเสร็จสิ้น",
+                                                    text: "ขอบคุณสำหรับการบริจาค",
                                                     type: "success",
                                                     timer: 6000,
                                                     showConfirmButton: false

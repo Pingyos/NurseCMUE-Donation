@@ -6,24 +6,21 @@ $response = [];
 if ($data !== null) {
     $amount = $data['amount'];
     $id = $data['id'];
-    $rec_idname = $data['rec_idname'];
+    $rec_date_out = $data['rec_date_out'];
     $ref1 = $data['ref1'];
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=edonation;charset=utf8', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=edonation;charset=utf8', 'edonation', 'edonate@FON');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // ตรวจสอบว่ามีข้อมูลที่ตรงกันในตาราง json_confirm
-        $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND billPaymentRef2 = :rec_idname AND billPaymentRef1 = :ref1";
+        $sql = "SELECT * FROM json_confirm WHERE amount = :amount AND date = :rec_date_out AND billPaymentRef1 = :ref1";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':amount', $amount);
-        $stmt->bindParam(':rec_idname', $rec_idname);
+        $stmt->bindParam(':rec_date_out', $rec_date_out);
         $stmt->bindParam(':ref1', $ref1);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            // มีข้อมูลที่ตรงกันในตาราง json_confirm
-
-            // อัปเดตค่า resDesc เป็น 'success' ในตาราง receipt_offline
             $updateSql = "UPDATE receipt_offline SET resDesc = 'success' WHERE id = :id";
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->bindParam(':id', $id);
@@ -203,8 +200,9 @@ if ($data !== null) {
                                 }
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
-                                $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่
+                                $sToken = ["VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf"]; // เพิ่ม Token ของคุณที่นี่
                                 $sMessage .= "\n";
+                                $sMessage .= "โครงการ: " . $edo_description . "\n";
                                 $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
                                 $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
                                 $sMessage .= "\n";

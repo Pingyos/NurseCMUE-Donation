@@ -84,8 +84,11 @@
                                     if (value < 0) {
                                         value = '';
                                     }
-                                    if (value.length < 12) {
+                                    if (value.length > 13) {
+                                        value = value.slice(0, 13);
+                                    }
 
+                                    if (value.length < 13) {
                                         recIdnameInput.setCustomValidity("กรุณากรอกเลขบัตรประชาชนให้ถูกต้อง");
                                     } else {
                                         recIdnameInput.setCustomValidity("");
@@ -95,6 +98,7 @@
                                 });
                             </script>
                         </div>
+
 
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="email" name="rec_email" class="form-control" placeholder="อีเมล์ (ใช้สำหรับการส่งใบเสร็จผ่าน อีเมล์)">

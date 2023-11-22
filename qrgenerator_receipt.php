@@ -213,14 +213,14 @@
                             function fetchData() {
                                 var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
                                 var amount = "<?php echo isset($_GET['amount']) ? $_GET['amount'] : ''; ?>";
-                                var rec_idname = "<?php echo isset($_GET['rec_idname']) ? $_GET['rec_idname'] : ''; ?>";
+                                var rec_date_out = "<?php echo isset($_GET['rec_date_out']) ? $_GET['rec_date_out'] : ''; ?>";
                                 var ref1 = "<?php echo isset($_GET['ref1']) ? $_GET['ref1'] : ''; ?>";
 
-                                if (amount !== '' && rec_idname !== '' && ref1 !== '' && id !== '') {
+                                if (amount !== '' && rec_date_out !== '' && ref1 !== '' && id !== '') {
                                     var data = {
                                         id: id,
                                         amount: amount,
-                                        rec_idname: rec_idname,
+                                        rec_date_out: rec_date_out,
                                         ref1: ref1
                                     };
                                     var xhr = new XMLHttpRequest();
@@ -232,20 +232,19 @@
                                             console.log(response);
                                             if (response.message === 'success') {
                                                 swal({
-                                                    title: "ชำระเงินเสร็จสิ้น",
-                                                    text: "ระบบกำลังเปิดใบเสร็จ",
+                                                    title: "ชำระเงินการบริจาคเสร็จสิ้น",
+                                                    text: "ขอบคุณสำหรับการบริจาค",
                                                     type: "success",
                                                     timer: 6000,
                                                     showConfirmButton: false
                                                 });
                                                 setTimeout(function() {
-                                                    window.location.href = "invoice.php";
+                                                    window.location.href = "index.php#section_2";
                                                 }, 6000);
                                             }
                                         }
                                     };
                                     xhr.send(JSON.stringify(data));
-                                    loopCount++;
                                 } else {
                                     console.log('ไม่ได้รับข้อมูลที่เรียกใช้งานไป');
                                 }

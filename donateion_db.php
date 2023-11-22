@@ -136,7 +136,7 @@ if (
       $last_two_digits = substr($id_year, -2);
       $id_suffix = $_POST['edo_pro_id'] . str_pad($lastInsertedId, 7, '0', STR_PAD_LEFT);
 
-      $pdf_url = "https://app.nurse.cmu.ac.th/edonation/finance/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
+      $pdf_url = "https://app.nurse.cmu.ac.th/edonation/edo_admin/pdf_maker.php?id=$lastInsertedId&ACTION=VIEW";
 
       $updateSql = "UPDATE receipt_offline SET ref1 = '{$last_two_digits}{$id_suffix}', pdflink = :pdf_url WHERE id = :lastInsertedId";
       $updateStmt = $conn->prepare($updateSql);
@@ -156,7 +156,7 @@ if (
             timer: 2000,
             showConfirmButton: false
           }, function(){
-            window.location.href = "qrgenerator_receipt.php?id=' . $lastInsertedId . '&amount=' . $_POST['amount'] . '&rec_idname=' . $_POST['rec_idname'] . '&ref1=' . $last_two_digits  . $id_suffix . '";
+            window.location.href = "qrgenerator_receipt.php?id=' . $lastInsertedId . '&amount=' . $_POST['amount'] . '&rec_date_out=' . $_POST['rec_date_out'] . '&ref1=' . $last_two_digits  . $id_suffix . '";
           });
         </script>';
       } else {
