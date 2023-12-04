@@ -152,7 +152,6 @@ require_once 'head.php'; ?>
                                             </div>
                                         </div>
                                     </div>
-
                                     <input type="hidden" name="name_title" value="<?= $row['name_title']; ?>">
                                     <input type="hidden" name="rec_surname" value="<?= $row['rec_surname']; ?>">
                                     <input type="hidden" name="resDesc" value="success">

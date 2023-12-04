@@ -171,33 +171,6 @@ require_once 'head.php'; ?>
                                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#largeModal<?= $t1['id']; ?>">
                                                                 <i class="bx bx-edit-alt me-1"></i> View
                                                             </a>
-
-                                                            <!-- <a class="dropdown-item" href="javascript:void(0);" onclick="confirmDelete('<?= $t1['receipt_id']; ?>')">
-                                                                <i class="bx bx-trash me-1"></i> Delete
-                                                            </a>
-                                                            <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-                                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-                                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
-                                                            <script>
-                                                                function confirmDelete(receipt_id) {
-                                                                    swal({
-                                                                            title: "คำเตือน",
-                                                                            text: "เมื่อคุณกด 'Delete' ระบบจะลบข้อมูลและไม่สามารถกู้คืนได้อีก",
-                                                                            type: "warning",
-                                                                            showCancelButton: true,
-                                                                            confirmButtonColor: "#DD6B55",
-                                                                            confirmButtonText: "Delete",
-                                                                            cancelButtonText: "Cancel",
-                                                                            closeOnConfirm: false
-                                                                        },
-                                                                        function(isConfirm) {
-                                                                            if (isConfirm) {
-                                                                                // ทำงานเมื่อยืนยันการลบ
-                                                                                window.location = "delete.php?receipt_id=" + receipt_id;
-                                                                            }
-                                                                        });
-                                                                }
-                                                            </script> -->
                                                         </div>
                                                     </div>
                                                     <div class="modal fade" id="largeModal<?= $t1['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel" aria-hidden="true">

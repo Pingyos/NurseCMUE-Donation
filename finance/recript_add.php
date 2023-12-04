@@ -85,8 +85,6 @@ if (
             $updateStmt = $conn->prepare($updateSql);
             $updateStmt->bindParam(':id', $id, PDO::PARAM_INT);
             $updateResult = $updateStmt->execute();
-
-            // เพิ่มข้อมูลลงในตาราง receipt
             if ($updateResult) {
                 $moveDataSql = "INSERT INTO receipt (id, ref1, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate)
           SELECT id, ref1, :id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, :edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate
@@ -243,6 +241,7 @@ if (
                             }
                             curl_close($chOne);
                         }
+                        // T6pYBZljHjLz1fTbMJoSv8uiPEwSj7FRxu8QTcegFmU
                         // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                         // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
                         $sToken = ["6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL"]; // เพิ่ม Token ของคุณที่นี่

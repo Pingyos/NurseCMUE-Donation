@@ -17,10 +17,71 @@ require_once 'head.php'; ?>
                             <div class="card-body">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
+                                        <div class="form-group col-lg-12 col-md-3 col-6">
+                                            <div class="form-group">
+                                                <label for="selectnaem" class="control-label mb-1">ข้อมูลผู้บริจาค</label>
+                                                <select id="selectnaem" class="form-control" onchange="displaySelectedData()">
+                                                    <option>เลือกข้อมูลผู้บริจาค</option>
+                                                    <?php
+                                                    require_once 'connection.php';
+                                                    try {
+                                                        $query = "SELECT DISTINCT name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code FROM receipt WHERE status_receipt = 'yes'";
+                                                        $result = $conn->query($query);
+                                                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                                            $full_name = $row['name_title'] . ' ' . $row['rec_name'] . ' ' . $row['rec_surname'] . ' ' . $row['rec_tel'] . ' ' . $row['rec_email'] . ' ' . $row['rec_idname'] . ' ' . $row['address'] . ' ' . $row['road'] . ' ' . $row['districts'] . ' ' . $row['amphures'] . ' ' . $row['provinces'] . ' ' . $row['zip_code'];
+                                                            echo "<option value='" . $full_name . "'>" . $full_name . "</option>";
+                                                        }
+                                                    } catch (PDOException $e) {
+                                                        echo "Query failed: " . $e->getMessage();
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        function displaySelectedData() {
+                                            var select = document.getElementById("selectnaem");
+                                            var selectedOption = select.options[select.selectedIndex].text;
+
+                                            // ตัวแปรที่จะใช้เก็บค่าที่ได้จากการ split
+                                            var selectedTitle, selectedName, selectedSurname, selectedTel, selectedEmail, selectedIdName, selectedAddress, selectedRoad, provincesInput, amphuresInput, districtsInput, selectedZipCode;
+
+                                            // ให้ค่าตามลำดับที่คุณต้องการ
+                                            selectedTitle = selectedOption.split(" ")[0]; // คำนำหน้า
+                                            selectedName = selectedOption.split(" ")[1]; // ชื่อ
+                                            selectedSurname = selectedOption.split(" ")[2]; // สกุล
+                                            selectedTel = selectedOption.split(" ")[3]; // เบอร์โทรศัพท์
+                                            selectedEmail = selectedOption.split(" ")[4]; // อีเมล์
+                                            selectedIdName = selectedOption.split(" ")[5]; // เลขบัตรประชาชน
+                                            selectedAddress = selectedOption.split(" ")[6]; // ที่อยู่
+                                            selectedRoad = selectedOption.split(" ")[7]; // ถนน
+                                            provincesInput = selectedOption.split(" ")[8]; // จังหวัด
+                                            amphuresInput = selectedOption.split(" ")[9]; // อำเภอ
+                                            districtsInput = selectedOption.split(" ")[10]; // ตำบล
+                                            selectedZipCode = selectedOption.split(" ")[11]; // รหัสไปรษณีย์
+
+                                            // กำหนดค่าลงใน element ต่าง ๆ
+                                            document.getElementById("selectedTitle").value = selectedTitle;
+                                            document.getElementById("selectedName").value = selectedName;
+                                            document.getElementById("selectedSurname").value = selectedSurname;
+                                            document.getElementById("selectedTel").value = selectedTel;
+                                            document.getElementById("selectedEmail").value = selectedEmail;
+                                            document.getElementById("selectedIdName").value = selectedIdName;
+                                            document.getElementById("selectedAddress").value = selectedAddress;
+                                            document.getElementById("selectedRoad").value = selectedRoad;
+                                            document.getElementById("provincesInput").value = provincesInput;
+                                            document.getElementById("amphuresInput").value = amphuresInput;
+                                            document.getElementById("districtsInput").value = districtsInput;
+                                            document.getElementById("selectedZipCode").value = selectedZipCode;
+                                        }
+                                    </script>
+                                    <br>
+                                    <div class="row">
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="name_title" class="control-label mb-1">คำนำหน้าชื่อ <span style="color:red;"></span></label>
-                                                <input type="text" name="name_title" class="form-control" list="cars">
+                                                <input type="text" name="name_title" class="form-control" id="selectedTitle" list="cars">
                                                 <datalist id="cars">
                                                     <option value="นาย" />
                                                     <option value="นาง" />
@@ -31,19 +92,19 @@ require_once 'head.php'; ?>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_name" class="control-label mb-1">ชื่อ <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_name" class="form-control">
+                                                <input type="text" name="rec_name" class="form-control" id="selectedName" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_surname" class="control-label mb-1">สกุล <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_surname" class="form-control">
+                                                <input type="text" name="rec_surname" class="form-control" id="selectedSurname" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_tel" class="control-label mb-1">เบอร์โทรศัพท์</label>
-                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*">
+                                                <input type="number" name="rec_tel" class="form-control" pattern="[0-9]*" id="selectedTel">
                                             </div>
                                         </div>
                                     </div>
@@ -52,25 +113,25 @@ require_once 'head.php'; ?>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_email" class="control-label mb-1">อีเมล์</label>
-                                                <input type="text" name="rec_email" class="form-control">
+                                                <input type="text" name="rec_email" class="form-control" id="selectedEmail">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="rec_idname" class="control-label mb-1">เลขบัตรประชาชน <span style="color:red;"></span></label>
-                                                <input type="text" name="rec_idname" id="rec_idname" class="form-control" />
+                                                <input type="text" name="rec_idname" class="form-control" id="selectedIdName" />
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="address" class="control-label mb-1">ที่อยู่ <span style="color:red;"></span></label>
-                                                <input type="text" name="address" class="form-control">
+                                                <input type="text" name="address" class="form-control" id="selectedAddress">
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="road" class="control-label mb-1">ถนน</label>
-                                                <input type="text" name="road" class="form-control">
+                                                <input type="text" name="road" class="form-control" id="selectedRoad">
                                             </div>
                                         </div>
                                     </div>
@@ -80,56 +141,27 @@ require_once 'head.php'; ?>
                                             <div class="form-group">
                                                 <label for="provinces" class="control-label mb-1">จังหวัด <span style="color:red;"></span></label>
                                                 <input type="text" name="provinces" class="form-control" id="provincesInput">
-                                                <script>
-                                                    document.getElementById('provincesInput').addEventListener('blur', function() {
-                                                        var inputElement = this;
-                                                        var inputValue = inputElement.value.trim();
-                                                        var prefix = 'จ. ';
 
-                                                        // ตรวจสอบว่าข้อมูลที่กรอกเข้ามาไม่ใช่ค่าว่าง และยังไม่มีคำนำหน้า "จ." อยู่แล้ว
-                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
-                                                            inputElement.value = prefix + inputValue;
-                                                        }
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="amphures" class="control-label mb-1">อำเภอ <span style="color:red;"></span></label>
                                                 <input type="text" name="amphures" id="amphuresInput" class="form-control">
-                                                <script>
-                                                    document.getElementById('amphuresInput').addEventListener('blur', function() {
-                                                        var inputElement = this;
-                                                        var inputValue = inputElement.value.trim();
-                                                        var prefix = 'อ. ';
-                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
-                                                            inputElement.value = prefix + inputValue;
-                                                        }
-                                                    });
-                                                </script>
+
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="districts" class="control-label mb-1">ตำบล <span style="color:red;"></span></label>
                                                 <input type="text" name="districts" id="districtsInput" class="form-control">
-                                                <script>
-                                                    document.getElementById('districtsInput').addEventListener('blur', function() {
-                                                        var inputElement = this;
-                                                        var inputValue = inputElement.value.trim();
-                                                        var prefix = 'ต. ';
-                                                        if (inputValue !== '' && !inputValue.startsWith(prefix)) {
-                                                            inputElement.value = prefix + inputValue;
-                                                        }
-                                                    });
-                                                </script>
+
                                             </div>
                                         </div>
                                         <div class="form-group col-lg-3 col-md-3 col-6">
                                             <div class="form-group">
                                                 <label for="zip_code" class="control-label mb-1">รหัสไปรษณีย์</label>
-                                                <input type="text" name="zip_code" class="form-control">
+                                                <input type="text" name="zip_code" class="form-control" id="selectedZipCode">
                                             </div>
                                         </div>
                                     </div>
@@ -248,10 +280,10 @@ require_once 'head.php'; ?>
                                         </div>
                                 </form>
                                 <?php
-                                require_once 'recript_add.php';
-                                // echo '<pre>';
-                                // print_r($_POST);
-                                // echo '</pre>';
+                                // require_once 'recript_add.php';
+                                echo '<pre>';
+                                print_r($_POST);
+                                echo '</pre>';
                                 ?>
                             </div>
                         </div>
