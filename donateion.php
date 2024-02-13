@@ -99,7 +99,6 @@
                             </script>
                         </div>
 
-
                         <div class="col-lg-4 col-md-6 col-12">
                             <input type="email" name="rec_email" class="form-control" placeholder="อีเมล์ (ใช้สำหรับการส่งใบเสร็จผ่าน อีเมล์)">
                         </div>

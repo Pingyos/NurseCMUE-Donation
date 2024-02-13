@@ -5,7 +5,7 @@
     <meta name="keywords" content="โครงการที่รอการบริจาค,บริจาคคณะพยาบาล มช,ทำบุญ,คณะพยาบาล มช,บริจาค มช">
     <title>NurseCMU E-Donation</title>
 
-    <link href="images/logo_m.png" rel="icon">
+    <link href="images/logo.svg" rel="icon">
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
 

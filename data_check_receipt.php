@@ -75,28 +75,13 @@ if ($data !== null) {
                             $receipt = $id_year . '-' . $id_suffix;
 
                             // อัปเดตค่า id_receipt
-                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/finance/pdf_maker.php?receipt_id={$receipt_id}&ACTION=VIEW";
+                            $pdf_url = "https://app.nurse.cmu.ac.th/edonation/service/finance/invoice_confirm.php?receipt_id={$receipt_id}&ACTION=VIEW";
                             $updateIdSql = "UPDATE receipt SET id_receipt = :receipt, pdflink = :pdf_url WHERE id = :id";
                             $updateIdStmt = $pdo->prepare($updateIdSql);
                             $updateIdStmt->bindParam(':receipt', $receipt);
                             $updateIdStmt->bindParam(':pdf_url', $pdf_url);
                             $updateIdStmt->bindParam(':id', $id);
                             $updateIdResult = $updateIdStmt->execute();
-
-                            $copyDataSql = "INSERT INTO store (id, ref1, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate, items, items_set)
-                            SELECT id, ref1, id_receipt, name_title, rec_name, rec_surname, rec_tel, rec_email, rec_idname, address, road, districts, amphures, provinces, zip_code, rec_date_s, rec_date_out, amount, payby, edo_name, other_description, edo_pro_id, edo_description, edo_objective, comment, status_donat, status_user, status_receipt, resDesc, rec_time, pdflink, receipt_cc, dateCreate,1,
-                            CASE
-                                WHEN amount BETWEEN 1000.00 AND 2999.99 THEN 'A'
-                                WHEN amount BETWEEN 3000.00 AND 99999.99 THEN 'B'
-                                WHEN amount >= 100000.00 THEN 'C'
-                                ELSE 'D'
-                            END AS items_set
-                            FROM receipt
-                            WHERE id = :id";
-                            $copyDataStmt = $pdo->prepare($copyDataSql);
-                            $copyDataStmt->bindParam(':id', $id);
-                            $copyDataResult = $copyDataStmt->execute();
-
                             if ($updateIdResult) {
                                 require_once "phpmailer/PHPMailerAutoload.php";
                                 $mail = new PHPMailer;
@@ -198,16 +183,30 @@ if ($data !== null) {
                                     }
                                     curl_close($chOne);
                                 }
+                                function thai_date($date)
+                                {
+                                    $months = [
+                                        'ม.ค', 'ก.พ', 'มี.ค', 'เม.ย', 'พ.ค', 'มิ.ย',
+                                        'ก.ค', 'ส.ค', 'ก.ย', 'ต.ค', 'พ.ย', 'ธ.ค'
+                                    ];
+
+                                    $timestamp = strtotime($date);
+                                    $thai_year = date(' Y', $timestamp) + 543;
+                                    $thai_date = date('j ', $timestamp) . $months[date('n', $timestamp) - 1] . ' ' . $thai_year;
+
+                                    return $thai_date;
+                                }
                                 // 6GxKHxqMlBcaPv1ufWmDiJNDucPJSWPQ42sJwPOsQQL bot test
                                 // VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf 
                                 $sToken = ["VnaAYBFqNRPYNLKLeBA3Uk9kFFyFsYdUbw8SmU9HNWf"]; // เพิ่ม Token ของคุณที่นี่
-                                $sMessage .= "\n";
+                                $sMessage = "\n";
                                 $sMessage .= "โครงการ: " . $edo_description . "\n";
-                                $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
-                                $sMessage .= "ผู้บริจาค: " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
                                 $sMessage .= "\n";
-                                $sMessage .= "จำนวน: " . $amount . " บาท\n";
-                                $sMessage .= "วันที่โอน: " . $rec_date_out . " " . $rec_time . "\n";
+                                $sMessage .= "เลขที่ใบเสร็จ: " . $receipt . "\n";
+                                $sMessage .= "ผู้บริจาค : " . $name_title . " " . $rec_name . " " . $rec_surname . "\n";
+                                $sMessage .= "\n";
+                                $sMessage .= "จำนวน: " . number_format($amount, 2) . " บาท\n";
+                                $sMessage .= "วันที่โอน: " . thai_date($rec_date_out) . "\n";
                                 $sMessage .= "ชำระโดย: " . $payby . "\n";
 
                                 // เรียกใช้งานฟังก์ชัน notify_message สำหรับทุก Token

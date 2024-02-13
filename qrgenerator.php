@@ -223,7 +223,7 @@
                                                 });
                                                 setTimeout(function() {
                                                     window.location.href = "index.php#section_2";
-                                                }, 6000);
+                                                }, 5000);
                                             }
                                         }
                                     };
