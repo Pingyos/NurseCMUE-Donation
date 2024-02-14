@@ -91,36 +91,25 @@
                                 <div class="col-lg-10 col-12 text-center mx-auto">
                                     <h5 class="mb-2">ของที่ระลึก</h5>
                                 </div>
-                                <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0 mb-md-4">
-                                    <div class="featured-block d-flex justify-content-center align-items-center">
-                                        <a class="d-block">
-                                            <img src="images/service/setA.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set A Griptok</h5>
-                                            <p>บริจาค 1,000 บาทขั้นไป</p>
-                                        </a>
+                                <?php
+                                require_once 'connection.php';
+                                $stmt = $conn->prepare("SELECT * FROM storage");
+                                $stmt->execute();
+                                $result = $stmt->fetchAll();
+                                foreach ($result as $t1) {
+                                    $edoId = $t1['id'];
+                                    $imageURL = "images/causes" . $t1['img_file'];
+                                ?>
+                                    <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0 mb-md-4">
+                                        <div class="featured-block d-flex justify-content-center align-items-center">
+                                            <a class="d-block">
+                                                <img src="<?= $t1['img_file']; ?>" class="featured-block-image img-fluid" alt="">
+                                                <h5 class="featured-block-text"><?= $t1['name']; ?></h5>
+                                                <p>บริจาค <?= $t1['min']; ?> ถึง <?= $t1['max']; ?></p>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0 mb-md-4">
-                                    <div class="featured-block d-flex justify-content-center align-items-center">
-                                        <a class="d-block">
-                                            <img src="images/service/setB.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set B จานรองแก้วเซรามิค</h5>
-                                            <p>บริจาค 3,000 บาทขั้นไป</p>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-6 col-6 mb-4 mb-lg-0">
-                                    <div class="featured-block d-flex justify-content-center align-items-center">
-                                        <a class="d-block">
-                                            <img src="images/service/setC.jpg" class="featured-block-image img-fluid" alt="">
-                                            <h5 class="featured-block-text">Set C ชุดเข็มกลัด</h5>
-                                            <p>บริจาค 100,000 บาทขั้นไป</p>
-                                        </a>
-                                    </div>
-                                </div>
-
+                                <?php } ?>
                             </div>
                         </div>
                     </section>
