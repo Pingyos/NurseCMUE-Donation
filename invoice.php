@@ -38,7 +38,7 @@
                                             <td>
                                                 <?= $t1['name_title']; ?> <?= $t1['rec_name']; ?> <?= $t1['rec_surname']; ?>
                                                 <br>
-                                                <span style="color: orange;"><?= date('d/m/Y', strtotime($t1['rec_date_out'])); ?></span> /
+                                                <span style="color: orange;"><?= thai_date($t1['rec_date_out']); ?></span> /
                                                 <span style="color: orange;">E<?= str_pad($t1['receipt_id'], 4, '0', STR_PAD_LEFT); ?></span>
                                             </td>
                                             <td><?= $t1['edo_name']; ?></td>
@@ -110,6 +110,22 @@
                         </form>
                     </div>
                 </div>
+                <?php
+                function thai_date($date)
+                {
+                    $months = [
+                        'ม.ค', 'ก.พ', 'มี.ค', 'เม.ย', 'พ.ค', 'มิ.ย',
+                        'ก.ค', 'ส.ค', 'ก.ย', 'ต.ค', 'พ.ย', 'ธ.ค'
+                    ];
+
+                    $timestamp = strtotime($date);
+                    $thai_year = date(' Y', $timestamp) + 543;
+                    $thai_date = date('j ', $timestamp) . $months[date('n', $timestamp) - 1] . ' ' . $thai_year;
+
+                    return $thai_date;
+                }
+
+                ?>
             </div>
         </section>
     </main>

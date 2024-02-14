@@ -17,8 +17,6 @@
                         $stmt = $conn->prepare("SELECT * FROM pro_offline WHERE id=?");
                         $stmt->execute([$_GET['id']]);
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                        // ตรวจสอบว่าพบข้อมูลโครงการหรือไม่ก่อนแสดงรูปภาพ
                         if ($row) {
                             $imageURL = "images/causes/" . $row['img_file'];
                     ?>
