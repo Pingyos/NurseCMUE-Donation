@@ -2,7 +2,7 @@
 <html lang="en">
 <?php require_once('head.php'); ?>
 
-<body id="section_1">
+<body class="theme_turquoise">
 
     <?php require_once('header.php');
     require_once('nav.php'); ?>
@@ -76,7 +76,7 @@
                 </div>
             </div>
         </section>
-        <section class="about-section section-padding" id="section_4">
+        <!-- <section class="about-section section-padding" id="section_4">
             <div class="container">
                 <center>
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">
@@ -84,12 +84,13 @@
                     </div>
                 </center>
             </div>
-        </section>
+        </section> -->
 
     </main>
     <?php require_once('footer.php'); ?>
     <script src="js/main.js"></script>
-
+    <script defer src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.6/dist/cookieconsent.js"></script>
+    <script defer src="cc-init.js"></script>
 </body>
 
 </html>
